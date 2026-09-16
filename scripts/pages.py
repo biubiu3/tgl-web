@@ -17,6 +17,7 @@ Page shape:
 
 PAPER = {
     "slug": "paper",
+    "parent": "",
     "schema": ["ScholarlyArticle"],
     "related": ["research-context", "teach-and-grow-learning"],
     "en": {
@@ -35,18 +36,27 @@ PAPER = {
                 "Services, Shanghai 200240, China. The corresponding author is Hesheng Wang.",
             ]),
             ("Publication status", [
-                "This is a <b>technical report</b>, dated 15 September 2026. No venue acceptance is claimed. The "
-                "current manuscript is available as a PDF from this site, and the method implementation is "
-                "maintained in the IRMVLab/TGL repository. This record will be updated if the manuscript is "
-                "submitted to or accepted by a venue.",
+                "This is a <b>technical report</b>. No venue acceptance is claimed. A public preprint is "
+                "available: the paper is on arXiv as <code>arXiv:2608.17209</code>, first posted 17 August 2026, "
+                "with DOI <code>10.48550/arXiv.2608.17209</code>. The current manuscript PDF is also served from "
+                "this site, and the method implementation is maintained in the IRMVLab/TGL repository. This "
+                "record will be updated if the manuscript is submitted to or accepted by a venue.",
             ]),
             ("Abstract", ["{abstract}"]),
             ("Keywords", ["{keywords}"]),
+            ("Identifiers", [
+                "arXiv: <a href=\"{arxiv_url}\">2608.17209</a> · DOI: "
+                "<a href=\"{doi_url}\">10.48550/arXiv.2608.17209</a> · "
+                "PDF: <a href=\"{pdf}\">manuscript (this site)</a> and "
+                "<a href=\"{arxiv_pdf}\">arXiv:2608.17209</a> · "
+                "Code: <a href=\"{code}\">IRMVLab/TGL</a>",
+            ]),
             ("How to cite", [
                 "BibTeX is available at <a href=\"{cite}\">/cite.bib</a> under the key "
-                "<code>{bibtex_key}</code>. A plain-text citation is: Chang Nie, Zhe Liu and Hesheng Wang, “Teach "
-                "and Grow: An Agent-Centered Architecture for General Robot Learning,” technical report, "
-                "Shanghai Jiao Tong University, 2026. Project page: https://tgl.changnie.top.",
+                "<code>{bibtex_key}</code>, and as <code>CITATION.cff</code> for reference managers. A plain-text "
+                "citation is: Chang Nie, Zhe Liu and Hesheng Wang, “Teach and Grow: An Agent-Centered "
+                "Architecture for General Robot Learning,” arXiv:2608.17209, 2026. "
+                "DOI: 10.48550/arXiv.2608.17209.",
             ]),
             ("Companion artifacts", [
                 "The report is released together with a reference implementation and ten paired demonstration "
@@ -71,17 +81,25 @@ PAPER = {
                 "（上海 200240）。通讯作者为王贺升。",
             ]),
             ("发表状态", [
-                "这是一份<b>技术报告</b>，日期为 2026 年 9 月 15 日，不主张已被任何会议或期刊接收。"
-                "当前稿件可通过本站下载 PDF，方法实现维护在 IRMVLab/TGL 仓库中。"
-                "若稿件后续投稿或获得接收，本页面会同步更新。",
+                "这是一份<b>技术报告</b>，不主张已被任何会议或期刊接收。公开预印本已发布："
+                "论文在 arXiv 的编号为 <code>arXiv:2608.17209</code>，首次发布于 2026 年 8 月 17 日，"
+                "DOI 为 <code>10.48550/arXiv.2608.17209</code>。当前稿件 PDF 同时由本站提供，"
+                "方法实现维护在 IRMVLab/TGL 仓库中。若稿件后续投稿或获得接收，本页面会同步更新。",
             ]),
             ("摘要", ["{abstract_zh}"]),
             ("关键词", ["{keywords_zh}"]),
+            ("标识符", [
+                "arXiv：<a href=\"{arxiv_url}\">2608.17209</a> · DOI："
+                "<a href=\"{doi_url}\">10.48550/arXiv.2608.17209</a> · "
+                "PDF：<a href=\"{pdf}\">本站稿件</a> 与 <a href=\"{arxiv_pdf}\">arXiv:2608.17209</a> · "
+                "代码：<a href=\"{code}\">IRMVLab/TGL</a>",
+            ]),
             ("如何引用", [
-                "BibTeX 位于 <a href=\"{cite}\">/cite.bib</a>，键为 <code>{bibtex_key}</code>。"
+                "BibTeX 位于 <a href=\"{cite}\">/cite.bib</a>，键为 <code>{bibtex_key}</code>；"
+                "另有 <code>CITATION.cff</code> 供引用管理器使用。"
                 "纯文本引用格式：Chang Nie, Zhe Liu and Hesheng Wang, “Teach and Grow: An Agent-Centered "
-                "Architecture for General Robot Learning,” technical report, Shanghai Jiao Tong University, 2026. "
-                "项目主页：https://tgl.changnie.top。",
+                "Architecture for General Robot Learning,” arXiv:2608.17209, 2026. "
+                "DOI: 10.48550/arXiv.2608.17209。",
             ]),
             ("配套产出", [
                 "本报告同时发布参考实现与十段成对演示视频。<a href=\"{home}\">项目主页</a>涵盖问题定义、"
@@ -95,6 +113,7 @@ PAPER = {
 
 RESEARCH_CONTEXT = {
     "slug": "research-context",
+    "parent": "",
     "related": ["teach-and-grow-learning", "retraining-tax"],
     "en": {
         "title": "Research Context: Where Teach and Grow Sits Among VLA, WAM and Embodied AI",
@@ -237,6 +256,7 @@ RESEARCH_CONTEXT = {
 CONCEPTS = [
     {
         "slug": "teach-and-grow-learning",
+        "parent": "concepts",
         "related": ["training-free-robot-learning", "retraining-tax", "research-context"],
         "en": {
             "title": "Teach-and-Grow Learning (TGL): Training-Free Robot Learning from Demonstrations",
@@ -349,6 +369,7 @@ CONCEPTS = [
     },
     {
         "slug": "training-free-robot-learning",
+        "parent": "concepts",
         "related": ["teach-and-grow-learning", "skill-block", "retraining-tax"],
         "en": {
             "title": "Training-Free Robot Learning: What It Means and What It Does Not Mean",
@@ -432,6 +453,7 @@ CONCEPTS = [
     },
     {
         "slug": "skill-block",
+        "parent": "concepts",
         "related": ["skill-library", "experience-memory", "teach-and-grow-learning"],
         "en": {
             "title": "Skill Block: The Unit of Reusable Robot Behaviour in TGL",
@@ -531,6 +553,7 @@ CONCEPTS = [
     },
     {
         "slug": "skill-library",
+        "parent": "concepts",
         "related": ["skill-block", "experience-memory", "teach-and-grow-learning"],
         "en": {
             "title": "Skill Library: Persistent, Validated Robot Behaviours",
@@ -611,6 +634,7 @@ CONCEPTS = [
     },
     {
         "slug": "experience-memory",
+        "parent": "concepts",
         "related": ["skill-library", "skill-block", "retraining-tax"],
         "en": {
             "title": "Experience Memory: Recording Why a Robot Attempt Worked or Failed",
@@ -687,6 +711,7 @@ CONCEPTS = [
     },
     {
         "slug": "retraining-tax",
+        "parent": "concepts",
         "related": ["teach-and-grow-learning", "training-free-robot-learning", "research-context"],
         "en": {
             "title": "The Retraining Tax: The Recurring Cost of Repairing a Robot Policy",

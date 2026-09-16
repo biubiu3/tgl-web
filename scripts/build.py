@@ -6,8 +6,10 @@ import json
 from pathlib import Path
 import shutil
 from research import sections
-from seo import head_seo, write_crawler_files, html_to_md, render_subpage
+from seo import (head_seo, write_crawler_files, html_to_md, render_subpage,
+                  render_index_pages)
 import pages as PAGES
+import pages_extra as PAGES_EXTRA
 from urllib.parse import urlsplit
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -90,7 +92,7 @@ def page(lang):
 <section id="resources" class="section resources soft"><div class="container"><div class="resource-top"><div><p class="eyebrow">09 / {t('PAPER & RESOURCES','论文与资源')}</p><h2>{t('Read the full paper.','阅读全文。')}</h2><p>{t('The technical report covers the formulation, the Skill Block contract, the LIBERO and LIBERO-Plus evaluations, the controlled studies, and the scaling hypothesis, with appendices on cost regimes and experimental details.','技术报告包含问题定义、Skill Block 契约、LIBERO 与 LIBERO-Plus 评测、受控研究以及缩放假设，并在附录中给出成本模型与实验细节。')}</p></div><a class="button primary" href="{paper}" target="_blank" rel="noopener">{t('Open paper · PDF','打开论文 · PDF')} ↗</a></div><div class="resource-links"><a href="https://github.com/IRMVLab/TGL" target="_blank" rel="noopener">{t("Method code · IRMVLab/TGL","方法代码 · IRMVLab/TGL")} ↗</a><a href="#demos">{t('10 demonstration videos','10 段演示视频')} ↗</a><a href="https://github.com/biubiu3/tgl-web" target="_blank" rel="noopener">{t('Website source','网页源码')} ↗</a><a href="https://changnie.top" target="_blank" rel="noopener">{t("Chang Nie · Personal homepage","聂畅 · 个人主页")} ↗</a><a href="mailto:changniep@gmail.com">{t('Contact the authors','联系作者')} ↗</a></div><p class="small">{t('The method implementation is maintained in IRMVLab/TGL. Installation and execution instructions are in its README.','方法实现在 IRMVLab/TGL 仓库维护，安装与运行说明请见该仓库 README。')}</p><div class="citation" id="citation"><div><h3>BibTeX</h3><button id="copy-citation" type="button" hidden>{t('Copy citation','复制引用')}</button></div><pre><code id="bibtex">{e(bib)}</code></pre><span id="copy-status" role="status"></span></div></div></section>
 {narrative['glossary']}
 {narrative['faq']}
-</main><footer class="container"><a class="brand" href="#">TGL<span class="brand-dot">.</span></a><p>Teach and Grow · Shanghai Jiao Tong University<br><span>{t('Project images and demonstration videos are hosted with this website.','项目图片与演示视频均由本站提供。')}</span></p><a href="#">{t('Back to top','返回顶部')} ↑</a><nav class="footer-index footer-pages" aria-label="{t('Related pages','相关页面')}"><a href="{base}paper/">{t('Paper record','论文著录')}</a><a href="{base}research-context/">{t('Research context','技术定位')}</a><a href="{base}concepts/teach-and-grow-learning/">{t('Teach-and-Grow Learning','Teach-and-Grow Learning')}</a><a href="{base}concepts/training-free-robot-learning/">{t('Training-free robot learning','免训练机器人学习')}</a><a href="{base}concepts/skill-block/">{t('Skill Block','Skill Block')}</a><a href="{base}concepts/skill-library/">{t('Skill Library','Skill Library')}</a><a href="{base}concepts/experience-memory/">{t('Experience Memory','Experience Memory')}</a><a href="{base}concepts/retraining-tax/">{t('Retraining tax','再训练成本')}</a></nav><nav class="footer-index" aria-label="{t('Machine-readable entry points','机器可读入口')}"><a href="{base}llms.txt">llms.txt</a><a href="{base}llms-full.txt">llms-full.txt</a><a href="{base}project.json">project.json</a><a href="{base}sitemap.xml">sitemap.xml</a><a href="{base}robots.txt">robots.txt</a><a href="{base}{'' if zh else 'zh/'}" lang="{t('zh-CN','en')}">{t('中文版','English')}</a></nav></footer><dialog id="image-dialog" aria-label="{t('Enlarged research image','放大的研究图片')}"><button class="dialog-close" aria-label="{t('Close image','关闭图片')}">×</button><img alt=""><p></p></dialog>
+</main><footer class="container"><a class="brand" href="#">TGL<span class="brand-dot">.</span></a><p>Teach and Grow · Shanghai Jiao Tong University<br><span>{t('Project images and demonstration videos are hosted with this website.','项目图片与演示视频均由本站提供。')}</span></p><a href="#">{t('Back to top','返回顶部')} ↑</a><nav class="footer-index footer-pages" aria-label="{t('Related pages','相关页面')}"><a href="{base}paper/">{t('Paper record','论文著录')}</a><a href="{base}research-context/">{t('Research context','技术定位')}</a><a href="{base}concepts/teach-and-grow-learning/">{t('Teach-and-Grow Learning','Teach-and-Grow Learning')}</a><a href="{base}concepts/training-free-robot-learning/">{t('Training-free robot learning','免训练机器人学习')}</a><a href="{base}concepts/skill-block/">{t('Skill Block','Skill Block')}</a><a href="{base}concepts/skill-library/">{t('Skill Library','Skill Library')}</a><a href="{base}concepts/experience-memory/">{t('Experience Memory','Experience Memory')}</a><a href="{base}concepts/retraining-tax/">{t('Retraining tax','再训练成本')}</a><a href="{base}concepts/">{t('All concepts','全部概念')}</a><a href="{base}glossary/">{t('Glossary','术语表')}</a><a href="{base}faq/">{t('FAQ','问答')}</a></nav><nav class="footer-index" aria-label="{t('Machine-readable entry points','机器可读入口')}"><a href="{base}llms.txt">llms.txt</a><a href="{base}llms-full.txt">llms-full.txt</a><a href="{base}project.json">project.json</a><a href="{base}sitemap.xml">sitemap.xml</a><a href="{base}robots.txt">robots.txt</a><a href="{base}{'' if zh else 'zh/'}" lang="{t('zh-CN','en')}">{t('中文版','English')}</a></nav></footer><dialog id="image-dialog" aria-label="{t('Enlarged research image','放大的研究图片')}"><button class="dialog-close" aria-label="{t('Close image','关闭图片')}">×</button><img alt=""><p></p></dialog>
 </body></html>'''
 
 EN_HTML = page('en')
@@ -109,14 +111,19 @@ if site != out:
 (out/'404.html').write_text(f'<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Page not found · TGL</title><style>body{{font:20px system-ui;max-width:640px;margin:15vh auto;padding:24px;color:#173d37}}a{{color:#155e59}}</style><h1>Page not found</h1><p>The page may have moved.</p><a href="{url}">Return to Teach and Grow →</a></html>')
 (out/'.nojekyll').touch()
 # Generated sub-pages: /paper/, /research-context/, /concepts/<slug>/, and /zh/ equivalents.
-SUBPAGES = [PAGES.PAPER, PAGES.RESEARCH_CONTEXT] + PAGES.CONCEPTS
+SUBPAGES = [PAGES.PAPER, PAGES.RESEARCH_CONTEXT] + PAGES.CONCEPTS + PAGES_EXTRA.CONCEPTS
 SUB_URLS = []
 for _pg in SUBPAGES:
     for _lang in ("en", "zh"):
         SUB_URLS.append(render_subpage(_pg, _lang, url, DATA, site))
 print(f'  wrote {len(SUB_URLS)} sub-pages')
 
-write_crawler_files(out, url, DATA, rendered, SUB_URLS)
+# Index pages derived from the same data: concept hub, glossary, FAQ.
+SUB_URLS += render_index_pages(url, DATA, site, SUBPAGES)
+print(f'  wrote index pages -> {len(SUB_URLS)} generated pages total')
+ALL_PAGES = SUBPAGES
+
+write_crawler_files(out, url, DATA, rendered, SUB_URLS, ALL_PAGES)
 # Browsers and some crawlers probe /favicon.ico directly.
 shutil.copy2(ROOT/'assets/favicon.ico', out/'favicon.ico')
 if args.custom_domain:

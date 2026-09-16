@@ -309,17 +309,21 @@
     }
   ],
   "seo": {
-    "paper_date": "2026/09/15",
-    "paper_date_iso": "2026-09-15",
+    "paper_date": "2026/08/17",
+    "paper_date_iso": "2026-08-17",
+    "updated_iso": "2026-09-16",
     "paper_type": "technical report",
     "institution": "Shanghai Jiao Tong University",
     "institution_zh": "上海交通大学",
     "lab": "IRMV Lab",
     "lab_url": "https://irmv.sjtu.edu.cn/",
     "code_url": "https://github.com/IRMVLab/TGL",
+    "arxiv_id": "2608.17209",
+    "arxiv_url": "https://arxiv.org/abs/2608.17209",
+    "arxiv_pdf_url": "https://arxiv.org/pdf/2608.17209",
+    "doi": "10.48550/arXiv.2608.17209",
+    "doi_url": "https://doi.org/10.48550/arXiv.2608.17209",
     "bibtex_key": "nie2026teachandgrow",
-    "arxiv_id": null,
-    "doi": null,
     "abstract": "Vision-language-action (VLA) and world-action models typically absorb unfamiliar manipulation tasks through additional robot data collection and policy optimization. This recurring retraining burden slows the acquisition of new behavior. We present Teach-and-Grow Learning (TGL), a training-free architecture that turns a few successful demonstrations into reusable robot skills. Task acquisition requires no gradient updates, fine-tuning, or reinforcement learning: pretrained model weights remain fixed as the robot expands its explicit knowledge. Our implementation uses OpenAI GPT-6 Astra for multimodal reasoning and Codex to connect the agent to robot tools. The agent identifies subgoals shared across demonstrations, expresses them as closed-loop Skill Blocks, and grounds each block in the current scene. Physical feedback guides the next action and any recovery. Verified behaviors enter a persistent Skill Library; Experience Memory records the conditions and repairs that inform later decisions. TGL reaches 99.9% mean success on four LIBERO suites and 92.4% on seven LIBERO-Plus perturbation categories. Controlled studies show that taught blocks persist and improve related-task execution under the same model weights and executors. We further formulate a scaling hypothesis that relates effective reusable experience to falling future-task error and teaching demand. Code and demonstration videos: https://tgl.changnie.top.",
     "abstract_zh": "视觉-语言-动作（VLA）与世界动作模型通常需要通过追加机器人数据采集与策略优化，才能吸收不熟悉的操作任务；这种反复出现的再训练负担拖慢了新行为的获得。我们提出 Teach-and-Grow Learning（TGL），一种免训练架构，把少量成功演示转化为可复用的机器人技能。获取新任务不需要梯度更新、微调或强化学习：预训练模型权重保持固定，机器人在此前提下扩展其显式知识。我们的实现使用 OpenAI GPT-6 Astra 进行多模态推理，并用 Codex 把智能体与机器人工具连接起来。智能体识别演示之间共享的子目标，将其表达为闭环的 Skill Block，并把每个块落实到当前场景。物理反馈引导下一步动作与恢复。经验证的行为进入持久化的 Skill Library；Experience Memory 记录影响后续决策的条件与修复。TGL 在四个 LIBERO 套件上达到 99.9% 的平均成功率，在七个 LIBERO-Plus 扰动类别上达到 92.4%。受控研究显示，在模型权重与执行器相同的条件下，已习得的技能块能够保留并改善相关任务的执行。我们还提出一个缩放假设，把有效可复用经验与未来任务误差、示教需求的下降联系起来。代码与演示视频：https://tgl.changnie.top。",
     "keywords": [
@@ -389,6 +393,30 @@
       "少样本示教",
       "视觉-语言-动作模型"
     ],
+    "paper_keywords": [
+      "Training-free robot learning",
+      "agentic robotics",
+      "GPT-6 Astra",
+      "Codex",
+      "few-shot teaching",
+      "vision-language-action models",
+      "lifelong learning",
+      "skill composition",
+      "embodied intelligence"
+    ],
+    "paper_keywords_zh": [
+      "免训练机器人学习",
+      "智能体机器人学",
+      "GPT-6 Astra",
+      "Codex",
+      "少样本示教",
+      "视觉-语言-动作模型",
+      "终身学习",
+      "技能组合",
+      "具身智能"
+    ],
+    "context": "Teach and Grow sits inside embodied-intelligence and agentic-robotics research, and targets general robot manipulation. Work in this area is usually organized around vision-language-action (VLA) models, which map perception and language directly to control, and world-action models (WAM), which add learned physical dynamics. Both absorb a new capability by collecting more robot data and optimizing policy parameters. Robot foundation models supply the priors TGL depends on; TGL changes where new task knowledge is stored, and leaves the strength of those priors to the foundation models. Its neighbors therefore include few-shot and sparse-teaching methods, skill-composition and skill-library approaches, lifelong and continual learning, and agent-based robot control. The technical report's own keywords are listed above.",
+    "context_zh": "Teach and Grow 属于具身智能与智能体机器人学（agentic robotics）的研究脉络，面向通用机器人操作。这一领域通常围绕两类方法组织：视觉-语言-动作（VLA）模型把感知与语言直接映射为控制，世界动作模型（WAM）进一步引入学习到的物理动态。两者都通过采集更多机器人数据、优化策略参数来吸收新能力。机器人基础模型为 TGL 提供先验；TGL 改变的是新任务知识存放的位置，先验的强弱则仍由基础模型决定。因此它的邻近方向包括少样本与稀疏示教方法、技能组合与技能库方法、终身学习与持续学习，以及基于智能体的机器人控制。技术报告自身的关键词见上。",
     "terms": [
       {
         "name": "Teach-and-Grow Learning (TGL)",
@@ -473,33 +501,9 @@
       {
         "q": "Is the paper published?",
         "q_zh": "论文发表了吗？",
-        "a": "This is a technical report. No venue acceptance is claimed. The current manuscript is available as a PDF from this site, and the method implementation is maintained in the IRMVLab/TGL repository.",
-        "a_zh": "这是一份技术报告，不主张已被任何会议或期刊接收。当前稿件可以通过本站下载 PDF，方法实现维护在 IRMVLab/TGL 仓库中。"
+        "a": "Yes — a preprint is publicly available. The paper is on arXiv as 2608.17209 (DOI 10.48550/arXiv.2608.17209), first posted 17 August 2026. It is a technical report: no venue acceptance is claimed. The current manuscript PDF and the method implementation (IRMVLab/TGL) are linked from this site.",
+        "a_zh": "有公开预印本。论文已在 arXiv 发布，编号 2608.17209（DOI 10.48550/arXiv.2608.17209），首次发布于 2026 年 8 月 17 日。它是一份技术报告，不主张已被任何会议或期刊接收。当前稿件 PDF 与方法实现（IRMVLab/TGL）均可在本站链接到。"
       }
-    ],
-    "paper_keywords": [
-      "Training-free robot learning",
-      "agentic robotics",
-      "GPT-6 Astra",
-      "Codex",
-      "few-shot teaching",
-      "vision-language-action models",
-      "lifelong learning",
-      "skill composition",
-      "embodied intelligence"
-    ],
-    "paper_keywords_zh": [
-      "免训练机器人学习",
-      "智能体机器人学",
-      "GPT-6 Astra",
-      "Codex",
-      "少样本示教",
-      "视觉-语言-动作模型",
-      "终身学习",
-      "技能组合",
-      "具身智能"
-    ],
-    "context": "Teach and Grow sits inside embodied-intelligence and agentic-robotics research, and targets general robot manipulation. Work in this area is usually organized around vision-language-action (VLA) models, which map perception and language directly to control, and world-action models (WAM), which add learned physical dynamics. Both absorb a new capability by collecting more robot data and optimizing policy parameters. Robot foundation models supply the priors TGL depends on; TGL changes where new task knowledge is stored, and leaves the strength of those priors to the foundation models. Its neighbors therefore include few-shot and sparse-teaching methods, skill-composition and skill-library approaches, lifelong and continual learning, and agent-based robot control. The technical report's own keywords are listed above.",
-    "context_zh": "Teach and Grow 属于具身智能与智能体机器人学（agentic robotics）的研究脉络，面向通用机器人操作。这一领域通常围绕两类方法组织：视觉-语言-动作（VLA）模型把感知与语言直接映射为控制，世界动作模型（WAM）进一步引入学习到的物理动态。两者都通过采集更多机器人数据、优化策略参数来吸收新能力。机器人基础模型为 TGL 提供先验；TGL 改变的是新任务知识存放的位置，先验的强弱则仍由基础模型决定。因此它的邻近方向包括少样本与稀疏示教方法、技能组合与技能库方法、终身学习与持续学习，以及基于智能体的机器人控制。技术报告自身的关键词见上。"
+    ]
   }
 }

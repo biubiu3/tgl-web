@@ -61,6 +61,22 @@ The supplied description calls Goal task 07 a bottle-cap task. The local LIBERO 
 
 Images open in an accessible native dialog (Escape to close). Videos retain native controls, and content remains readable when JavaScript is disabled. All stages of the worked example remain visible without JavaScript. Reduced-motion preferences are respected.
 
+## Publication identity
+
+The paper is on arXiv as **2608.17209** (DOI `10.48550/arXiv.2608.17209`), first posted **17 August 2026**. These
+live in `content/site.json` under `seo` and are written into the citation tags, JSON-LD `identifier`/`sameAs`,
+`cite.bib`, `CITATION.cff`, `codemeta.json`, `project.json` and `/paper/` automatically. `arxiv_id` and `doi`
+were verified against the arXiv record on 2026-09-16; re-verify before changing them.
+
+Two dates are tracked separately and must not be conflated:
+
+- `paper_date` (`2026/08/17`) — the publication date. Feeds `citation_publication_date` and JSON-LD
+  `datePublished`. **Must stay `YYYY/MM/DD`** or Google Scholar mis-parses it.
+- `updated_iso` (`2026-09-16`) — last content change. Feeds sitemap `lastmod` and JSON-LD `dateModified`.
+
+The site's own abstract comes from the current manuscript PDF, which is newer than the arXiv posting; the two
+abstracts are worded differently. The site keeps its own and links out to arXiv rather than overwriting either.
+
 ## Generated sub-pages
 
 Beyond the two main pages, the build emits **16 supplementary pages** from `scripts/pages.py` — English and
@@ -76,6 +92,20 @@ Chinese for each, cross-linked by `hreflang` and by hand-written `related` lists
 | `/concepts/skill-library/` | The persistent validated-behaviour store. |
 | `/concepts/experience-memory/` | The contextual store of outcomes, diagnoses and repairs. |
 | `/concepts/retraining-tax/` | The named cost problem the paper frames. |
+| `/concepts/agentic-robotics/` | What it means for a robot to be agent-centered. |
+| `/concepts/general-robot-learning/` | Two routes to generality and what each costs. |
+| `/concepts/lifelong-robot-learning/` | The forgetting problem, and a mechanism that avoids it. |
+| `/concepts/vla-without-retraining/` | Adapting a VLA model with frozen weights. |
+| `/concepts/physical-ai/` | Physical AI and embodied AI, for manipulation. |
+| `/concepts/llm-robotics/` | What a large language model adds to a robot stack. |
+| `/concepts/gpt-robotic-arm/` | GPT-class models and robot arms. |
+| `/concepts/ai-agent-robotic-arm/` | The agent loop paired with a physical arm. |
+| `/concepts/` | Hub listing every concept page. |
+| `/glossary/` | Every term defined, aggregated from site.json. |
+| `/faq/` | Every question and answer, aggregated from site.json and the concept pages. |
+
+That is 19 pages per language, 41 HTML pages in total. Pages declare their own `parent` folder;
+`_page_dirs()` in `seo.py` reads it rather than inferring a path from the slug.
 
 Each page is written to stand alone — a definition, the mechanism, its relation to TGL, an FAQ where useful —
 so it can be quoted by a reader or an AI assistant without the surrounding page. `{home}`, `{cite}`,
@@ -92,8 +122,11 @@ project without scraping HTML. All of it is generated from `content/site.json`:
 | `robots.txt` | Per-crawler rules split by search / user-triggered / training role, plus `Content-Signal` |
 | `sitemap.xml` | Index over `sitemap-pages.xml`, `sitemap-images.xml`, `sitemap-videos.xml` |
 | `llms.txt` / `llms-full.txt` | LLM index, and the full text of every page in both languages |
-| `cite.bib` | BibTeX, linked from `/paper/` |
-| `index.md` / `zh/index.md` | Markdown mirrors of the two main pages (sub-pages get their own) |
+| `cite.bib` / `CITATION.cff` / `codemeta.json` | Citation and software metadata |
+| `results.json` / `results.csv` | The benchmark tables, so nothing has to be scraped from HTML |
+| `page-index.json` | Machine-readable inventory of every page |
+| `related-work.json` | Neighbouring directions, for entity association |
+| `index.md` / `zh/index.md` | Markdown mirrors of the two main pages, with YAML frontmatter (sub-pages get their own) |
 | `project.json` | Canonical facts, benchmark numbers and identifiers for agents |
 | `feed.xml`, `favicon.ico` | Change feed and root icon |
 
