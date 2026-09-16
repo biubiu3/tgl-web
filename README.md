@@ -100,12 +100,25 @@ Chinese for each, cross-linked by `hreflang` and by hand-written `related` lists
 | `/concepts/llm-robotics/` | What a large language model adds to a robot stack. |
 | `/concepts/gpt-robotic-arm/` | GPT-class models and robot arms. |
 | `/concepts/ai-agent-robotic-arm/` | The agent loop paired with a physical arm. |
+| `/research/agentic-robotics-2026/` | Research map of the 2026 agentic-robotics landscape. |
+| `/concepts/gpt-6-robotic-arm/` | GPT-6-class models driving a robot arm. |
+| `/concepts/agent-as-policy/` | Agent as Policy (AGP), with current examples and a comparison against TGL. |
+| `/concepts/coding-agent-robotics/` | Models that write and run robot programs. |
+| `/concepts/physical-in-context-learning/` | Adapting a robot from context without updating weights. |
+| `/concepts/general-purpose-agent-robot/` | One agent across many tasks, and what it does not retain. |
+| `/concepts/no-retraining-robot-learning/` | Acquiring tasks with frozen weights. |
+| `/concepts/robot-agent-memory/` | What a robot should keep from an interaction. |
+| `/concepts/runtime-reasoning-robotics/` | Deciding while the task is running. |
+| `/concepts/tool-use-robotics/` | Perception, grasping and motion as callable tools. |
 | `/concepts/` | Hub listing every concept page. |
 | `/glossary/` | Every term defined, aggregated from site.json. |
 | `/faq/` | Every question and answer, aggregated from site.json and the concept pages. |
 
-That is 19 pages per language, 41 HTML pages in total. Pages declare their own `parent` folder;
-`_page_dirs()` in `seo.py` reads it rather than inferring a path from the slug.
+That is 29 pages per language, 61 HTML pages in total. Pages declare their own `parent` folder;
+`_page_dirs()` in `seo.py` reads it rather than inferring a path from the slug. The 2026 pages live in
+`scripts/pages_hot.py`, which is wired into `build.py` the same way as `pages.py` and `pages_extra.py`;
+its module docstring records the sourcing rule — identifiers are resolved against the arXiv API, never
+inferred from a title search.
 
 Each page is written to stand alone — a definition, the mechanism, its relation to TGL, an FAQ where useful —
 so it can be quoted by a reader or an AI assistant without the surrounding page. `{home}`, `{cite}`,
@@ -125,7 +138,9 @@ project without scraping HTML. All of it is generated from `content/site.json`:
 | `cite.bib` / `CITATION.cff` / `codemeta.json` | Citation and software metadata |
 | `results.json` / `results.csv` | The benchmark tables, so nothing has to be scraped from HTML |
 | `page-index.json` | Machine-readable inventory of every page |
-| `related-work.json` | Neighbouring directions, for entity association |
+| `related-work.json` | Neighbouring directions under eight 2026 categories, each naming its page |
+| `data/agentic-robotics-2026.json` | The 2026 reading list; arXiv identifiers resolved against the API |
+| `data/search-targets.json` | Query to landing page, for assistants that start from a question |
 | `index.md` / `zh/index.md` | Markdown mirrors of the two main pages, with YAML frontmatter (sub-pages get their own) |
 | `project.json` | Canonical facts, benchmark numbers and identifiers for agents |
 | `feed.xml`, `favicon.ico` | Change feed and root icon |

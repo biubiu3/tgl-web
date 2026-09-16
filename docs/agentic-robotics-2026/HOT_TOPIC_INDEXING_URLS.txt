@@ -1,0 +1,29 @@
+# Hot-topic URLs added or updated in this round
+# Generated from the build; every URL is in sitemap-pages.xml.
+# Base: https://tgl.changnie.top/
+
+https://tgl.changnie.top/research/agentic-robotics-2026/
+    zh: https://tgl.changnie.top/zh/research/agentic-robotics-2026/
+https://tgl.changnie.top/concepts/gpt-6-robotic-arm/
+    zh: https://tgl.changnie.top/zh/concepts/gpt-6-robotic-arm/
+https://tgl.changnie.top/concepts/agent-as-policy/
+    zh: https://tgl.changnie.top/zh/concepts/agent-as-policy/
+https://tgl.changnie.top/concepts/coding-agent-robotics/
+    zh: https://tgl.changnie.top/zh/concepts/coding-agent-robotics/
+https://tgl.changnie.top/concepts/physical-in-context-learning/
+    zh: https://tgl.changnie.top/zh/concepts/physical-in-context-learning/
+https://tgl.changnie.top/concepts/general-purpose-agent-robot/
+    zh: https://tgl.changnie.top/zh/concepts/general-purpose-agent-robot/
+https://tgl.changnie.top/concepts/no-retraining-robot-learning/
+    zh: https://tgl.changnie.top/zh/concepts/no-retraining-robot-learning/
+https://tgl.changnie.top/concepts/robot-agent-memory/
+    zh: https://tgl.changnie.top/zh/concepts/robot-agent-memory/
+https://tgl.changnie.top/concepts/runtime-reasoning-robotics/
+    zh: https://tgl.changnie.top/zh/concepts/runtime-reasoning-robotics/
+https://tgl.changnie.top/concepts/tool-use-robotics/
+    zh: https://tgl.changnie.top/zh/concepts/tool-use-robotics/
+
+## Data endpoints
+
+https://tgl.changnie.top/data/agentic-robotics-2026.json
+https://tgl.changnie.top/data/search-targets.json

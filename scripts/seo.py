@@ -20,6 +20,33 @@ import re
 
 e = html.escape
 SITE_NAME = "Teach and Grow"
+
+# The 2026 agentic-robotics topics this site addresses, with the page that treats
+# each one. `menus` are used as JSON-LD `mentions` on pages where the topic is
+# named or linked, so the association is always backed by something visible.
+TOPIC_PAGES = [
+    ("Agentic robotics", "research/agentic-robotics-2026/"),
+    ("AI agent robotics", "concepts/ai-agent-robotic-arm/"),
+    ("Agent as Policy", "concepts/agent-as-policy/"),
+    ("Coding agents for robotics", "concepts/coding-agent-robotics/"),
+    ("Physical in-context learning", "concepts/physical-in-context-learning/"),
+    ("General-purpose agent robots", "concepts/general-purpose-agent-robot/"),
+    ("Robot agent memory", "concepts/robot-agent-memory/"),
+    ("Robot learning without retraining", "concepts/no-retraining-robot-learning/"),
+    ("Runtime reasoning robotics", "concepts/runtime-reasoning-robotics/"),
+    ("Tool-using robot agents", "concepts/tool-use-robotics/"),
+    ("GPT-6 robotics", "concepts/gpt-6-robotic-arm/"),
+    ("Frontier model robotics", "concepts/gpt-6-robotic-arm/"),
+    ("Robotic manipulation", "concepts/general-robot-learning/"),
+    ("Robot skill libraries", "concepts/skill-library/"),
+    ("Physical AI", "concepts/physical-ai/"),
+    ("Vision-language-action models", "concepts/vla-without-retraining/"),
+]
+
+
+def _topic_mentions(url, exclude=()):
+    return [{"@type": "Thing", "name": name, "url": url + path}
+            for name, path in TOPIC_PAGES if name not in exclude]
 SITE_NAME_ZH = "Teach and Grow（TGL）"
 
 
@@ -107,6 +134,8 @@ def page_jsonld(lang, url, data):
         "about": [{"@id": url + "#term-" + _slug(t["name"])} for t in seo["terms"]],
         "breadcrumb": {"@id": page_url + "#breadcrumb"},
         "primaryImageOfPage": {"@id": url + "#cover"},
+        # The topics the homepage names in its research-context bridge or links in its footer.
+        "mentions": _topic_mentions(url),
     })
 
     graph.append({
@@ -638,6 +667,8 @@ def write_crawler_files(out, url, data, rendered, sub_urls=None, all_pages=None)
         (url + "results.csv", "0.4", "monthly"),
         (url + "page-index.json", "0.4", "monthly"),
         (url + "related-work.json", "0.4", "monthly"),
+        (url + "data/agentic-robotics-2026.json", "0.4", "monthly"),
+        (url + "data/search-targets.json", "0.4", "monthly"),
         (url + "CITATION.cff", "0.4", "yearly"),
         (url + "codemeta.json", "0.4", "yearly"),
         (url + "feed.xml", "0.3", "weekly"),
@@ -815,6 +846,36 @@ def _write_project_json(out, url, data):
             for v in data["videos"]
         ],
         "search_context": seo["keywords"],
+        "topics": [
+            "agentic robotics",
+            "AI agent robotics",
+            "agent as policy",
+            "general-purpose agent robotics",
+            "GPT-6 robotics",
+            "GPT robotic arm",
+            "frontier model robotics",
+            "coding agent robotics",
+            "physical in-context learning",
+            "robot experience memory",
+            "robot skill library",
+            "runtime reasoning robotics",
+            "tool-using robot agents",
+            "robot learning without task-specific retraining",
+        ],
+        "research_context_2026": {
+            "hub": url + "research/agentic-robotics-2026/",
+            "pages": {
+                "GPT-6 robotic arm": url + "concepts/gpt-6-robotic-arm/",
+                "Agent as Policy": url + "concepts/agent-as-policy/",
+                "Coding agents for robotics": url + "concepts/coding-agent-robotics/",
+                "Physical in-context learning": url + "concepts/physical-in-context-learning/",
+                "General-purpose agent robot": url + "concepts/general-purpose-agent-robot/",
+                "Robot learning without retraining": url + "concepts/no-retraining-robot-learning/",
+                "Robot agent memory": url + "concepts/robot-agent-memory/",
+                "Runtime reasoning": url + "concepts/runtime-reasoning-robotics/",
+                "Tool use in robotics": url + "concepts/tool-use-robotics/",
+            },
+        },
         "entry_points": {
             "project_page_en": url,
             "project_page_zh": url + "zh/",
@@ -824,6 +885,8 @@ def _write_project_json(out, url, data):
             "llms_full": url + "llms-full.txt",
             "sitemap": url + "sitemap.xml",
             "project_json": url + "project.json",
+            "agentic_robotics_2026": url + "data/agentic-robotics-2026.json",
+            "search_targets": url + "data/search-targets.json",
         },
         "notice": ("This is a technical report. No venue acceptance is claimed. Benchmark rows other than TGL are "
                    "published literature values reproduced for comparison."),
@@ -905,13 +968,32 @@ def _write_llms(out, url, data, rendered, sub_urls=(), all_pages=None):
             lines.append(f"- [{label}]({u}): {blurb}")
     lines += [
         "",
+        "## Current agentic-robotics context",
+        "",
+        f"- [Agentic robotics in 2026]({url}research/agentic-robotics-2026/): the research map — frontier models driving robot arms, agents inside the execution loop, coding agents, physical in-context learning, robot memory, and where TGL fits.",
+        f"- [GPT-6 robotic arms]({url}concepts/gpt-6-robotic-arm/): GPT-6-class models as a reasoning layer for manipulation; the role GPT-6 Astra plays in TGL.",
+        f"- [Agent as Policy (AGP)]({url}concepts/agent-as-policy/): the agent inside the execution loop, with current examples and a comparison against TGL.",
+        f"- [Coding agents for robotics]({url}concepts/coding-agent-robotics/): models that write and run robot programs; Codex's role in TGL.",
+        f"- [Physical in-context learning]({url}concepts/physical-in-context-learning/): adapting a robot from context without updating weights.",
+        f"- [General-purpose agent robot]({url}concepts/general-purpose-agent-robot/): one agent across many tasks, and what it does not retain.",
+        f"- [Robot agent memory]({url}concepts/robot-agent-memory/): what a robot should keep from an interaction.",
+        f"- [Robot learning without retraining]({url}concepts/no-retraining-robot-learning/): acquiring tasks with frozen weights.",
+        f"- [Runtime reasoning]({url}concepts/runtime-reasoning-robotics/): deciding while the task is running.",
+        f"- [Tool use in robotics]({url}concepts/tool-use-robotics/): perception, grasping and motion as callable tools.",
+        f"- [2026 reading list]({url}data/agentic-robotics-2026.json): neighbouring work with arXiv identifiers, verified.",
+        f"- [Query to page map]({url}data/search-targets.json): the queries each page is written to answer.",
+        "",
         "## Related topics",
         "",
         "For retrieval association: training-free robot learning, robot learning without fine-tuning, agentic "
         "robotics, AI agent robot manipulation, embodied AI, embodied intelligence, vision-language-action models "
         "(VLA), world-action models (WAM), skill composition, few-shot teaching, sparse demonstrations, lifelong "
         "learning, continual learning, robot foundation models, GPT-6 Astra, Codex, LIBERO, LIBERO-Plus, Franka, "
-        "Contact-GraspNet, MPLib.",
+        "Contact-GraspNet, MPLib. "
+        "2026 agentic-robotics context: agent as policy (AGP), coding agent robotics, physical in-context "
+        "learning, single-video robot learning, robot experience memory, robot skill library, runtime reasoning "
+        "robotics, tool-using robot agents, frontier-model robot control, general-purpose agent robots, "
+        "robot learning without task-specific retraining.",
         "",
         "## Optional",
         "",
@@ -1047,12 +1129,30 @@ NAV = [("overview", "Problem", "问题"), ("origins", "Research path", "研究�
        ("resources", "Paper", "论文"), ("glossary", "Terms", "术语"), ("faq", "FAQ", "问答")]
 
 
+def _page_registry():
+    """Every sub-page by slug, so `related` resolves across all three page modules."""
+    import pages as PAGES
+    import pages_extra as PAGES_EXTRA
+    import pages_hot as PAGES_HOT
+    everything = [PAGES.PAPER, PAGES.RESEARCH_CONTEXT, PAGES_HOT.HUB]
+    everything += PAGES.CONCEPTS + PAGES_EXTRA.CONCEPTS + PAGES_HOT.CONCEPTS
+    return {p["slug"]: p for p in everything}
+
+
 def _subpage_jsonld(page, lang, url, data, page_url):
     """A self-contained graph for one sub-page. No cross-document @id references."""
     seo = data["seo"]
     zh = lang == "zh"
     body = page["zh" if zh else "en"]
-    node_type = "ScholarlyArticle" if page["slug"] == "paper" else "DefinedTerm"
+    # A page that declares its own @type is not a glossary entry: the 2026 research
+    # map is an Article, and tagging it DefinedTerm would invent a term.
+    declared = page.get("schema")
+    if page["slug"] == "paper":
+        node_type = "ScholarlyArticle"
+    elif declared and "DefinedTerm" not in declared:
+        node_type = declared[0]
+    else:
+        node_type = "DefinedTerm"
 
     graph = [
         {"@type": "WebSite", "@id": url + "#website", "url": url, "name": SITE_NAME,
@@ -1093,18 +1193,34 @@ def _subpage_jsonld(page, lang, url, data, page_url):
         if same:
             art["sameAs"] = same
         graph.append(art)
-    else:
-        # Concept pages describe a term the paper introduces.
-        term = next((t for t in seo["terms"]
-                     if _slug(t["name"]).startswith(page["slug"][:14])
-                     or page["slug"] in _slug(t["name"])), None)
+        # The article names its publisher, so the node has to exist in this document:
+        # the graph is self-contained and nothing may point outside it.
         graph.append({
-            "@type": "DefinedTerm", "@id": page_url + "#term",
-            "name": term["name_zh"] if (term and zh) else (term["name"] if term else body["h1"]),
-            "description": (term["definition_zh"] if (term and zh) else term["definition"]) if term else body["desc"],
-            "url": page_url,
-            "inDefinedTermSet": {"@type": "DefinedTermSet", "name": "Teach and Grow glossary",
-                                 "url": url + "#glossary"}})
+            "@type": "CollegeOrUniversity", "@id": url + "#sjtu",
+            "name": "Shanghai Jiao Tong University",
+            "alternateName": seo["institution_zh"],
+            "url": "https://en.sjtu.edu.cn/",
+            "department": {"@type": "Organization",
+                           "name": "School of Automation and Intelligent Sensing"},
+        })
+    else:
+        if node_type == "DefinedTerm":
+            # Concept pages describe a term the paper introduces.
+            term = next((t for t in seo["terms"]
+                         if _slug(t["name"]).startswith(page["slug"][:14])
+                         or page["slug"] in _slug(t["name"])), None)
+            node = {
+                "@type": "DefinedTerm", "@id": page_url + "#term",
+                "name": term["name_zh"] if (term and zh) else (term["name"] if term else body["h1"]),
+                "description": (term["definition_zh"] if (term and zh) else term["definition"]) if term else body["desc"],
+                "url": page_url}
+            # Only the six glossary terms claim membership of the term set; the wider
+            # 2026 pages define their own term on their own page and are not listed there.
+            if term:
+                node["inDefinedTermSet"] = {"@type": "DefinedTermSet",
+                                            "name": "Teach and Grow glossary",
+                                            "url": url + "#glossary"}
+            graph.append(node)
         graph.append({
             "@type": "Article", "@id": page_url + "#article",
             "headline": body["h1"], "description": body["desc"],
@@ -1112,6 +1228,17 @@ def _subpage_jsonld(page, lang, url, data, page_url):
             "dateModified": seo.get("updated_iso", seo["paper_date_iso"]),
             "mainEntityOfPage": {"@id": page_url + "#webpage"},
             "isPartOf": about, "author": _author_objects(data)})
+
+    if page.get("topics"):
+        graph.append({
+            "@type": "ItemList", "@id": page_url + "#topics",
+            "name": "Topics covered",
+            "itemListElement": [
+                {"@type": "ListItem", "position": i + 1,
+                 "item": {"@type": "Thing", "name": name, "url": url + path}}
+                for i, (name, path) in enumerate(
+                    (n, p) for n, p in TOPIC_PAGES if n in page["topics"])],
+        })
 
     if body.get("faq"):
         graph.append({
@@ -1267,8 +1394,7 @@ def render_subpage(page, lang, url, data, site):
         parts.append("</div>")
 
     if page.get("related"):
-        from pages import CONCEPTS, PAPER, RESEARCH_CONTEXT
-        index = {p["slug"]: p for p in [PAPER, RESEARCH_CONTEXT] + CONCEPTS}
+        index = _page_registry()
         parts.append(f'<h2>{T("Related pages","相关页面")}</h2><ul class="related-list">')
         for r in page["related"]:
             if r in index:
@@ -1414,7 +1540,9 @@ def _write_codemeta(out, url, data):
 # Derived index pages: /concepts/, /glossary/, /faq/
 # ---------------------------------------------------------------------------
 def _concept_index(all_pages):
-    return [p for p in all_pages if p["slug"] not in ("paper", "research-context")]
+    """Pages that live under /concepts/. The 2026 research map is an article under
+    /research/, so it stays out of the concept index and off the glossary path."""
+    return [p for p in all_pages if p.get("parent") == "concepts"]
 
 
 def render_index_pages(url, data, site, all_pages):
@@ -1627,8 +1755,189 @@ def _write_data_endpoints(out, url, data, sub_urls):
              "page": url + "#results", "relation": "evaluation suite"},
         ],
     }
+    # The 2026 query categories: each names the direction and the page that treats it.
+    related["categories"] = [
+        {"id": "frontier-model-robot-control", "name": "Frontier-model robot control",
+         "page": url + "concepts/gpt-6-robotic-arm/",
+         "relation_to_tgl": "the reasoning layer TGL leaves frozen"},
+        {"id": "agent-as-policy", "name": "Agent as Policy (AGP)",
+         "page": url + "concepts/agent-as-policy/",
+         "relation_to_tgl": "shared control locus; TGL adds persistence",
+         "reference": "Jia et al., arXiv:2609.12541 (2026)"},
+        {"id": "coding-agent-robotics", "name": "Coding agents for robotics",
+         "page": url + "concepts/coding-agent-robotics/",
+         "relation_to_tgl": "the role Codex plays in TGL"},
+        {"id": "physical-in-context-learning", "name": "Physical in-context learning",
+         "page": url + "concepts/physical-in-context-learning/",
+         "relation_to_tgl": "TGL writes the adaptation into stores that outlive the context"},
+        {"id": "robot-agent-memory", "name": "Robot agent memory",
+         "page": url + "concepts/robot-agent-memory/",
+         "relation_to_tgl": "Skill Library plus Experience Memory"},
+        {"id": "single-video-robot-learning", "name": "Single-video task acquisition",
+         "page": url + "concepts/physical-in-context-learning/",
+         "relation_to_tgl": "context supplies structure; TGL supplies the grounded realization"},
+        {"id": "agentic-vla", "name": "Agentic VLA",
+         "page": url + "concepts/vla-without-retraining/",
+         "relation_to_tgl": "TGL keeps the VLA fixed and stores new capability outside it"},
+        {"id": "physical-ai-agent", "name": "Physical AI agent",
+         "page": url + "concepts/physical-ai/",
+         "relation_to_tgl": "application framing"},
+    ]
+    for d in related["directions"]:
+        d.setdefault("categories", [c["id"] for c in related["categories"]
+                                    if c["page"] == d.get("page")])
     (out / "related-work.json").write_text(json.dumps(related, ensure_ascii=False, indent=2) + "\n",
                                             encoding="utf-8")
+
+    # /data/ — the 2026 agentic-robotics reading list and the query map.
+    _write_agentic_data(out, url)
+
+
+def _write_agentic_data(out, url):
+    """Two JSON files under /data/.
+
+    agentic-robotics-2026.json — the neighbouring work the 2026 pages cite. Every
+    arXiv identifier here was resolved against the arXiv API before it was written;
+    nothing is inferred from a search snippet or from a document's summary of it.
+
+    search-targets.json — query to landing page, so an assistant that has the query
+    can find the page without a site crawl.
+    """
+    from pathlib import Path
+    d = Path(out) / "data"
+    d.mkdir(parents=True, exist_ok=True)
+
+    landscape = {
+        "schema_version": "1.0",
+        "topic": "Agentic robotics, 2026",
+        "note": ("Neighbouring directions to this work, with identifiers verified against the arXiv API on "
+                 "2026-09-16. Listing is association, not a priority claim, and not a claim that this list is "
+                 "complete. Each entry links to the page that discusses it."),
+        "hub": url + "research/agentic-robotics-2026/",
+        "works": [
+            {"name": "Agent as Policy for Robotic Manipulation",
+             "abbreviation": "AGP",
+             "authors": "Mengzhao Jia, Yang Lin, Xixin Zhang, Zhihan Zhang, Xiaobai Liu, Meng Jiang",
+             "date": "2026-09-11",
+             "category": ["agent-as-policy", "frontier-model-robot-control", "robot manipulation"],
+             "identifier": {"scheme": "arXiv", "value": "2609.12541"},
+             "url": "https://arxiv.org/abs/2609.12541",
+             "contribution": ("Introduces Agent as Policy: a general-purpose agent drives a physical robot "
+                              "through task execution with no task-specific or environment-specific training, "
+                              "writing executable programs and revising on physical outcomes."),
+             "relation_to_tgl": ("Same control locus — an agent inside the execution loop. TGL adds the "
+                                 "persistence layer AGP does not define: a Skill Library and Experience Memory."),
+             "page": url + "concepts/agent-as-policy/"},
+            {"name": "Revisiting the \"Push-T\" Robot Manipulation Task with Agentic Robotics",
+             "authors": "Shuangyu Xie, Kaiyuan Chen, Ken Goldberg",
+             "date": "2026-08-18",
+             "category": ["coding-agent-robotics", "agent-as-policy"],
+             "identifier": {"scheme": "arXiv", "value": "2608.18227"},
+             "url": "https://arxiv.org/abs/2608.18227",
+             "contribution": ("An LLM coding agent is prompted to write a solution to Push-T with no "
+                              "demonstration data; the resulting code-as-policy is compared with a visuomotor "
+                              "imitation-learning policy."),
+             "relation_to_tgl": ("Evidence for the coding-agent-for-robots pattern TGL uses via Codex, and a "
+                                 "direct comparison between a written program and a learned policy."),
+             "page": url + "concepts/coding-agent-robotics/"},
+            {"name": "Agentic Robot: A Brain-Inspired Framework for Vision-Language-Action Models in Embodied Agents",
+             "authors": "Zhejian Yang, Yongchao Chen, Xueyang Zhou, Jiangyue Yan, Dingjie Song, Yinuo Liu, Yuting Li, Yu Zhang, Pan Zhou",
+             "date": "2025-05-29",
+             "category": ["agentic-vla", "agent-as-policy"],
+             "identifier": {"scheme": "arXiv", "value": "2505.23450"},
+             "url": "https://arxiv.org/abs/2505.23450",
+             "contribution": ("A coordination protocol (Standardized Action Procedure) for vision-language-action "
+                              "components, aimed at error accumulation and missing verification in long-horizon "
+                              "manipulation."),
+             "relation_to_tgl": ("Shares the diagnosis that execution needs verification. TGL makes the effect "
+                                 "check part of each Skill Block's contract rather than a layer around the policy."),
+             "page": url + "concepts/agent-as-policy/"},
+            {"name": "Code as Policies: Language Model Programs for Embodied Control",
+             "authors": "Jacky Liang, Wenlong Huang, Fei Xia, Peng Xu, Karol Hausman, Brian Ichter, Pete Florence, Andy Zeng",
+             "date": "2022-09-16",
+             "category": ["coding-agent-robotics", "frontier-model-robot-control"],
+             "identifier": {"scheme": "arXiv", "value": "2209.07753"},
+             "url": "https://arxiv.org/abs/2209.07753",
+             "project_url": "https://code-as-policies.github.io/",
+             "contribution": "The program-as-policy predecessor: a language model writes policy code over supplied perception primitives.",
+             "relation_to_tgl": "The lineage TGL's Codex role descends from; TGL adds validation and persistence around the written program.",
+             "page": url + "concepts/coding-agent-robotics/"},
+            {"name": "Do As I Can, Not As I Say: Grounding Language in Robotic Affordances",
+             "authors": "Michael Ahn et al.",
+             "date": "2022-04-04",
+             "category": ["frontier-model-robot-control"],
+             "identifier": {"scheme": "arXiv", "value": "2204.01691"},
+             "url": "https://arxiv.org/abs/2204.01691",
+             "project_url": "https://say-can.github.io/",
+             "contribution": "Grounds language-model plans in the affordances of the robot that will execute them.",
+             "relation_to_tgl": "The planning-side predecessor; TGL's grounding happens per subgoal against the current scene.",
+             "page": url + "concepts/agent-as-policy/"},
+            {"name": "ReKep: Spatio-Temporal Reasoning of Relational Keypoint Constraints for Robotic Manipulation",
+             "authors": "Wenlong Huang, Chen Wang, Yunzhu Li, Ruohan Zhang, Li Fei-Fei",
+             "date": "2024-09-03",
+             "category": ["frontier-model-robot-control", "agent-as-policy"],
+             "identifier": {"scheme": "arXiv", "value": "2409.01652"},
+             "url": "https://arxiv.org/abs/2409.01652",
+             "contribution": "Represents manipulation as relational keypoint constraints and solves them in a closed loop.",
+             "relation_to_tgl": "A different route to closed-loop reliability: constraints rather than validated reusable blocks.",
+             "page": url + "concepts/agent-as-policy/"},
+        ],
+        "excluded": ("Several widely-circulated 2026 items are omitted because they could not be resolved to a "
+                     "verifiable primary source at the time of writing. They are not listed speculatively."),
+    }
+    (d / "agentic-robotics-2026.json").write_text(
+        json.dumps(landscape, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+    def target(query, slug, note):
+        return {"query": query, "url": url + slug, "note": note}
+
+    targets = {
+        "schema_version": "1.0",
+        "updated_at": "2026-09-16",
+        "note": ("Search queries this site is written to answer, mapped to the page that answers them. "
+                 "Intended for assistants that receive a query and want the right page directly."),
+        "targets": [
+            target("GPT-6 robot arm", "concepts/gpt-6-robotic-arm/",
+                   "GPT-6-class models used as a reasoning layer for robot-arm manipulation; TGL uses GPT-6 Astra."),
+            target("GPT-6 robotic arm", "concepts/gpt-6-robotic-arm/", "Variant phrasing of the above."),
+            target("GPT-6 Astra robot", "concepts/gpt-6-robotic-arm/",
+                   "The specific model TGL's implementation uses."),
+            target("agent as policy robotics", "concepts/agent-as-policy/",
+                   "AGP: the agent inside the execution loop, per arXiv:2609.12541."),
+            target("agent as policy definition", "concepts/agent-as-policy/",
+                   "Short answer plus current examples and a comparison with TGL."),
+            target("coding agent robotics", "concepts/coding-agent-robotics/",
+                   "Coding agents writing and running robot programs; Codex in TGL."),
+            target("physical in-context learning robotics", "concepts/physical-in-context-learning/",
+                   "Adapting a robot from context without updating weights."),
+            target("general-purpose agent robot", "concepts/general-purpose-agent-robot/",
+                   "One agent across many tasks, and what it fails to retain."),
+            target("robot agent memory", "concepts/robot-agent-memory/",
+                   "What a robot should keep from an interaction; Skill Library vs Experience Memory."),
+            target("robot learning without retraining", "concepts/no-retraining-robot-learning/",
+                   "Acquiring tasks with frozen weights; the retraining tax."),
+            target("AI agent robotic arm", "concepts/ai-agent-robotic-arm/",
+                   "An AI agent driving a robot arm end to end."),
+            target("runtime reasoning robotics", "concepts/runtime-reasoning-robotics/",
+                   "Deciding while the task is running rather than before it."),
+            target("tool use robotics", "concepts/tool-use-robotics/",
+                   "Exposing perception, grasping and motion as callable tools for an agent."),
+            target("train a robot from one video", "concepts/physical-in-context-learning/",
+                   "What a single video can and cannot supply; the single-video case of in-context adaptation."),
+            target("agentic robotics 2026", "research/agentic-robotics-2026/",
+                   "The research map: frontier models, AGP, coding agents, physical ICL, memory, and where TGL fits."),
+            target("teach and grow robot learning", "concepts/teach-and-grow-learning/",
+                   "The TGL paradigm itself."),
+            target("training-free robot learning", "concepts/training-free-robot-learning/",
+                   "What training-free means here and what it does not mean."),
+            target("skill library robot", "concepts/skill-library/",
+                   "The persistent store of validated Skill Blocks."),
+        ],
+    }
+    (d / "search-targets.json").write_text(
+        json.dumps(targets, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    print(f"  wrote data/agentic-robotics-2026.json ({len(landscape['works'])} works) "
+          f"and data/search-targets.json ({len(targets['targets'])} queries)")
 
 
 def _knowledge_base(url, data):
@@ -1710,6 +2019,52 @@ Machine-readable: {url}results.json and {url}results.csv. Full tables are in the
         "law — that effective reusable experience X relates to falling future-task error and falling teaching demand, "
         "both approaching irreducible floors as power laws in X.")
 
+    sec("# 2026 Agentic Robotics Research Landscape",
+        "In 2026 frontier multimodal models became usable as a reasoning layer for physical manipulation, and "
+        "attention moved from \"can a model produce an action?\" to \"what does the robot retain?\". The pages "
+        "below map that landscape and place TGL in it. The research map is at "
+        f"{url}research/agentic-robotics-2026/; a machine-readable reading list with verified arXiv identifiers "
+        f"is at {url}data/agentic-robotics-2026.json.")
+
+    sec("# TGL and GPT-6-Class Robot Agents",
+        "GPT-6-class systems are used as a reasoning layer that interprets visual observations and invokes "
+        "robot-control tools or generated programs, rather than emitting joint commands. TGL's implementation "
+        f"uses OpenAI GPT-6 Astra in that role. See {url}concepts/gpt-6-robotic-arm/.")
+    sec("# TGL and Agent-as-Policy Robotics",
+        "Agent as Policy (AGP) places a general-purpose agent inside the execution loop rather than limiting it "
+        "to offline planning. Jia et al., arXiv:2609.12541 (2026), named and demonstrated it. TGL shares the "
+        "control locus and adds persistence: validated behaviour enters a Skill Library, and outcome, diagnosis "
+        f"and repair enter Experience Memory. See {url}concepts/agent-as-policy/.")
+    sec("# TGL and Coding Agents for Robots",
+        "Coding agents inspect state, call tools, write and run short programs, and read the result — a good fit "
+        "for the boundary between a frontier model and a robot's control stack. Codex plays this role in TGL. The "
+        "lineage runs through Code as Policies (Liang et al., arXiv:2209.07753); a 2026 example is Xie, Chen and "
+        f"Goldberg, arXiv:2608.18227. See {url}concepts/coding-agent-robotics/.")
+    sec("# TGL and Physical In-Context Learning",
+        "Physical in-context learning lets a robot adapt to a new task from context such as demonstrations or "
+        "video without updating model weights. TGL complements it by storing reusable behaviour and structured "
+        f"physical experience persistently, so learning accumulates across tasks. See {url}concepts/physical-in-context-learning/.")
+    sec("# TGL and Single-Video Robot Learning",
+        "The minimal case: one video, no teleoperation, no policy training. A video usually reveals the order of "
+        "operations while leaving the grasp unresolved — the same distinction TGL preserves between semantic "
+        f"structure and robot-specific grounding. See {url}concepts/physical-in-context-learning/.")
+    sec("# TGL and Robot Agent Memory",
+        "Robot-agent memory preserves information from earlier physical interaction for future decisions. In TGL "
+        "the split is explicit: the Skill Library holds reusable executable behaviour, while Experience Memory "
+        f"carries forward success, failure, diagnosis and repair. See {url}concepts/robot-agent-memory/.")
+    sec("# TGL and Runtime Physical Reasoning",
+        "The deciding component stays running while the task executes, so it can act on evidence that only exists "
+        "during execution. TGL gives it something to reason over: each Skill Block has an outcome test, and its "
+        f"result is what the agent reads. See {url}concepts/runtime-reasoning-robotics/.")
+    sec("# TGL and Tool-Using Robot Agents",
+        "Perception, grasping, motion and control are exposed as callable tools with documented effects, so the "
+        "agent decides what should happen while geometry and control stay in specialist components. A Skill Block "
+        f"declares which executors can realize it and what evidence counts as success. See {url}concepts/tool-use-robotics/.")
+    sec("# TGL and Frontier-Model Robotic Manipulation",
+        "Frontier models supply the reasoning; TGL changes where a newly acquired capability is stored, so a "
+        "repair is local rather than a policy-wide update. Robot learning without task-specific retraining is "
+        f"the claim: see {url}concepts/no-retraining-robot-learning/.")
+
     sec("# Research Context", seo.get("context", ""))
     for label, slug in (("## TGL and Agentic Robotics", "agentic-robotics"),
                         ("## TGL and General Robot Learning", "general-robot-learning"),
@@ -1730,6 +2085,8 @@ Machine-readable: {url}results.json and {url}results.csv. Full tables are in the
         f"Project (en): {url}", f"Project (zh): {url}zh/",
         f"Paper: {url}paper/", f"Research context: {url}research-context/",
         f"Concepts hub: {url}concepts/", f"Glossary: {url}glossary/", f"FAQ: {url}faq/",
+        f"Agentic robotics 2026: {url}research/agentic-robotics-2026/",
+        f"Reading list: {url}data/agentic-robotics-2026.json", f"Query map: {url}data/search-targets.json",
         f"Machines: {url}llms.txt · {url}llms-full.txt · {url}project.json · {url}results.json · "
         f"{url}page-index.json · {url}related-work.json · {url}sitemap.xml · {url}cite.bib · "
         f"{url}CITATION.cff · {url}codemeta.json · {url}robots.txt",

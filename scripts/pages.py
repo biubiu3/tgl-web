@@ -314,6 +314,12 @@ CONCEPTS = [
                  "Two persistent stores: a Skill Library of validated executable behaviours with their scopes and "
                  "contracts, and an Experience Memory recording the task, the selected blocks, observations, the "
                  "outcome, the diagnosis and any repair."),
+                ("How does TGL retain capabilities across tasks?",
+                 "By writing them into explicit stores instead of into weights. A behaviour that validates on cases "
+                 "kept separate from the teaching demonstrations is admitted to the Skill Library with its scope and "
+                 "outcome test; the conditions, outcome, diagnosis and repair of each attempt go to Experience "
+                 "Memory. Later tasks retrieve from both, so the second attempt at a task starts from what the "
+                 "first one established."),
             ],
             "keywords": ("Teach-and-Grow Learning, TGL, training-free robot learning, robot learning from "
                          "demonstrations, agent-centered robot learning, Skill Blocks, Skill Library, Experience "
@@ -361,6 +367,10 @@ CONCEPTS = [
                 ("一次 TGL 运行实际产出什么？",
                  "两份持久化存储：一份是 Skill Library，保存经验证的可执行行为及其适用范围与契约；"
                  "另一份是 Experience Memory，记录任务、所选技能块、观测、结果、诊断与修复。"),
+                ("TGL 如何让机器人持续积累技能？",
+                 "办法是把技能写进显式存储，而不是写进权重。在与示教演示分开的用例上通过验证的行为，"
+                 "带着适用范围与结果检验进入 Skill Library；每次尝试的条件、结果、诊断与修复进入 Experience Memory。"
+                 "后续任务从两者中检索，因此同一任务的第二次尝试会从第一次已经确立的东西开始。"),
             ],
             "keywords": ("Teach-and-Grow Learning, TGL, 免训练机器人学习, 从演示学习机器人技能, "
                          "以智能体为中心的机器人学习, Skill Block, 技能库, 经验记忆, 再训练成本, "

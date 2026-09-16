@@ -63,3 +63,6 @@ body{font-size:16px;line-height:1.9}body[data-lang=zh]{font-family:-apple-system
   .content .subpage-lede,.subpage-lede{font-size:17px;margin-bottom:32px}
   .subpage h2{margin-top:34px}
 }
+
+/* The short research-context bridge in the footer. */
+.research-bridge{max-width:78ch;margin:18px 0 6px;color:var(--muted,#5c6b68)}
