@@ -48,7 +48,7 @@ References: [GitHub custom domains](https://docs.github.com/en/pages/configuring
 - `content/site.json`: authors, exact benchmark values, paired-video descriptions in English and Chinese, and the `seo` block (paper date, abstract, keywords, glossary terms, FAQ). Every number and identifier used for metadata comes from here — do not hard-code a figure elsewhere.
 - `scripts/build.py`: bilingual page shell, videos, figures, and BibTeX.
 - `scripts/seo.py`: `<head>` metadata, the JSON-LD `@graph`, and every machine-readable file (robots.txt, sitemaps, llms.txt, llms-full.txt, Markdown mirrors, project.json, feed.xml).
-- `scripts/research.py`: the bilingual research narrative, abstract block, glossary, FAQ and interactive worked example.
+- `scripts/research.py`: the bilingual research narrative, abstract block, glossary, FAQ and worked example. The FAQ and the cost deep-dive render expanded (no accordions), so every text block is readable without interaction; only the four-stage worked example keeps its tab switch, and all four stages remain visible without JavaScript.
 - `assets/style.css`: responsive layout and styling.
 - `assets/app.js`: paired playback, filters, concept walkthrough, citation copy, figure lightbox.
 - `assets/videos/`: original MP4s, preserved byte for byte.
@@ -57,9 +57,30 @@ References: [GitHub custom domains](https://docs.github.com/en/pages/configuring
 - `assets/paper/teach-and-grow.pdf`: freshly built current 17-page manuscript.
 - `content/provenance.json`: paper/figure source hashes and the video-label correction.
 
-The supplied description calls Goal task 07 a bottle-cap task. The local LIBERO task map identifies it as `turn_on_the_stove`, consistent with inspection of both videos; the website uses that name. Paired video playback shares a start time but does not time-align actions or imply a speed comparison. The page presents five qualitative simulation examples, qualitative study descriptions, bounded observations, and clearly identified scaling hypotheses. It does not assert publication acceptance, complete paper reproduction from the public code snapshot, empirical readiness, or an independently replicated benchmark.
+The supplied description calls Goal task 07 a bottle-cap task. The local LIBERO task map identifies it as `turn_on_the_stove`, consistent with inspection of both videos; the website uses that name. Paired video playback shares a start time but does not time-align actions or imply a speed comparison. The page presents five qualitative simulation examples, the controlled-study counts reported in the paper's appendix (stage accuracy, effect confirmations, the 3/3 and 0/6-to-4/6 studies), bounded observations, and clearly identified scaling hypotheses. The full benchmark tables stay in the paper. It does not assert publication acceptance, complete paper reproduction from the public code snapshot, empirical readiness, or an independently replicated benchmark.
 
 Images open in an accessible native dialog (Escape to close). Videos retain native controls, and content remains readable when JavaScript is disabled. All stages of the worked example remain visible without JavaScript. Reduced-motion preferences are respected.
+
+## Generated sub-pages
+
+Beyond the two main pages, the build emits **16 supplementary pages** from `scripts/pages.py` — English and
+Chinese for each, cross-linked by `hreflang` and by hand-written `related` lists:
+
+| Path | Purpose |
+| --- | --- |
+| `/paper/` | Publication record: abstract, authors, keywords, BibTeX, links. Carries the Google Scholar metadata. |
+| `/research-context/` | How TGL sits among VLA models, world-action models, robot foundation models and agentic robotics. |
+| `/concepts/teach-and-grow-learning/` | The paradigm itself. |
+| `/concepts/training-free-robot-learning/` | The category, and what the term does and does not mean. |
+| `/concepts/skill-block/` | The unit of reusable behaviour and its contract. |
+| `/concepts/skill-library/` | The persistent validated-behaviour store. |
+| `/concepts/experience-memory/` | The contextual store of outcomes, diagnoses and repairs. |
+| `/concepts/retraining-tax/` | The named cost problem the paper frames. |
+
+Each page is written to stand alone — a definition, the mechanism, its relation to TGL, an FAQ where useful —
+so it can be quoted by a reader or an AI assistant without the surrounding page. `{home}`, `{cite}`,
+`{abstract}`, `{keywords}` and `{bibtex_key}` are placeholders resolved from `content/site.json` at build time,
+so no page hard-codes a path or a fact. The Chinese concept pages live under `/zh/concepts/`.
 
 ## Search and AI discovery
 
@@ -70,8 +91,9 @@ project without scraping HTML. All of it is generated from `content/site.json`:
 | --- | --- |
 | `robots.txt` | Per-crawler rules split by search / user-triggered / training role, plus `Content-Signal` |
 | `sitemap.xml` | Index over `sitemap-pages.xml`, `sitemap-images.xml`, `sitemap-videos.xml` |
-| `llms.txt` / `llms-full.txt` | LLM index, and the full English + Chinese text as Markdown |
-| `index.md` / `zh/index.md` | Markdown mirrors of the two pages |
+| `llms.txt` / `llms-full.txt` | LLM index, and the full text of every page in both languages |
+| `cite.bib` | BibTeX, linked from `/paper/` |
+| `index.md` / `zh/index.md` | Markdown mirrors of the two main pages (sub-pages get their own) |
 | `project.json` | Canonical facts, benchmark numbers and identifiers for agents |
 | `feed.xml`, `favicon.ico` | Change feed and root icon |
 

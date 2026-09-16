@@ -203,8 +203,8 @@
         "将汤罐放入篮子"
       ],
       "description": [
-        "The teacher provides the task structure: acquire the can, carry it, and release it in the basket. TGL approaches and grasps the can differently while preserving the intended outcome.",
-        "教师演示提供抓取、搬运和放入篮子的任务结构。TGL 采用不同的接近与抓取方式，完成相同的目标。"
+        "The teacher supplies the task structure: acquire the can, carry it, release it in the basket. TGL takes a different approach direction and a different grasp, and still reaches the same outcome. The strategy carried over; the motion did not.",
+        "教师演示提供任务结构：拿到罐子、搬运、放入篮子。TGL 采用了不同的接近方向与抓取方式，仍然完成同一结果——保留下来的是策略，而不是动作本身。"
       ],
       "watch": [
         "Compare the approach direction and gripper orientation before the lift.",
@@ -227,8 +227,8 @@
         "将碗放到盘子上"
       ],
       "description": [
-        "TGL grasps a different part of the bowl rim from the teacher. The reusable subgoal stays the same, while the physical grasp is grounded in the current scene.",
-        "TGL 抓取碗沿的位置与教师不同。可复用的子目标保持不变，实际抓取根据当前场景确定。"
+        "TGL grasps a different part of the bowl rim than the teacher does. The subgoal is unchanged; the contact point is recomputed from the scene in front of the robot.",
+        "TGL 抓取碗沿的位置与教师不同。子目标没有变，接触位置则是根据机器人当前看到的场景重新计算出来的。"
       ],
       "watch": [
         "Follow where the fingers contact the rim in each rollout.",
@@ -251,8 +251,8 @@
         "将柜子上的碗移到盘子上"
       ],
       "description": [
-        "The first grasp does not secure the bowl. In the supplied system rollout, TGL makes another attempt and completes the placement. This example illustrates feedback-driven recovery during execution.",
-        "第一次抓取未能夹稳碗。在这段系统视频中，TGL 再次尝试并完成放置，展示执行过程中的反馈纠错。"
+        "The first grasp does not secure the bowl. In this system rollout, TGL tries again and completes the placement: recovery driven by what the robot observed after the failed lift.",
+        "第一次抓取未能夹稳碗。在这段系统视频中，TGL 重新尝试并完成放置——一次由抬起失败后的观察所触发的恢复。"
       ],
       "watch": [
         "Watch the first lift attempt, then the renewed approach and successful transfer.",
@@ -275,8 +275,8 @@
         "将沙拉酱瓶放入篮子"
       ],
       "description": [
-        "The teacher and TGL both complete the bottle transfer. The pair shows the acquire, transport, and release stages on another object.",
-        "教师与 TGL 都完成瓶子的搬运。这组对照展示抓取、运输与释放的步骤如何应用于另一种物体。"
+        "The teacher and TGL both complete the bottle transfer. On a second object the same three stages hold: acquire, transport, release.",
+        "教师与 TGL 都完成瓶子的搬运。换一个物体之后，同样的三个阶段依然成立：获取、运输、释放。"
       ],
       "watch": [
         "Track the bottle from the initial grasp to release above the basket.",
@@ -299,8 +299,8 @@
         "旋转旋钮，打开炉灶"
       ],
       "description": [
-        "This task requires an interaction with the stove knob rather than moving an object to a new location. Both clips show the robot approaching and turning the control.",
-        "这项任务需要操作炉灶旋钮，而非搬运物体。两段视频展示机器人接近并旋转旋钮的过程。"
+        "Here the goal is not a change of location. The robot has to reach the stove knob and turn it, and both clips follow the approach and the rotation itself.",
+        "这项任务的目标不是改变物体的位置，而是操作炉灶旋钮。两段视频都记录了接近旋钮并把它转动的过程。"
       ],
       "watch": [
         "Focus on the gripper–knob contact and the resulting rotation.",
@@ -320,8 +320,8 @@
     "bibtex_key": "nie2026teachandgrow",
     "arxiv_id": null,
     "doi": null,
-    "abstract": "Vision-language-action (VLA) and world-action models often absorb unfamiliar manipulation tasks through additional robot data collection and policy optimization. This recurring retraining burden slows the acquisition of new behavior. We present Teach-and-Grow Learning (TGL), a training-free architecture that turns a few successful demonstrations into reusable robot skills. Task acquisition requires no gradient updates, fine-tuning, or reinforcement learning: pretrained model weights remain fixed as the robot expands its explicit knowledge. Our implementation uses OpenAI GPT-6 Astra for multimodal reasoning and Codex to connect the agent to robot tools. The agent identifies shared subgoals across demonstrations, expresses them as closed-loop Skill Blocks, and grounds each block in the current scene. Physical feedback guides subsequent actions and recovery. Verified behaviors enter a persistent Skill Library, while Experience Memory records the conditions and repairs that inform later decisions. TGL achieves 99.9% mean success across four LIBERO suites and 92.4% across seven LIBERO-Plus perturbation categories. Controlled studies show that taught blocks persist and improve related-task execution with the same model weights and executors. We further formulate a scaling hypothesis relating effective reusable experience to declining future-task error and teaching demand.",
-    "abstract_zh": "视觉-语言-动作（VLA）与世界动作模型通常需要通过追加机器人数据采集与策略优化，才能吸收不熟悉的操作任务；这种反复出现的再训练负担拖慢了新行为的获得。我们提出 Teach-and-Grow Learning（TGL），一种免训练架构，把少量成功演示转化为可复用的机器人技能。任务获取不需要梯度更新、微调或强化学习：预训练模型权重保持固定，机器人在此前提下扩展其显式知识。我们的实现使用 OpenAI GPT-6 Astra 进行多模态推理，并用 Codex 把智能体与机器人工具连接起来。智能体识别演示之间的共享子目标，将其表达为闭环的 Skill Block，并把每个块落地到当前场景。物理反馈引导后续动作与恢复。经验证的行为进入持久化的 Skill Library，Experience Memory 记录影响后续决策的条件与修复。TGL 在四个 LIBERO 套件上取得 99.9% 的平均成功率，在七个 LIBERO-Plus 扰动类别上取得 92.4%。",
+    "abstract": "Vision-language-action (VLA) and world-action models typically absorb unfamiliar manipulation tasks through additional robot data collection and policy optimization. This recurring retraining burden slows the acquisition of new behavior. We present Teach-and-Grow Learning (TGL), a training-free architecture that turns a few successful demonstrations into reusable robot skills. Task acquisition requires no gradient updates, fine-tuning, or reinforcement learning: pretrained model weights remain fixed as the robot expands its explicit knowledge. Our implementation uses OpenAI GPT-6 Astra for multimodal reasoning and Codex to connect the agent to robot tools. The agent identifies subgoals shared across demonstrations, expresses them as closed-loop Skill Blocks, and grounds each block in the current scene. Physical feedback guides the next action and any recovery. Verified behaviors enter a persistent Skill Library; Experience Memory records the conditions and repairs that inform later decisions. TGL reaches 99.9% mean success on four LIBERO suites and 92.4% on seven LIBERO-Plus perturbation categories. Controlled studies show that taught blocks persist and improve related-task execution under the same model weights and executors. We further formulate a scaling hypothesis that relates effective reusable experience to falling future-task error and teaching demand. Code and demonstration videos: https://tgl.changnie.top.",
+    "abstract_zh": "视觉-语言-动作（VLA）与世界动作模型通常需要通过追加机器人数据采集与策略优化，才能吸收不熟悉的操作任务；这种反复出现的再训练负担拖慢了新行为的获得。我们提出 Teach-and-Grow Learning（TGL），一种免训练架构，把少量成功演示转化为可复用的机器人技能。获取新任务不需要梯度更新、微调或强化学习：预训练模型权重保持固定，机器人在此前提下扩展其显式知识。我们的实现使用 OpenAI GPT-6 Astra 进行多模态推理，并用 Codex 把智能体与机器人工具连接起来。智能体识别演示之间共享的子目标，将其表达为闭环的 Skill Block，并把每个块落实到当前场景。物理反馈引导下一步动作与恢复。经验证的行为进入持久化的 Skill Library；Experience Memory 记录影响后续决策的条件与修复。TGL 在四个 LIBERO 套件上达到 99.9% 的平均成功率，在七个 LIBERO-Plus 扰动类别上达到 92.4%。受控研究显示，在模型权重与执行器相同的条件下，已习得的技能块能够保留并改善相关任务的执行。我们还提出一个缩放假设，把有效可复用经验与未来任务误差、示教需求的下降联系起来。代码与演示视频：https://tgl.changnie.top。",
     "keywords": [
       "Teach and Grow",
       "TGL",
@@ -393,8 +393,8 @@
       {
         "name": "Teach-and-Grow Learning (TGL)",
         "name_zh": "Teach-and-Grow Learning（TGL）",
-        "definition": "A training-free robot-learning architecture that converts a few successful demonstrations into reusable, verifiable skills while pretrained model weights remain fixed.",
-        "definition_zh": "一种免训练的机器人学习架构：在预训练模型权重保持固定的前提下，把少量成功演示转化为可复用、可验证的技能。"
+        "definition": "A training-free robot-learning architecture that converts a few successful demonstrations into reusable, verifiable skills while pretrained model weights remain fixed. New task knowledge lives in the skill and memory stores, not in the weights.",
+        "definition_zh": "一种免训练的机器人学习架构：在预训练模型权重保持固定的前提下，把少量成功演示转化为可复用、可验证的技能。新任务知识存放在技能与记忆存储中，而不是写进权重。"
       },
       {
         "name": "Training-free robot learning",
@@ -405,14 +405,14 @@
       {
         "name": "Skill Block",
         "name_zh": "Skill Block（技能块）",
-        "definition": "The unit of reusable robot behavior in TGL: a goal, a reusable strategy, supported conditions, compatible executors, and an outcome test. The semantic effect is retained; the physical realization is recomputed from the current scene.",
-        "definition_zh": "TGL 中可复用机器人行为的单元：目标、可复用策略、适用条件、兼容执行器与结果检验。语义效果被保留，物理实现则根据当前场景重新计算。"
+        "definition": "The unit of reusable robot behavior in TGL: a goal, a reusable strategy, supported conditions, compatible executors, and an outcome test. The semantic effect is retained; the physical realization is recomputed from the current scene. Success is decided by that effect, so a closed gripper does not by itself pass an acquisition block.",
+        "definition_zh": "TGL 中可复用机器人行为的单元：目标、可复用策略、适用条件、兼容执行器与结果检验。语义效果被保留，物理实现则根据当前场景重新计算。判定成功的是这个效果本身，因此夹爪闭合并不能让一个抓取类技能块自动通过验证。"
       },
       {
         "name": "Skill Library",
         "name_zh": "Skill Library（技能库）",
-        "definition": "The persistent store of validated Skill Blocks, including their scopes, contracts, and executor compatibility. It grows after validation, not after every episode.",
-        "definition_zh": "经验证的 Skill Block 的持久化存储，包含其适用范围、契约与执行器兼容性。它在验证之后增长，而不是每个回合都增长。"
+        "definition": "The persistent store of validated Skill Blocks, including their scopes, contracts, and executor compatibility. It grows after validation, not after every episode, so a stored file is not the same as a retained behavior.",
+        "definition_zh": "经验证的 Skill Block 的持久化存储，包含其适用范围、契约与执行器兼容性。它在验证之后才增长，而非每个回合都增长；因此保存了文件，也不等于保留了行为能力。"
       },
       {
         "name": "Experience Memory",
@@ -431,8 +431,8 @@
       {
         "q": "What is Teach and Grow?",
         "q_zh": "Teach and Grow 是什么？",
-        "a": "Teach and Grow (TGL) is a training-free architecture for general robot learning. A pretrained AI agent turns a few successful demonstrations into explicit, reusable skills; the robot acquires new manipulation tasks while its pretrained model weights stay fixed.",
-        "a_zh": "Teach and Grow（TGL）是一种面向通用机器人学习的免训练架构。预训练的 AI 智能体把少量成功演示转化为显式、可复用的技能，机器人在预训练模型权重保持固定的前提下获得新的操作任务能力。"
+        "a": "Teach and Grow (TGL) is a training-free architecture for general robot learning. A pretrained AI agent turns a few successful demonstrations into explicit, reusable skills, so the robot acquires new manipulation tasks while its pretrained model weights stay fixed. The rest of this page describes how the agent, the Skill Blocks, and the robot-side executors divide that work.",
+        "a_zh": "Teach and Grow（TGL）是一种面向通用机器人学习的免训练架构。预训练 AI 智能体把少量成功演示转化为显式、可复用的技能，机器人在预训练模型权重保持固定的前提下获得新的操作任务能力。本页其余部分说明智能体、Skill Block 与机器人侧执行器如何分工。"
       },
       {
         "q": "What does “training-free” mean here exactly?",
@@ -441,22 +441,28 @@
         "a_zh": "指获取当前任务的过程中不进行梯度更新、不做微调、也不包含强化学习阶段。智能体及其专用模型本身可以是预训练好的；任务获取过程中改变的是显式的技能与记忆状态，而不是权重。"
       },
       {
+        "q": "What is the retraining tax?",
+        "q_zh": "什么是“再训练成本”（retraining tax）？",
+        "a": "It is the recurring cost of repairing robot behavior through a policy update: new data collection, another optimization run, and regression checks on everything the policy already supported. It is called a tax because the cost returns with every new task, sensor, or gripper, and grows with the amount of behavior that already works.",
+        "a_zh": "指通过策略更新修复机器人行为所付出的反复代价：新增数据采集、又一轮优化，以及对策略此前支持过的所有行为的回归检查。它之所以被称为“税”，是因为每遇到新任务、新传感器或新夹爪，这笔代价都会再次出现，并且随已有能力的增多而增大。"
+      },
+      {
         "q": "How is this different from training a VLA or world-action model?",
         "q_zh": "这与训练 VLA 或世界动作模型有什么不同？",
-        "a": "VLA and world-action models absorb a new behavior by collecting more robot data and optimizing policy parameters. TGL instead repairs and extends behavior through explicit Skill Blocks, and calls the recurring cost of the parameter route the retraining tax: new data collection, optimization, and regression checking against everything the policy previously supported.",
-        "a_zh": "VLA 与世界动作模型通过采集更多机器人数据、优化策略参数来吸收新行为。TGL 则通过显式的 Skill Block 来修复和扩展行为，并把参数路线带来的反复成本称为“再训练成本”：新增数据采集、优化，以及对策略此前已支持能力的回归验证。"
+        "a": "VLA and world-action models absorb a new behavior by collecting more robot data and optimizing policy parameters. TGL repairs and extends behavior through explicit Skill Blocks instead. A learned policy can still take part: it may act as the executor inside a block, or later serve as a student of verified trajectories.",
+        "a_zh": "VLA 与世界动作模型通过采集更多机器人数据、优化策略参数来吸收新行为。TGL 则通过显式的 Skill Block 来修复和扩展行为。学习策略依然可以参与其中：它既可以充当技能块内部的执行器，也可以在今后作为接收已验证轨迹的学生。"
       },
       {
         "q": "What is a Skill Block?",
         "q_zh": "什么是 Skill Block？",
-        "a": "A Skill Block is the unit of reusable behavior: a goal, a reusable strategy, supported conditions, compatible executors, and an outcome test. The semantic effect is what gets retained, while the physical realization — object bindings, grasp geometry, collision-free motion — is recomputed from the current scene.",
-        "a_zh": "Skill Block 是可复用行为的单元：包含目标、可复用策略、适用条件、兼容执行器与结果检验。被保留下来的是语义效果，而物理实现——物体绑定、抓取几何、无碰撞运动——则根据当前场景重新计算。"
+        "a": "A Skill Block is the unit of reusable behavior: a goal, a reusable strategy, supported conditions, compatible executors, and an outcome test. The semantic effect is what gets retained, while the physical realization (object bindings, grasp geometry, collision-free motion) is recomputed from the current scene. An acquisition block, for instance, is never satisfied by a closed gripper alone.",
+        "a_zh": "Skill Block 是可复用行为的单元：包含目标、可复用策略、适用条件、兼容执行器与结果检验。被保留下来的是语义效果，而物理实现（物体绑定、抓取几何、无碰撞运动）则根据当前场景重新计算。例如，抓取类技能块不会仅凭“夹爪已闭合”就判定成功。"
       },
       {
         "q": "What results does TGL report?",
         "q_zh": "TGL 报告了哪些结果？",
-        "a": "The technical report reports 99.9% mean success across four LIBERO suites and 92.4% mean success across seven LIBERO-Plus perturbation categories. Controlled studies report that taught blocks persist and improve related-task execution with the same model weights and executors. Full comparison tables and protocols are in the paper.",
-        "a_zh": "技术报告报告了四个 LIBERO 套件上 99.9% 的平均成功率，以及七个 LIBERO-Plus 扰动类别上 92.4% 的平均成功率。受控研究显示，在模型权重与执行器相同的条件下，已习得的技能块可以保留并改善相关任务的执行。完整的对比表与实验协议见论文。"
+        "a": "The technical report reports 99.9% mean success across four LIBERO suites and 92.4% mean success across seven LIBERO-Plus perturbation categories. Controlled studies report that taught blocks persist and improve related-task execution with the same model weights and executors. The comparison tables, protocols, and caveats are in the paper.",
+        "a_zh": "技术报告报告了四个 LIBERO 套件上 99.9% 的平均成功率，以及七个 LIBERO-Plus 扰动类别上 92.4% 的平均成功率。受控研究显示，在模型权重与执行器相同的条件下，已习得的技能块可以保留并改善相关任务的执行。完整的对比表、实验协议与适用边界见论文。"
       },
       {
         "q": "What robot and agent does the implementation use?",
@@ -493,7 +499,7 @@
       "技能组合",
       "具身智能"
     ],
-    "context": "Teach and Grow sits inside embodied-intelligence and agentic-robotics research, and targets general robot manipulation. Work in this area is usually organised around vision-language-action (VLA) models, which map perception and language directly to control, and world-action models (WAM), which add learned physical dynamics. Both absorb a new capability by collecting more robot data and optimising policy parameters. Robot foundation models supply the priors TGL relies on; TGL changes where new task knowledge is stored, not how strong those priors are. Its neighbours therefore include few-shot and sparse-teaching methods, skill-composition and skill-library approaches, lifelong and continual learning, and agent-based robot control. The technical report's own keywords are listed above.",
-    "context_zh": "Teach and Grow 属于具身智能与智能体机器人学（agentic robotics）的研究脉络，面向通用机器人操作。这一领域通常围绕两类方法组织：视觉-语言-动作（VLA）模型把感知与语言直接映射为控制，世界动作模型（WAM）进一步引入学习到的物理动态。两者都通过采集更多机器人数据、优化策略参数来吸收新能力。机器人基础模型为 TGL 提供先验；TGL 改变的是新任务知识存放的位置，而不是先验的强弱。因此它的邻近方向包括少样本与稀疏示教方法、技能组合与技能库方法、终身学习与持续学习，以及基于智能体的机器人控制。技术报告自身的关键词见上。"
+    "context": "Teach and Grow sits inside embodied-intelligence and agentic-robotics research, and targets general robot manipulation. Work in this area is usually organized around vision-language-action (VLA) models, which map perception and language directly to control, and world-action models (WAM), which add learned physical dynamics. Both absorb a new capability by collecting more robot data and optimizing policy parameters. Robot foundation models supply the priors TGL depends on; TGL changes where new task knowledge is stored, and leaves the strength of those priors to the foundation models. Its neighbors therefore include few-shot and sparse-teaching methods, skill-composition and skill-library approaches, lifelong and continual learning, and agent-based robot control. The technical report's own keywords are listed above.",
+    "context_zh": "Teach and Grow 属于具身智能与智能体机器人学（agentic robotics）的研究脉络，面向通用机器人操作。这一领域通常围绕两类方法组织：视觉-语言-动作（VLA）模型把感知与语言直接映射为控制，世界动作模型（WAM）进一步引入学习到的物理动态。两者都通过采集更多机器人数据、优化策略参数来吸收新能力。机器人基础模型为 TGL 提供先验；TGL 改变的是新任务知识存放的位置，先验的强弱则仍由基础模型决定。因此它的邻近方向包括少样本与稀疏示教方法、技能组合与技能库方法、终身学习与持续学习，以及基于智能体的机器人控制。技术报告自身的关键词见上。"
   }
 }

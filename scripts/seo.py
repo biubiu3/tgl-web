@@ -584,7 +584,7 @@ def _sitemap_urlset(entries, extra_ns=""):
     )
 
 
-def write_crawler_files(out, url, data, rendered):
+def write_crawler_files(out, url, data, rendered, sub_urls=None):
     """Write every root-level machine-readable file.
 
     `out`       dist root (where robots.txt and the sitemap index live)
@@ -605,6 +605,10 @@ def write_crawler_files(out, url, data, rendered):
     page_rows = [
         (url, "1.0", "monthly"),
         (url + "zh/", "0.9", "monthly"),
+    ]
+    for u in (sub_urls or []):
+        page_rows.append((u, "0.7" if "/paper/" in u or u.endswith("/paper/") else "0.6", "monthly"))
+    page_rows += [
         (url + "llms.txt", "0.5", "monthly"),
         (url + "llms-full.txt", "0.5", "monthly"),
         (url + "index.md", "0.5", "monthly"),
@@ -699,8 +703,9 @@ def write_crawler_files(out, url, data, rendered):
         f"  <sitemap><loc>{url}sitemap-videos.xml</loc><lastmod>{date}</lastmod></sitemap>\n"
         "</sitemapindex>\n", encoding="utf-8")
 
+    _write_cite_bib(out, url, data)
     _write_project_json(out, url, data)
-    _write_llms(out, url, data, rendered)
+    _write_llms(out, url, data, rendered, sub_urls or [])
     _write_mirrors(out, url, data, rendered)
     _write_feed(out, url, data)
 
@@ -737,7 +742,7 @@ def _write_project_json(out, url, data):
         "contributions": {
             "paradigm": "Teach-and-Grow Learning (TGL)",
             "claim": ("A robot acquires a new executable capability while keeping its pretrained model weights "
-                      "fixed — no gradient update, fine-tuning, or reinforcement-learning stage."),
+                      "fixed: no gradient update, no fine-tuning, and no reinforcement-learning stage."),
             "components": ["Skill Block", "Skill Library", "Experience Memory", "retraining tax"],
             "named_problem": {
                 "name": "retraining tax",
@@ -796,7 +801,7 @@ def _write_project_json(out, url, data):
 # ---------------------------------------------------------------------------
 # llms.txt / llms-full.txt
 # ---------------------------------------------------------------------------
-def _write_llms(out, url, data, rendered):
+def _write_llms(out, url, data, rendered, sub_urls=()):
     seo = data["seo"]
     summary = (
         f"> Teach and Grow (TGL) is an agent-centered, training-free architecture for general robot learning, "
@@ -824,7 +829,7 @@ def _write_llms(out, url, data, rendered):
         "",
         "## Primary",
         "",
-        f"- [Project page (English)]({url}): Problem, research path, Skill Block architecture, worked example, demonstrations and results.",
+        f"- [Project page (English)]({url}): The problem, the research path, the Skill Block architecture, a worked example, paired demonstrations, and the controlled-study results.",
         f"- [项目主页（中文）]({url}zh/): TGL 的中文说明、方法、演示与结果。",
         f"- [Canonical fact file]({url}project.json): Every number and identifier as JSON.",
         f"- [Full content as Markdown]({url}llms-full.txt): Complete English + Chinese page text with a glossary and FAQ.",
@@ -837,13 +842,28 @@ def _write_llms(out, url, data, rendered):
         "## Code and videos",
         "",
         f"- [Method implementation ({seo['code_url']})]({seo['code_url']}): reference implementation maintained by IRMV Lab.",
-        f"- [Ten paired demonstrations]({url}#demos): five LIBERO tasks, teacher and TGL rollouts side by side.",
+        f"- [Ten paired demonstrations]({url}#demos): five LIBERO tasks drawn from the Object, Spatial, and Goal suites, teacher and TGL rollouts side by side.",
         "",
         "## Key concepts",
         "",
     ]
     for t in seo["terms"]:
         lines.append(f"- **{t['name']}**: {t['definition']}")
+    if sub_urls:
+        lines += ["", "## Pages", ""]
+        for u in sub_urls:
+            if "/zh/" in u:
+                continue
+            slug = u.rstrip("/").rsplit("/", 1)[-1]
+            try:
+                import pages as _P
+                idx = {q["slug"]: q for q in [_P.PAPER, _P.RESEARCH_CONTEXT] + _P.CONCEPTS}
+                pg = idx.get(slug)
+                label = pg["en"]["h1"] if pg else slug
+                blurb = pg["en"]["desc"] if pg else ""
+            except Exception:
+                label, blurb = slug, ""
+            lines.append(f"- [{label}]({u}): {blurb}")
     lines += [
         "",
         "## Related topics",
@@ -870,12 +890,23 @@ def _write_llms(out, url, data, rendered):
         "",
         f"Source: {url} · Code: {seo['code_url']} · Facts: {url}project.json",
         "",
-        "=" * 72, "PART 1 — ENGLISH", "=" * 72, "",
+        "=" * 72, "PART 1 — MAIN PAGE (ENGLISH)", "=" * 72, "",
         rendered["en"]["md"],
         "",
-        "=" * 72, "PART 2 — 简体中文", "=" * 72, "",
+        "=" * 72, "PART 2 — MAIN PAGE (简体中文)", "=" * 72, "",
         rendered["zh"]["md"],
     ]
+    md_dir = out if hasattr(out, "joinpath") else None
+    for want_zh in (False, True):
+        label = "简体中文" if want_zh else "ENGLISH"
+        parts += ["", "=" * 72, f"SUB-PAGES — {label}", "=" * 72, ""]
+        for u in sub_urls:
+            rel = u[len(url):].rstrip("/")
+            if bool(rel.startswith("zh/")) != want_zh:
+                continue
+            md_path = (out / rel / "index.md") if md_dir else None
+            if md_path and md_path.exists():
+                parts += ["\n---\n", md_path.read_text(encoding="utf-8")]
     (out / "llms-full.txt").write_text("\n".join(parts) + "\n", encoding="utf-8")
 
 
@@ -948,3 +979,263 @@ def _write_feed(out, url, data):
         f"  <updated>{date}T00:00:00Z</updated>\n"
         f"  <author><name>{html.escape(data['authors'][0])}</name></author>\n"
         + body + "\n</feed>\n", encoding="utf-8")
+
+
+# ---------------------------------------------------------------------------
+# sub-pages (/paper/, /research-context/, /concepts/<slug>/)
+# ---------------------------------------------------------------------------
+NAV = [("overview", "Problem", "问题"), ("origins", "Research path", "研究路线"),
+       ("idea", "Idea", "思路"), ("method", "Method", "方法"), ("demos", "Videos", "演示"),
+       ("resources", "Paper", "论文"), ("glossary", "Terms", "术语"), ("faq", "FAQ", "问答")]
+
+
+def _subpage_jsonld(page, lang, url, data, page_url):
+    """A self-contained graph for one sub-page. No cross-document @id references."""
+    seo = data["seo"]
+    zh = lang == "zh"
+    body = page["zh" if zh else "en"]
+    node_type = "ScholarlyArticle" if page["slug"] == "paper" else "DefinedTerm"
+
+    graph = [
+        {"@type": "WebSite", "@id": url + "#website", "url": url, "name": SITE_NAME,
+         "alternateName": ["TGL", "Teach-and-Grow Learning"], "inLanguage": ["en", "zh-Hans"]},
+        {"@type": "WebPage", "@id": page_url + "#webpage", "url": page_url,
+         "name": body["title"], "description": body["desc"],
+         "isPartOf": {"@id": url + "#website"},
+         "inLanguage": "zh-Hans" if zh else "en",
+         "dateModified": seo["paper_date_iso"],
+         "breadcrumb": {"@id": page_url + "#breadcrumb"}},
+        {"@type": "BreadcrumbList", "@id": page_url + "#breadcrumb",
+         "itemListElement": [
+             {"@type": "ListItem", "position": 1, "name": SITE_NAME, "item": url},
+             {"@type": "ListItem", "position": 2, "name": body["h1"], "item": page_url}]},
+    ]
+
+    about = {"@id": url + "#website"}
+    if node_type == "ScholarlyArticle":
+        art = {"@type": "ScholarlyArticle", "@id": page_url + "#article",
+               "headline": data["title"], "name": data["title"],
+               "abstract": seo["abstract_zh" if zh else "abstract"],
+               "author": _author_objects(data),
+               "datePublished": seo["paper_date_iso"],
+               "isPartOf": about, "url": page_url,
+               "encoding": {"@type": "MediaObject",
+                            "contentUrl": url + "assets/paper/teach-and-grow.pdf",
+                            "encodingFormat": "application/pdf"},
+               "publisher": {"@id": url + "#sjtu"}}
+        if seo.get("arxiv_id"):
+            art["sameAs"] = [f"https://arxiv.org/abs/{seo['arxiv_id']}"]
+        graph.append(art)
+    else:
+        # Concept pages describe a term the paper introduces.
+        term = next((t for t in seo["terms"]
+                     if _slug(t["name"]).startswith(page["slug"][:14])
+                     or page["slug"] in _slug(t["name"])), None)
+        graph.append({
+            "@type": "DefinedTerm", "@id": page_url + "#term",
+            "name": term["name_zh"] if (term and zh) else (term["name"] if term else body["h1"]),
+            "description": (term["definition_zh"] if (term and zh) else term["definition"]) if term else body["desc"],
+            "url": page_url,
+            "inDefinedTermSet": {"@type": "DefinedTermSet", "name": "Teach and Grow glossary",
+                                 "url": url + "#glossary"}})
+        graph.append({
+            "@type": "Article", "@id": page_url + "#article",
+            "headline": body["h1"], "description": body["desc"],
+            "inLanguage": "zh-Hans" if zh else "en",
+            "dateModified": seo["paper_date_iso"],
+            "mainEntityOfPage": {"@id": page_url + "#webpage"},
+            "isPartOf": about, "author": _author_objects(data)})
+
+    if body.get("faq"):
+        graph.append({
+            "@type": "FAQPage", "@id": page_url + "#faq",
+            "isPartOf": {"@id": page_url + "#webpage"},
+            "inLanguage": "zh-Hans" if zh else "en",
+            "mainEntity": [{"@type": "Question", "name": q,
+                            "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in body["faq"]]})
+    return graph
+
+
+def _subpage_head(page, lang, url, data, page_url):
+    seo = data["seo"]
+    zh = lang == "zh"
+    body = page["zh" if zh else "en"]
+    dirs = _page_dirs(page, lang)
+    up = "../" * len(dirs)
+    asset = up + "assets/"
+    other = _link(dirs, _page_dirs(page, "en" if zh else "zh"), url)
+    lines = [
+        '<meta charset="utf-8">',
+        '<meta name="viewport" content="width=device-width, initial-scale=1">',
+        f"<title>{e(body['title'])}</title>",
+        f'<meta name="description" content="{e(body["desc"])}">',
+        f'<meta name="keywords" content="{e(body["keywords"])}">',
+        f'<meta name="author" content="{e(", ".join(data["authors"]))}">',
+        '<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">',
+        f'<meta name="language" content="{"Chinese" if zh else "English"}">',
+        f'<link rel="canonical" href="{page_url}">',
+        f'<link rel="alternate" hreflang="en" href="{other if zh else page_url}">',
+        f'<link rel="alternate" hreflang="zh-Hans" href="{page_url if zh else other}">',
+        f'<link rel="alternate" hreflang="x-default" href="{other if zh else page_url}">',
+        f'<link rel="describedby" href="{url}llms.txt" type="text/plain">',
+        f'<link rel="sitemap" type="application/xml" href="{url}sitemap.xml">',
+        '<meta property="og:type" content="article">',
+        f'<meta property="og:site_name" content="{SITE_NAME}">',
+        f'<meta property="og:title" content="{e(body["title"])}">',
+        f'<meta property="og:description" content="{e(body["desc"])}">',
+        f'<meta property="og:url" content="{page_url}">',
+        f'<meta property="og:image" content="{url}assets/brand/tgl-cover-v4.png">',
+        f'<meta property="og:locale" content="{"zh_CN" if zh else "en_US"}">',
+        '<meta name="twitter:card" content="summary_large_image">',
+        f'<meta name="twitter:title" content="{e(body["title"])}">',
+        f'<meta name="twitter:description" content="{e(body["desc"])}">',
+        f'<meta name="twitter:image" content="{url}assets/brand/tgl-cover-v4.png">',
+        '<meta name="theme-color" content="#155e59">',
+        '<meta name="color-scheme" content="light">',
+        '<script type="application/ld+json">',
+        json.dumps({"@context": "https://schema.org",
+                    "@graph": _subpage_jsonld(page, lang, url, data, page_url)},
+                   ensure_ascii=False, indent=1),
+        '</script>',
+        f'<link rel="icon" type="image/png" href="{asset}brand/tgl-logo-v3.png">',
+        f'<link rel="icon" href="{up}favicon.ico" sizes="any">',
+        f'<link rel="stylesheet" href="{asset}style.css?v=brand6">',
+    ]
+    return "\n".join(lines)
+
+
+def _fill(text, data, up, home):
+    """Resolve the placeholders allowed in page prose. Facts come from site.json."""
+    seo = data["seo"]
+    for key, val in (
+        ("{home}", home),
+        ("{cite}", up + "cite.bib"),
+        ("{abstract}", seo.get("abstract", "")),
+        ("{abstract_zh}", seo.get("abstract_zh", "")),
+        ("{keywords}", ", ".join(seo.get("keywords", []))),
+        ("{keywords_zh}", "、".join(seo.get("keywords_zh", []))),
+        ("{bibtex_key}", seo.get("bibtex_key", "")),
+    ):
+        text = text.replace(key, val)
+    return text
+
+
+def _page_dirs(page, lang):
+    """Directory components from the site root, e.g. ['zh','concepts','skill-block']."""
+    parts = ([] if lang == "en" else ["zh"])
+    if page["slug"] not in ("paper", "research-context"):
+        parts.append("concepts")
+    parts.append(page["slug"])
+    return parts
+
+
+def _link(page_dirs, target_dirs, url):
+    """Root-relative-to-this-page link, working with or without a repo path prefix."""
+    up = "../" * len(page_dirs)
+    return up + "/".join(target_dirs) + "/"
+
+
+def render_subpage(page, lang, url, data, site):
+    """Write <parent>/<slug>/index.html and index.md (or the /zh/ equivalents)."""
+    from pathlib import Path
+    zh = lang == "zh"
+    body = page["zh" if zh else "en"]
+    slug = page["slug"]
+    dirs = _page_dirs(page, lang)
+    page_url = url + "/".join(dirs) + "/"
+    up = "../" * len(dirs)
+    asset = up + "assets/"
+    home = up + ("zh/" if zh else "")
+    other_dirs = _page_dirs(page, "en" if zh else "zh")
+
+    nav = "".join(f'<a href="{home}#{a}">{cn if zh else en}</a>' for a, en, cn in NAV)
+
+    def T(en_s, cn_s):
+        return cn_s if zh else en_s
+
+    parts = [f'''<!doctype html>
+<html lang="{'zh-CN' if zh else 'en'}"><head>
+{_subpage_head(page, lang, url, data, page_url)}
+</head><body data-lang="{lang}"><a class="skip-link" href="#main">{T('Skip to content','跳至正文')}</a>
+<header class="site-header"><div class="nav-wrap"><a class="brand" href="{home}" aria-label="{T('Teach and Grow home','Teach and Grow 主页')}"><img src="{asset}brand/tgl-logo-v3.png" width="30" height="30" alt=""><span>TGL<span class="brand-dot">.</span></span></a><nav aria-label="{T('Main navigation','主导航')}">{nav}</nav><a class="language" href="{_link(dirs, other_dirs, url)}" lang="{T('zh-CN','en')}">{T('中文','English')} <span aria-hidden="true">↗</span></a></div></header>
+<main id="main"><section class="section container subpage">
+<nav class="breadcrumb-nav" aria-label="{T('Breadcrumb','面包屑')}"><a href="{home}">&larr; {T('Teach and Grow','Teach and Grow 项目主页')}</a></nav>
+<h1 class="subpage-title">{body['h1']}</h1>
+<p class="lead subpage-lede">{body['lede']}</p>''']
+
+    for head, paras in body["sections"]:
+        parts.append(f"<h2>{head}</h2>")
+        parts.append('<div class="reading-wide">')
+        for para in paras:
+            parts.append("<p>" + _fill(para, data, up, home) + "</p>")
+        parts.append("</div>")
+
+    if body.get("faq"):
+        parts.append(f"<h2>{T('Frequently asked questions','常见问题')}</h2>")
+        parts.append('<div class="faq-list">')
+        for q, a in body["faq"]:
+            parts.append('<article class="faq-item"><h3>' + _fill(q, data, up, home)
+                         + '</h3><div class="faq-answer"><p>' + _fill(a, data, up, home) + '</p></div></article>')
+        parts.append("</div>")
+
+    if page.get("related"):
+        from pages import CONCEPTS, PAPER, RESEARCH_CONTEXT
+        index = {p["slug"]: p for p in [PAPER, RESEARCH_CONTEXT] + CONCEPTS}
+        parts.append(f'<h2>{T("Related pages","相关页面")}</h2><ul class="related-list">')
+        for r in page["related"]:
+            if r in index:
+                label = index[r]["zh" if zh else "en"]["h1"]
+                parts.append(f'<li><a href="{_link(dirs, _page_dirs(index[r], lang), url)}">{label}</a></li>')
+        parts.append("</ul>")
+
+    parts.append(f'''<div class="subpage-footer"><p>{T('Machine-readable entry points','机器可读入口')}:
+<a href="{up}llms.txt">llms.txt</a> · <a href="{up}llms-full.txt">llms-full.txt</a> ·
+<a href="{up}project.json">project.json</a> · <a href="{up}cite.bib">cite.bib</a> ·
+<a href="{up}sitemap.xml">sitemap.xml</a></p>
+<p class="small">{T("Cite as: ", "引用：")}Chang Nie, Zhe Liu and Hesheng Wang, “Teach and Grow: An Agent-Centered Architecture for General Robot Learning,” technical report, Shanghai Jiao Tong University, 2026.</p></div>
+</section></main>
+<footer class="container"><a class="brand" href="{home}">TGL<span class="brand-dot">.</span></a><p>Teach and Grow · Shanghai Jiao Tong University<br><span>{T('Project images and demonstration videos are hosted with this website.','项目图片与演示视频均由本站提供。')}</span></p><a href="#">{T('Back to top','返回顶部')} ↑</a></footer>
+</body></html>''')
+
+    html_text = "\n".join(parts)
+    d = Path(site).joinpath(*dirs)
+    d.mkdir(parents=True, exist_ok=True)
+    (d / "index.html").write_text(html_text, encoding="utf-8")
+    (d / "index.md").write_text(_subpage_md(page, lang, url, data, page_url), encoding="utf-8")
+    return page_url
+
+
+def _subpage_md(page, lang, url, data, page_url):
+    zh = lang == "zh"
+    body = page["zh" if zh else "en"]
+    dirs = _page_dirs(page, lang)
+    up = "../" * len(dirs)
+    home = up + ("zh/" if zh else "")
+    out = [f"# {body['h1']}", "", f"> {body['lede']}", "",
+           f"Source: {page_url} · Language: {'zh-Hans' if zh else 'en'}", ""]
+    for head, paras in body["sections"]:
+        out += [f"## {head}", ""]
+        for para in paras:
+            out += [_fill(para, data, up, home), ""]
+    if body.get("faq"):
+        out += ["## " + ("常见问题" if zh else "Frequently asked questions"), ""]
+        for q, a in body["faq"]:
+            out += [f"**{_fill(q, data, up, home)}**", "", _fill(a, data, up, home), ""]
+    out += ["---", "",
+            f"{data['title']} — Chang Nie, Zhe Liu, Hesheng Wang, technical report, "
+            f"Shanghai Jiao Tong University, 2026. {url}"]
+    return "\n".join(out)
+
+
+def _write_cite_bib(out, url, data):
+    """The BibTeX file that the paper page links to."""
+    seo = data["seo"]
+    (out / "cite.bib").write_text(
+        f"@techreport{{{seo['bibtex_key']},\n"
+        f"  title       = {{{data['title']}}},\n"
+        f"  author      = {{Nie, Chang and Liu, Zhe and Wang, Hesheng}},\n"
+        f"  institution = {{{seo['institution']}}},\n"
+        f"  year        = {{{data['year']}}},\n"
+        f"  type        = {{Technical report}},\n"
+        f"  url         = {{{url}}}\n"
+        f"}}\n", encoding="utf-8")
