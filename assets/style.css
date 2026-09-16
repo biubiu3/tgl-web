@@ -11,3 +11,35 @@ body{font-size:16px;line-height:1.9}body[data-lang=zh]{font-family:-apple-system
 .project-cover{margin-top:48px;margin-bottom:0}.project-cover img{width:100%;height:auto;border-radius:9px;border:1px solid #273e56}.project-cover figcaption{font-size:11px;color:#6c8095;margin-top:10px}.brand img{border-radius:7px;object-fit:contain}@media(max-width:760px){.project-cover{margin-top:26px}.project-cover img{border-radius:5px}.project-cover figcaption{font-size:10px;line-height:1.7}}
 
 .project-cover .zoom{display:block;position:relative}.project-cover .zoom-label{position:absolute;right:12px;bottom:12px;background:#102a43;color:#fff;padding:4px 10px;border:1px solid #76a2bc;border-radius:4px;font-size:12px}
+
+/* ---- Abstract, glossary and FAQ blocks (2026 SEO/GEO round) ---- */
+.abstract-text{margin:0 0 24px;padding:0 0 0 26px;border-left:3px solid var(--green);font-family:var(--serif);font-size:19px;line-height:1.85;color:#33443f;max-width:860px}
+.abstract-text p+p{margin-top:15px}
+.abstract-meta p{margin:0;font-size:13px;color:var(--muted)}
+.abstract-meta p+p{margin-top:6px}
+.glossary-grid{margin:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:26px 38px}
+.glossary-item{margin:0;padding:0 0 18px;border-bottom:1px solid var(--line)}
+.glossary-item dt{font-weight:650;color:var(--ink);font-size:17px;line-height:1.4}
+.glossary-item dd{margin:9px 0 0;font-size:15px;line-height:1.72;color:var(--text)}
+.faq-list{margin:0;display:grid;gap:12px;max-width:900px}
+.faq-item{border:1px solid var(--line);border-radius:var(--radius);background:var(--white);padding:0 22px}
+.faq-item[open]{box-shadow:0 2px 14px rgba(21,94,89,.07)}
+.faq-item summary{cursor:pointer;list-style:none;padding:19px 0;display:flex;align-items:baseline;gap:14px}
+.faq-item summary::-webkit-details-marker{display:none}
+.faq-item summary::before{content:"+";font:600 20px var(--sans);color:var(--green);flex:0 0 auto;transition:transform .2s}
+.faq-item[open] summary::before{content:"−"}
+.faq-item summary h3{margin:0;font-size:17px;line-height:1.5;font-weight:600}
+.faq-answer{padding:0 0 21px 34px}
+.faq-answer p{margin:0;font-size:15.5px;line-height:1.78;color:var(--text)}
+@media(max-width:760px){
+  .abstract-text{font-size:17px;padding-left:18px}
+  .glossary-grid{gap:20px}
+  .faq-item{padding:0 17px}
+  .faq-item summary{padding:16px 0;gap:10px}
+  .faq-answer{padding-left:26px}
+}
+.footer-index{display:flex;flex-wrap:wrap;gap:6px 18px;width:100%;margin-top:22px;padding-top:18px;border-top:1px solid var(--line);font-size:12px}
+.footer-index a{color:var(--muted);text-decoration:none}
+.footer-index a:hover{color:var(--green);text-decoration:underline}
+.paper-keywords{margin:0 0 26px;font-size:14px;line-height:1.9;color:var(--muted);max-width:860px}
+.paper-keywords .kw-label{display:inline-block;margin-right:10px;font-size:11px;letter-spacing:2px;font-weight:750;color:var(--green);text-transform:uppercase}

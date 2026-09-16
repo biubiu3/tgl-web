@@ -45,9 +45,10 @@ References: [GitHub custom domains](https://docs.github.com/en/pages/configuring
 
 ## Editing
 
-- `content/site.json`: authors, exact benchmark values, paired-video descriptions in English and Chinese.
-- `scripts/build.py`: bilingual page shell, videos, figures, metadata, and BibTeX.
-- `scripts/research.py`: the bilingual research narrative and interactive worked example.
+- `content/site.json`: authors, exact benchmark values, paired-video descriptions in English and Chinese, and the `seo` block (paper date, abstract, keywords, glossary terms, FAQ). Every number and identifier used for metadata comes from here — do not hard-code a figure elsewhere.
+- `scripts/build.py`: bilingual page shell, videos, figures, and BibTeX.
+- `scripts/seo.py`: `<head>` metadata, the JSON-LD `@graph`, and every machine-readable file (robots.txt, sitemaps, llms.txt, llms-full.txt, Markdown mirrors, project.json, feed.xml).
+- `scripts/research.py`: the bilingual research narrative, abstract block, glossary, FAQ and interactive worked example.
 - `assets/style.css`: responsive layout and styling.
 - `assets/app.js`: paired playback, filters, concept walkthrough, citation copy, figure lightbox.
 - `assets/videos/`: original MP4s, preserved byte for byte.
@@ -59,6 +60,34 @@ References: [GitHub custom domains](https://docs.github.com/en/pages/configuring
 The supplied description calls Goal task 07 a bottle-cap task. The local LIBERO task map identifies it as `turn_on_the_stove`, consistent with inspection of both videos; the website uses that name. Paired video playback shares a start time but does not time-align actions or imply a speed comparison. The page presents five qualitative simulation examples, qualitative study descriptions, bounded observations, and clearly identified scaling hypotheses. It does not assert publication acceptance, complete paper reproduction from the public code snapshot, empirical readiness, or an independently replicated benchmark.
 
 Images open in an accessible native dialog (Escape to close). Videos retain native controls, and content remains readable when JavaScript is disabled. All stages of the worked example remain visible without JavaScript. Reduced-motion preferences are respected.
+
+## Search and AI discovery
+
+The build emits a machine-readable layer so that search engines, answer engines and AI agents can read the
+project without scraping HTML. All of it is generated from `content/site.json`:
+
+| File | Purpose |
+| --- | --- |
+| `robots.txt` | Per-crawler rules split by search / user-triggered / training role, plus `Content-Signal` |
+| `sitemap.xml` | Index over `sitemap-pages.xml`, `sitemap-images.xml`, `sitemap-videos.xml` |
+| `llms.txt` / `llms-full.txt` | LLM index, and the full English + Chinese text as Markdown |
+| `index.md` / `zh/index.md` | Markdown mirrors of the two pages |
+| `project.json` | Canonical facts, benchmark numbers and identifiers for agents |
+| `feed.xml`, `favicon.ico` | Change feed and root icon |
+
+The page carries a JSON-LD `@graph` (WebSite, WebPage, ScholarlyArticle, SoftwareSourceCode, Person,
+CollegeOrUniversity, Organization, DefinedTermSet, ImageObject, 10 VideoObject, ItemList, Dataset and
+FAQPage) and Google Scholar Highwire `citation_*` tags. `citation_publication_date` must stay in
+`YYYY/MM/DD` form or Scholar mis-parses it. `arxiv_id` and `doi` are `null` in `site.json`; when they are
+filled in, `scripts/seo.py` emits `citation_arxiv_id` / `citation_doi` and the matching `identifier` and
+`sameAs` automatically.
+
+Two rules the build enforces: structured data must describe content that is actually visible on the page
+(the `FAQPage` and `DefinedTerm` nodes exist because the FAQ and glossary are rendered), and the sitemaps
+discover figures from disk rather than assuming a count.
+
+**This is a technical report. The site does not claim venue acceptance anywhere, and that should not change
+without the authors' instruction.**
 
 ## Generated visual identity
 

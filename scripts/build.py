@@ -6,6 +6,7 @@ import json
 from pathlib import Path
 import shutil
 from research import sections
+from seo import head_seo, write_crawler_files, html_to_md
 from urllib.parse import urlsplit
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -41,6 +42,7 @@ def page(lang):
     zh = lang == 'zh'
     def t(en, cn): return cn if zh else en
     asset = '../assets/' if zh else 'assets/'
+    base = '../' if zh else ''
     page_url = url + ('zh/' if zh else '')
     paper = asset + 'paper/teach-and-grow.pdf'
     def figure(num, alt, caption, cls=''):
@@ -62,23 +64,20 @@ def page(lang):
   year = {{2026}},
   url = {{{url}}}
 }}'''
-    narrative = sections(t, figure, paper)
-    nav = [("overview",t("Problem","问题")),("origins",t("Research path","研究路线")),("idea",t("Idea","思路")),("method",t("Method","方法")),("demos",t("Videos","演示")),("resources",t("Paper","论文"))]
+    narrative = sections(t, figure, paper, DATA)
+    nav = [("overview",t("Problem","问题")),("origins",t("Research path","研究路线")),("idea",t("Idea","思路")),("method",t("Method","方法")),("demos",t("Videos","演示")),("resources",t("Paper","论文")),("glossary",t("Terms","术语")),("faq",t("FAQ","问答"))]
     nav_html = ''.join(f'<a href="#{a}">{b}</a>' for a,b in nav)
-    description=t('Training-free robot learning from sparse teaching. Reusable Skill Blocks, agent-led execution, and physical feedback turn demonstrations into lasting capability.','通过少量示教学会新任务，无需微调模型。Teach and Grow 将演示转化为可复用技能，以智能体决策和物理反馈实现机器人能力积累。')
     return f'''<!doctype html>
 <html lang="{t('en','zh-CN')}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Teach and Grow · {t('Training-free Robot Learning','无需训练的机器人学习')}</title>
-<meta name="description" content="{description}"><meta name="theme-color" content="#155e59"><meta name="color-scheme" content="light">
-<link rel="canonical" href="{page_url}"><link rel="alternate" hreflang="en" href="{url}"><link rel="alternate" hreflang="zh-CN" href="{url}zh/"><link rel="alternate" hreflang="x-default" href="{url}">
-<meta property="og:type" content="article"><meta property="og:title" content="Teach and Grow"><meta property="og:description" content="{description}"><meta property="og:url" content="{page_url}"><meta property="og:image" content="{url}assets/brand/tgl-cover-v4.png"><meta name="twitter:card" content="summary_large_image">
-<meta name="citation_title" content="{e(DATA['title'])}"><meta name="citation_author" content="Nie, Chang"><meta name="citation_author" content="Liu, Zhe"><meta name="citation_author" content="Wang, Hesheng"><meta name="citation_publication_date" content="2026"><meta name="citation_pdf_url" content="{url}assets/paper/teach-and-grow.pdf">
-<link rel="icon" href="{asset}brand/tgl-logo-v3.png" type="image/png"><link rel="stylesheet" href="{asset}style.css?v=brand6"><script src="{asset}app.js?v=brand6" defer></script>
+{head_seo(lang, url, DATA)}
+<meta name="theme-color" content="#155e59"><meta name="color-scheme" content="light">
+<link rel="icon" type="image/png" href="{asset}brand/tgl-logo-v3.png"><link rel="icon" href="{'../' if zh else ''}favicon.ico" sizes="any"><link rel="stylesheet" href="{asset}style.css?v=brand6"><script src="{asset}app.js?v=brand6" defer></script>
 </head><body data-lang="{lang}"><a class="skip-link" href="#main">{t('Skip to content','跳至正文')}</a>
 <header class="site-header"><div class="nav-wrap"><a class="brand" href="#" aria-label="Teach and Grow home"><img src="{asset}brand/tgl-logo-v3.png" width="30" height="30" alt=""><span>TGL<span class="brand-dot">.</span></span></a><nav aria-label="{t('Main navigation','主导航')}">{nav_html}</nav><a class="language" href="{'../' if zh else 'zh/'}" lang="{t('zh-CN','en')}">{t('中文','English')} <span aria-hidden="true">↗</span></a></div></header>
 <main id="main">
 <section class="hero research-hero"><div class="container"><p class="eyebrow hero-kicker">{t('AGENT-CENTERED ROBOT LEARNING / SHANGHAI JIAO TONG UNIVERSITY','以智能体为中心的机器人学习 / 上海交通大学')}</p><div class="hero-caption"><span class="signal-dot"></span>{t('AI-agent robot learning · GPT-6 Astra + Codex','基于 AI Agent 的机器人学习 · GPT-6 Astra + Codex')}</div><h1>Teach <em>and</em> Grow<span class="title-period">.</span></h1><p class="paper-subtitle">An Agent-Centered Architecture<br class="desktop-break"> for General Robot Learning</p><p class="authors"><a href="https://changnie.top" target="_blank" rel="noopener" aria-label="Chang Nie — personal homepage">Chang Nie ↗</a><span>·</span>Zhe Liu<span>·</span><a href="mailto:wanghesheng@sjtu.edu.cn">Hesheng Wang</a></p><p class="affiliation">{t('School of Automation and Intelligent Sensing, Shanghai Jiao Tong University','上海交通大学 自动化与感知学院')}</p><p class="hero-summary">{t('An AI agent turns sparse teaching into reusable robot skills,<br>with fixed model weights and physical feedback.','让 AI Agent 将少量示教转化为可复用的机器人技能，<br>以固定模型权重和物理反馈实现新任务学习。')}</p><div class="hero-links"><a class="button primary" href="#overview">{t('Explore the idea','了解研究思路')} ↓</a><a class="button" href="{paper}" target="_blank" rel="noopener">{t('Read the paper','阅读论文')} ↗</a><a class="button" href="https://github.com/IRMVLab/TGL" target="_blank" rel="noopener">{t("Code · GitHub","代码 · GitHub")} ↗</a><a class="button text-button" href="#demos">▷ {t('Watch demonstrations','观看演示')}</a></div><div class="hero-system" aria-label="{t('Teaching feeds agent-led Skill Blocks, whose verified outcomes grow the library and experience memory','示教形成智能体主导的技能块，经过验证的结果进入技能库与经验记忆')}"><div class="system-node"><span>01 / TEACH</span><b>{t('Sparse demonstrations','少量演示')}</b><small>{t('Subgoals & shared structure','子目标与共同结构')}</small></div><span class="system-arrow" aria-hidden="true">→</span><div class="system-node node-core"><span>02 / ACT + VERIFY</span><b>{t('Agent + Skill Blocks','Agent + Skill Blocks')}</b><small>{t('Grounded in physical feedback','以物理反馈形成闭环')}</small></div><span class="system-arrow" aria-hidden="true">→</span><div class="system-node"><span>03 / GROW</span><b>{t('Skills + experience','技能与经验')}</b><small>{t('Retained for the next task','用于下一个任务')}</small></div><div class="system-return"><span>↖</span> {t('Reusable knowledge returns to the next decision','可复用知识回到下一次决策')} <span>↵</span></div></div><div class="hero-bottom"><span>PRETRAINED WEIGHTS / FIXED</span><span>EXECUTABLE EXPERIENCE / EVOLVING</span></div></div></section>
 <figure class="project-cover container"><a class="zoom" href="{asset}brand/tgl-cover-v4.png" aria-label="{t('Enlarge project cover','放大项目封面')}"><img src="{asset}brand/tgl-cover-v4.png" width="1672" height="941" alt="{t('Conceptual cover: a Franka robot places a plush toy into a bowl in a changed scene; a few demonstrations and agent guidance contrast with VLA/WAM data and training costs','概念封面：Franka 机器人在变化的场景中将毛绒玩具放入碗中；少量示教与智能体指导，对照 VLA/WAM 的数据和训练成本')}" fetchpriority="high"><span class="zoom-label">↗ {t('Enlarge','放大')}</span></a><figcaption>{t('New scenes, reusable skills: sparse teaching and agent-guided execution with fixed model weights. Conceptual artwork.','场景变化，技能复用：通过少量示教与智能体指导，在模型权重固定的条件下适应任务。概念封面。')}</figcaption></figure>
+{narrative['abstract']}
 {narrative['overview']}
 {narrative['origins']}
 {narrative['idea']}
@@ -88,20 +87,29 @@ def page(lang):
 {narrative['investigation']}
 {narrative['growth']}
 <section id="resources" class="section resources soft"><div class="container"><div class="resource-top"><div><p class="eyebrow">09 / {t('PAPER & RESOURCES','论文与资源')}</p><h2>{t('Read the full paper.','阅读全文。')}</h2><p>{t('The technical report includes the formulation, Skill Block contract, evaluation, and extended discussion.','技术报告包含问题定义、Skill Block 契约、实验评估和扩展讨论。')}</p></div><a class="button primary" href="{paper}" target="_blank" rel="noopener">{t('Open paper · PDF','打开论文 · PDF')} ↗</a></div><div class="resource-links"><a href="https://github.com/IRMVLab/TGL" target="_blank" rel="noopener">{t("Method code · IRMVLab/TGL","方法代码 · IRMVLab/TGL")} ↗</a><a href="#demos">{t('10 demonstration videos','10 段演示视频')} ↗</a><a href="https://github.com/biubiu3/tgl-web" target="_blank" rel="noopener">{t('Website source','网页源码')} ↗</a><a href="https://changnie.top" target="_blank" rel="noopener">{t("Chang Nie · Personal homepage","聂畅 · 个人主页")} ↗</a><a href="mailto:changniep@gmail.com">{t('Contact the authors','联系作者')} ↗</a></div><p class="small">{t('The method implementation is maintained in IRMVLab/TGL. Installation and execution instructions are in its README.','方法实现在 IRMVLab/TGL 仓库维护，安装与运行说明请见该仓库 README。')}</p><div class="citation" id="citation"><div><h3>BibTeX</h3><button id="copy-citation" type="button" hidden>{t('Copy citation','复制引用')}</button></div><pre><code id="bibtex">{e(bib)}</code></pre><span id="copy-status" role="status"></span></div></div></section>
-</main><footer class="container"><a class="brand" href="#">TGL<span class="brand-dot">.</span></a><p>Teach and Grow · Shanghai Jiao Tong University<br><span>{t('Project images and demonstration videos are hosted with this website.','项目图片与演示视频均由本站提供。')}</span></p><a href="#">{t('Back to top','返回顶部')} ↑</a></footer><dialog id="image-dialog" aria-label="{t('Enlarged research image','放大的研究图片')}"><button class="dialog-close" aria-label="{t('Close image','关闭图片')}">×</button><img alt=""><p></p></dialog>
+{narrative['glossary']}
+{narrative['faq']}
+</main><footer class="container"><a class="brand" href="#">TGL<span class="brand-dot">.</span></a><p>Teach and Grow · Shanghai Jiao Tong University<br><span>{t('Project images and demonstration videos are hosted with this website.','项目图片与演示视频均由本站提供。')}</span></p><a href="#">{t('Back to top','返回顶部')} ↑</a><nav class="footer-index" aria-label="{t('Machine-readable entry points','机器可读入口')}"><a href="{base}llms.txt">llms.txt</a><a href="{base}llms-full.txt">llms-full.txt</a><a href="{base}project.json">project.json</a><a href="{base}sitemap.xml">sitemap.xml</a><a href="{base}robots.txt">robots.txt</a><a href="{base}{'' if zh else 'zh/'}" lang="{t('zh-CN','en')}">{t('中文版','English')}</a></nav></footer><dialog id="image-dialog" aria-label="{t('Enlarged research image','放大的研究图片')}"><button class="dialog-close" aria-label="{t('Close image','关闭图片')}">×</button><img alt=""><p></p></dialog>
 </body></html>'''
 
-(site/'index.html').write_text(page('en'))
+EN_HTML = page('en')
+(site/'index.html').write_text(EN_HTML)
 (site/'zh').mkdir()
-(site/'zh/index.html').write_text(page('zh'))
+ZH_HTML = page('zh')
+(site/'zh/index.html').write_text(ZH_HTML)
+rendered = {
+    'en': {'html': EN_HTML, 'md': html_to_md(EN_HTML)},
+    'zh': {'html': ZH_HTML, 'md': html_to_md(ZH_HTML)},
+}
 # A project root redirects to the requested /tgl/ review route.
 if site != out:
     target = '/'.join(segments) + '/'
     (out/'index.html').write_text(f'<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Teach and Grow</title><meta http-equiv="refresh" content="0;url={target}"><link rel="canonical" href="{url}"><p><a href="{target}">Continue to Teach and Grow →</a></p></html>')
 (out/'404.html').write_text(f'<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Page not found · TGL</title><style>body{{font:20px system-ui;max-width:640px;margin:15vh auto;padding:24px;color:#173d37}}a{{color:#155e59}}</style><h1>Page not found</h1><p>The page may have moved.</p><a href="{url}">Return to Teach and Grow →</a></html>')
 (out/'.nojekyll').touch()
-(out/'sitemap.xml').write_text(f'<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>{url}</loc></url><url><loc>{url}zh/</loc></url></urlset>')
-(out/'robots.txt').write_text(f'User-agent: *\nAllow: /\nSitemap: {parts.scheme}://{parts.netloc}/' + ('/'.join([s for s in parts.path.split('/') if s][:1])+'/' if parts.hostname.endswith('.github.io') and parts.path.strip('/') else '') + 'sitemap.xml\n')
+write_crawler_files(out, url, DATA, rendered)
+# Browsers and some crawlers probe /favicon.ico directly.
+shutil.copy2(ROOT/'assets/favicon.ico', out/'favicon.ico')
 if args.custom_domain:
     if '/' in args.custom_domain or args.custom_domain != parts.hostname:
         raise SystemExit('Custom domain must match the hostname in --url')

@@ -1,38 +1,499 @@
 {
   "title": "Teach and Grow: An Agent-Centered Architecture for General Robot Learning",
-  "authors": ["Chang Nie", "Zhe Liu", "Hesheng Wang"],
+  "authors": [
+    "Chang Nie",
+    "Zhe Liu",
+    "Hesheng Wang"
+  ],
   "year": "2026",
   "libero": {
-    "columns": ["Spatial", "Object", "Goal", "Long", "Mean"],
+    "columns": [
+      "Spatial",
+      "Object",
+      "Goal",
+      "Long",
+      "Mean"
+    ],
     "rows": [
-      ["OpenVLA", 84.7, 88.4, 79.2, 53.7, 76.5],
-      ["OpenVLA-OFT", 97.6, 98.4, 97.9, 94.5, 97.1],
-      ["SRPO", 98.8, 100.0, 99.4, 98.6, 99.2],
-      ["VLANeXt", 99.0, 99.2, 96.6, 94.8, 97.4],
-      ["InternVLA-A1.5", 98.6, 99.8, 98.6, 98.4, 98.9],
-      ["LaST-R1", 99.8, 100.0, 100.0, 99.8, 99.9],
-      ["TGL (ours)", 99.7, 100.0, 100.0, 99.9, 99.9]
+      [
+        "OpenVLA",
+        84.7,
+        88.4,
+        79.2,
+        53.7,
+        76.5
+      ],
+      [
+        "OpenVLA-OFT",
+        97.6,
+        98.4,
+        97.9,
+        94.5,
+        97.1
+      ],
+      [
+        "SRPO",
+        98.8,
+        100.0,
+        99.4,
+        98.6,
+        99.2
+      ],
+      [
+        "VLANeXt",
+        99.0,
+        99.2,
+        96.6,
+        94.8,
+        97.4
+      ],
+      [
+        "InternVLA-A1.5",
+        98.6,
+        99.8,
+        98.6,
+        98.4,
+        98.9
+      ],
+      [
+        "LaST-R1",
+        99.8,
+        100.0,
+        100.0,
+        99.8,
+        99.9
+      ],
+      [
+        "TGL (ours)",
+        99.7,
+        100.0,
+        100.0,
+        99.9,
+        99.9
+      ]
     ]
   },
   "plus": {
-    "columns": ["Camera", "Robot", "Language", "Light", "Background", "Noise", "Layout", "Mean"],
+    "columns": [
+      "Camera",
+      "Robot",
+      "Language",
+      "Light",
+      "Background",
+      "Noise",
+      "Layout",
+      "Mean"
+    ],
     "rows": [
-      ["OpenVLA", 0.8, 3.5, 23.0, 8.1, 34.8, 15.2, 28.5, 16.3],
-      ["π₀", 13.8, 6.0, 58.8, 85.0, 81.4, 79.0, 68.9, 56.1],
-      ["OpenVLA-OFT", 56.4, 31.9, 79.5, 88.7, 93.3, 75.8, 74.2, 71.4],
-      ["OpenVLA-OFT+", 92.8, 30.3, 85.8, 94.9, 93.9, 89.3, 77.6, 80.7],
-      ["VLANeXt", 90.4, 65.7, 81.8, 95.9, 82.5, 94.1, 80.8, 84.5],
-      ["InternVLA-A1.5", 83.1, 55.1, 86.9, 96.4, 98.2, 95.6, 85.2, 85.8],
-      ["π₀.₅ + MCSI", 86.0, 83.0, 83.0, 97.0, 98.0, 92.0, 87.0, 89.4],
-      ["π₀.₅ + RAS + MCSI", 81.0, 88.0, 90.0, 97.0, 96.0, 90.0, 86.0, 89.7],
-      ["TGL (ours)", 87.3, 90.7, 96.8, 97.3, 97.4, 89.9, 87.2, 92.4]
+      [
+        "OpenVLA",
+        0.8,
+        3.5,
+        23.0,
+        8.1,
+        34.8,
+        15.2,
+        28.5,
+        16.3
+      ],
+      [
+        "π₀",
+        13.8,
+        6.0,
+        58.8,
+        85.0,
+        81.4,
+        79.0,
+        68.9,
+        56.1
+      ],
+      [
+        "OpenVLA-OFT",
+        56.4,
+        31.9,
+        79.5,
+        88.7,
+        93.3,
+        75.8,
+        74.2,
+        71.4
+      ],
+      [
+        "OpenVLA-OFT+",
+        92.8,
+        30.3,
+        85.8,
+        94.9,
+        93.9,
+        89.3,
+        77.6,
+        80.7
+      ],
+      [
+        "VLANeXt",
+        90.4,
+        65.7,
+        81.8,
+        95.9,
+        82.5,
+        94.1,
+        80.8,
+        84.5
+      ],
+      [
+        "InternVLA-A1.5",
+        83.1,
+        55.1,
+        86.9,
+        96.4,
+        98.2,
+        95.6,
+        85.2,
+        85.8
+      ],
+      [
+        "π₀.₅ + MCSI",
+        86.0,
+        83.0,
+        83.0,
+        97.0,
+        98.0,
+        92.0,
+        87.0,
+        89.4
+      ],
+      [
+        "π₀.₅ + RAS + MCSI",
+        81.0,
+        88.0,
+        90.0,
+        97.0,
+        96.0,
+        90.0,
+        86.0,
+        89.7
+      ],
+      [
+        "TGL (ours)",
+        87.3,
+        90.7,
+        96.8,
+        97.3,
+        97.4,
+        89.9,
+        87.2,
+        92.4
+      ]
     ]
   },
   "videos": [
-    {"id":"libero_object_task00","suite":"Object","tag":["Adaptation","抓取适应"],"title":["Same goal. A different grasp.","同一个目标，不同的抓取方式"],"task":["Place the soup can in the basket","将汤罐放入篮子"],"description":["The teacher provides the task structure: acquire the can, carry it, and release it in the basket. TGL approaches and grasps the can differently while preserving the intended outcome.","教师演示提供抓取、搬运和放入篮子的任务结构。TGL 采用不同的接近与抓取方式，完成相同的目标。"],"watch":["Compare the approach direction and gripper orientation before the lift.","观察抬起罐子前，两侧的接近方向和夹爪朝向。"]},
-    {"id":"libero_spatial_task00","suite":"Spatial","tag":["Scene grounding","场景适应"],"title":["A new contact point. The same subgoal.","换一个接触位置，完成同一子目标"],"task":["Place the bowl on the plate","将碗放到盘子上"],"description":["TGL grasps a different part of the bowl rim from the teacher. The reusable subgoal stays the same, while the physical grasp is grounded in the current scene.","TGL 抓取碗沿的位置与教师不同。可复用的子目标保持不变，实际抓取根据当前场景确定。"],"watch":["Follow where the fingers contact the rim in each rollout.","对照两段视频中夹爪与碗沿的接触位置。"]},
-    {"id":"libero_spatial_task09","suite":"Spatial","tag":["Feedback & recovery","反馈纠错"],"title":["Miss. Observe. Try again.","抓取未成功，观察后再次尝试"],"task":["Move the bowl from the cabinet to the plate","将柜子上的碗移到盘子上"],"description":["The first grasp does not secure the bowl. In the supplied system rollout, TGL makes another attempt and completes the placement. This example illustrates feedback-driven recovery during execution.","第一次抓取未能夹稳碗。在这段系统视频中，TGL 再次尝试并完成放置，展示执行过程中的反馈纠错。"],"watch":["Watch the first lift attempt, then the renewed approach and successful transfer.","留意第一次抬起尝试，以及随后重新接近、抓取和搬运的过程。"]},
-    {"id":"libero_object_task02","suite":"Object","tag":["Skill execution","技能执行"],"title":["From a taught sequence to execution.","从演示中的步骤到自主执行"],"task":["Place the dressing bottle in the basket","将沙拉酱瓶放入篮子"],"description":["The teacher and TGL both complete the bottle transfer. The pair shows the acquire, transport, and release stages on another object.","教师与 TGL 都完成瓶子的搬运。这组对照展示抓取、运输与释放的步骤如何应用于另一种物体。"],"watch":["Track the bottle from the initial grasp to release above the basket.","观察从初始抓取到篮子上方释放的完整过程。"]},
-    {"id":"libero_goal_task07","suite":"Goal","tag":["Articulated control","关节式物体操控"],"title":["Turn a goal into a physical change.","将任务目标变成可观察的物理变化"],"task":["Turn on the stove","旋转旋钮，打开炉灶"],"description":["This task requires an interaction with the stove knob rather than moving an object to a new location. Both clips show the robot approaching and turning the control.","这项任务需要操作炉灶旋钮，而非搬运物体。两段视频展示机器人接近并旋转旋钮的过程。"],"watch":["Focus on the gripper–knob contact and the resulting rotation.","观察夹爪与旋钮的接触，以及旋钮随后的转动。"]}
-  ]
+    {
+      "id": "libero_object_task00",
+      "suite": "Object",
+      "tag": [
+        "Adaptation",
+        "抓取适应"
+      ],
+      "title": [
+        "Same goal. A different grasp.",
+        "同一个目标，不同的抓取方式"
+      ],
+      "task": [
+        "Place the soup can in the basket",
+        "将汤罐放入篮子"
+      ],
+      "description": [
+        "The teacher provides the task structure: acquire the can, carry it, and release it in the basket. TGL approaches and grasps the can differently while preserving the intended outcome.",
+        "教师演示提供抓取、搬运和放入篮子的任务结构。TGL 采用不同的接近与抓取方式，完成相同的目标。"
+      ],
+      "watch": [
+        "Compare the approach direction and gripper orientation before the lift.",
+        "观察抬起罐子前，两侧的接近方向和夹爪朝向。"
+      ]
+    },
+    {
+      "id": "libero_spatial_task00",
+      "suite": "Spatial",
+      "tag": [
+        "Scene grounding",
+        "场景适应"
+      ],
+      "title": [
+        "A new contact point. The same subgoal.",
+        "换一个接触位置，完成同一子目标"
+      ],
+      "task": [
+        "Place the bowl on the plate",
+        "将碗放到盘子上"
+      ],
+      "description": [
+        "TGL grasps a different part of the bowl rim from the teacher. The reusable subgoal stays the same, while the physical grasp is grounded in the current scene.",
+        "TGL 抓取碗沿的位置与教师不同。可复用的子目标保持不变，实际抓取根据当前场景确定。"
+      ],
+      "watch": [
+        "Follow where the fingers contact the rim in each rollout.",
+        "对照两段视频中夹爪与碗沿的接触位置。"
+      ]
+    },
+    {
+      "id": "libero_spatial_task09",
+      "suite": "Spatial",
+      "tag": [
+        "Feedback & recovery",
+        "反馈纠错"
+      ],
+      "title": [
+        "Miss. Observe. Try again.",
+        "抓取未成功，观察后再次尝试"
+      ],
+      "task": [
+        "Move the bowl from the cabinet to the plate",
+        "将柜子上的碗移到盘子上"
+      ],
+      "description": [
+        "The first grasp does not secure the bowl. In the supplied system rollout, TGL makes another attempt and completes the placement. This example illustrates feedback-driven recovery during execution.",
+        "第一次抓取未能夹稳碗。在这段系统视频中，TGL 再次尝试并完成放置，展示执行过程中的反馈纠错。"
+      ],
+      "watch": [
+        "Watch the first lift attempt, then the renewed approach and successful transfer.",
+        "留意第一次抬起尝试，以及随后重新接近、抓取和搬运的过程。"
+      ]
+    },
+    {
+      "id": "libero_object_task02",
+      "suite": "Object",
+      "tag": [
+        "Skill execution",
+        "技能执行"
+      ],
+      "title": [
+        "From a taught sequence to execution.",
+        "从演示中的步骤到自主执行"
+      ],
+      "task": [
+        "Place the dressing bottle in the basket",
+        "将沙拉酱瓶放入篮子"
+      ],
+      "description": [
+        "The teacher and TGL both complete the bottle transfer. The pair shows the acquire, transport, and release stages on another object.",
+        "教师与 TGL 都完成瓶子的搬运。这组对照展示抓取、运输与释放的步骤如何应用于另一种物体。"
+      ],
+      "watch": [
+        "Track the bottle from the initial grasp to release above the basket.",
+        "观察从初始抓取到篮子上方释放的完整过程。"
+      ]
+    },
+    {
+      "id": "libero_goal_task07",
+      "suite": "Goal",
+      "tag": [
+        "Articulated control",
+        "关节式物体操控"
+      ],
+      "title": [
+        "Turn a goal into a physical change.",
+        "将任务目标变成可观察的物理变化"
+      ],
+      "task": [
+        "Turn on the stove",
+        "旋转旋钮，打开炉灶"
+      ],
+      "description": [
+        "This task requires an interaction with the stove knob rather than moving an object to a new location. Both clips show the robot approaching and turning the control.",
+        "这项任务需要操作炉灶旋钮，而非搬运物体。两段视频展示机器人接近并旋转旋钮的过程。"
+      ],
+      "watch": [
+        "Focus on the gripper–knob contact and the resulting rotation.",
+        "观察夹爪与旋钮的接触，以及旋钮随后的转动。"
+      ]
+    }
+  ],
+  "seo": {
+    "paper_date": "2026/09/15",
+    "paper_date_iso": "2026-09-15",
+    "paper_type": "technical report",
+    "institution": "Shanghai Jiao Tong University",
+    "institution_zh": "上海交通大学",
+    "lab": "IRMV Lab",
+    "lab_url": "https://irmv.sjtu.edu.cn/",
+    "code_url": "https://github.com/IRMVLab/TGL",
+    "bibtex_key": "nie2026teachandgrow",
+    "arxiv_id": null,
+    "doi": null,
+    "abstract": "Vision-language-action (VLA) and world-action models often absorb unfamiliar manipulation tasks through additional robot data collection and policy optimization. This recurring retraining burden slows the acquisition of new behavior. We present Teach-and-Grow Learning (TGL), a training-free architecture that turns a few successful demonstrations into reusable robot skills. Task acquisition requires no gradient updates, fine-tuning, or reinforcement learning: pretrained model weights remain fixed as the robot expands its explicit knowledge. Our implementation uses OpenAI GPT-6 Astra for multimodal reasoning and Codex to connect the agent to robot tools. The agent identifies shared subgoals across demonstrations, expresses them as closed-loop Skill Blocks, and grounds each block in the current scene. Physical feedback guides subsequent actions and recovery. Verified behaviors enter a persistent Skill Library, while Experience Memory records the conditions and repairs that inform later decisions. TGL achieves 99.9% mean success across four LIBERO suites and 92.4% across seven LIBERO-Plus perturbation categories. Controlled studies show that taught blocks persist and improve related-task execution with the same model weights and executors. We further formulate a scaling hypothesis relating effective reusable experience to declining future-task error and teaching demand.",
+    "abstract_zh": "视觉-语言-动作（VLA）与世界动作模型通常需要通过追加机器人数据采集与策略优化，才能吸收不熟悉的操作任务；这种反复出现的再训练负担拖慢了新行为的获得。我们提出 Teach-and-Grow Learning（TGL），一种免训练架构，把少量成功演示转化为可复用的机器人技能。任务获取不需要梯度更新、微调或强化学习：预训练模型权重保持固定，机器人在此前提下扩展其显式知识。我们的实现使用 OpenAI GPT-6 Astra 进行多模态推理，并用 Codex 把智能体与机器人工具连接起来。智能体识别演示之间的共享子目标，将其表达为闭环的 Skill Block，并把每个块落地到当前场景。物理反馈引导后续动作与恢复。经验证的行为进入持久化的 Skill Library，Experience Memory 记录影响后续决策的条件与修复。TGL 在四个 LIBERO 套件上取得 99.9% 的平均成功率，在七个 LIBERO-Plus 扰动类别上取得 92.4%。",
+    "keywords": [
+      "Teach and Grow",
+      "TGL",
+      "Teach-and-Grow Learning",
+      "training-free robot learning",
+      "robot learning without fine-tuning",
+      "agent-centered architecture",
+      "agentic robotics",
+      "AI agent robot",
+      "Skill Blocks",
+      "Skill Library",
+      "Experience Memory",
+      "retraining tax",
+      "few-shot teaching",
+      "sparse teaching",
+      "robot manipulation",
+      "vision-language-action",
+      "VLA",
+      "world-action model",
+      "WAM",
+      "embodied AI",
+      "embodied intelligence",
+      "lifelong learning",
+      "continual learning",
+      "skill composition",
+      "GPT-6 Astra",
+      "Codex",
+      "LIBERO",
+      "LIBERO-Plus",
+      "robot foundation model",
+      "Franka",
+      "manipulation benchmark",
+      "test-time reasoning robot",
+      "Training-free robot learning",
+      "vision-language-action models"
+    ],
+    "keywords_zh": [
+      "Teach and Grow",
+      "TGL",
+      "免训练机器人学习",
+      "无需微调的机器人学习",
+      "智能体机器人",
+      "以智能体为中心的架构",
+      "具身智能",
+      "物理AI",
+      "机器人操作",
+      "技能块",
+      "技能库",
+      "经验记忆",
+      "再训练成本",
+      "少量示教",
+      "少样本学习",
+      "VLA",
+      "视觉语言动作模型",
+      "世界动作模型",
+      "持续学习",
+      "终身学习",
+      "技能组合",
+      "GPT-6 Astra",
+      "Codex",
+      "LIBERO 基准",
+      "机器人基础模型",
+      "机器人学习",
+      "智能体机器人学",
+      "少样本示教",
+      "视觉-语言-动作模型"
+    ],
+    "terms": [
+      {
+        "name": "Teach-and-Grow Learning (TGL)",
+        "name_zh": "Teach-and-Grow Learning（TGL）",
+        "definition": "A training-free robot-learning architecture that converts a few successful demonstrations into reusable, verifiable skills while pretrained model weights remain fixed.",
+        "definition_zh": "一种免训练的机器人学习架构：在预训练模型权重保持固定的前提下，把少量成功演示转化为可复用、可验证的技能。"
+      },
+      {
+        "name": "Training-free robot learning",
+        "name_zh": "免训练机器人学习",
+        "definition": "Acquiring a new robot capability without gradient updates, fine-tuning, or reinforcement learning. Pretrained weights stay fixed; new task knowledge lives in explicit skill and memory stores.",
+        "definition_zh": "在没有梯度更新、微调或强化学习的情况下获得新的机器人能力。预训练权重保持固定，新任务知识存放在显式的技能库与经验记忆中。"
+      },
+      {
+        "name": "Skill Block",
+        "name_zh": "Skill Block（技能块）",
+        "definition": "The unit of reusable robot behavior in TGL: a goal, a reusable strategy, supported conditions, compatible executors, and an outcome test. The semantic effect is retained; the physical realization is recomputed from the current scene.",
+        "definition_zh": "TGL 中可复用机器人行为的单元：目标、可复用策略、适用条件、兼容执行器与结果检验。语义效果被保留，物理实现则根据当前场景重新计算。"
+      },
+      {
+        "name": "Skill Library",
+        "name_zh": "Skill Library（技能库）",
+        "definition": "The persistent store of validated Skill Blocks, including their scopes, contracts, and executor compatibility. It grows after validation, not after every episode.",
+        "definition_zh": "经验证的 Skill Block 的持久化存储，包含其适用范围、契约与执行器兼容性。它在验证之后增长，而不是每个回合都增长。"
+      },
+      {
+        "name": "Experience Memory",
+        "name_zh": "Experience Memory（经验记忆）",
+        "definition": "The contextual store recording the task, selected blocks, observations, outcome, diagnosis, and repair of an attempt, so later decisions can reuse the conditions as well as the behavior.",
+        "definition_zh": "记录一次尝试的任务、所选技能块、观测、结果、诊断与修复的上下文存储，使后续决策既能复用行为，也能复用条件。"
+      },
+      {
+        "name": "Retraining tax",
+        "name_zh": "再训练成本（retraining tax）",
+        "definition": "The recurring cost of repairing robot behavior through policy updates: new data collection, optimization, and regression checking against previously supported behavior.",
+        "definition_zh": "通过策略更新修复机器人行为所带来的反复成本：新增数据采集、优化，以及对既有能力的回归验证。"
+      }
+    ],
+    "faq": [
+      {
+        "q": "What is Teach and Grow?",
+        "q_zh": "Teach and Grow 是什么？",
+        "a": "Teach and Grow (TGL) is a training-free architecture for general robot learning. A pretrained AI agent turns a few successful demonstrations into explicit, reusable skills; the robot acquires new manipulation tasks while its pretrained model weights stay fixed.",
+        "a_zh": "Teach and Grow（TGL）是一种面向通用机器人学习的免训练架构。预训练的 AI 智能体把少量成功演示转化为显式、可复用的技能，机器人在预训练模型权重保持固定的前提下获得新的操作任务能力。"
+      },
+      {
+        "q": "What does “training-free” mean here exactly?",
+        "q_zh": "这里的“免训练”具体指什么？",
+        "a": "It means acquiring the incoming task invokes no gradient update, no fine-tuning, and no reinforcement-learning stage. The agent and its specialist models may already be pretrained; what changes during task acquisition is the explicit skill and memory state, not the weights.",
+        "a_zh": "指获取当前任务的过程中不进行梯度更新、不做微调、也不包含强化学习阶段。智能体及其专用模型本身可以是预训练好的；任务获取过程中改变的是显式的技能与记忆状态，而不是权重。"
+      },
+      {
+        "q": "How is this different from training a VLA or world-action model?",
+        "q_zh": "这与训练 VLA 或世界动作模型有什么不同？",
+        "a": "VLA and world-action models absorb a new behavior by collecting more robot data and optimizing policy parameters. TGL instead repairs and extends behavior through explicit Skill Blocks, and calls the recurring cost of the parameter route the retraining tax: new data collection, optimization, and regression checking against everything the policy previously supported.",
+        "a_zh": "VLA 与世界动作模型通过采集更多机器人数据、优化策略参数来吸收新行为。TGL 则通过显式的 Skill Block 来修复和扩展行为，并把参数路线带来的反复成本称为“再训练成本”：新增数据采集、优化，以及对策略此前已支持能力的回归验证。"
+      },
+      {
+        "q": "What is a Skill Block?",
+        "q_zh": "什么是 Skill Block？",
+        "a": "A Skill Block is the unit of reusable behavior: a goal, a reusable strategy, supported conditions, compatible executors, and an outcome test. The semantic effect is what gets retained, while the physical realization — object bindings, grasp geometry, collision-free motion — is recomputed from the current scene.",
+        "a_zh": "Skill Block 是可复用行为的单元：包含目标、可复用策略、适用条件、兼容执行器与结果检验。被保留下来的是语义效果，而物理实现——物体绑定、抓取几何、无碰撞运动——则根据当前场景重新计算。"
+      },
+      {
+        "q": "What results does TGL report?",
+        "q_zh": "TGL 报告了哪些结果？",
+        "a": "The technical report reports 99.9% mean success across four LIBERO suites and 92.4% mean success across seven LIBERO-Plus perturbation categories. Controlled studies report that taught blocks persist and improve related-task execution with the same model weights and executors. Full comparison tables and protocols are in the paper.",
+        "a_zh": "技术报告报告了四个 LIBERO 套件上 99.9% 的平均成功率，以及七个 LIBERO-Plus 扰动类别上 92.4% 的平均成功率。受控研究显示，在模型权重与执行器相同的条件下，已习得的技能块可以保留并改善相关任务的执行。完整的对比表与实验协议见论文。"
+      },
+      {
+        "q": "What robot and agent does the implementation use?",
+        "q_zh": "实现使用了什么机器人与智能体？",
+        "a": "The implementation uses OpenAI GPT-6 Astra for multimodal reasoning and Codex to connect the agent to robot tools. Detection, segmentation, RGB-D geometry, Contact-GraspNet, MPLib and controllers supply the physical grounding and execution, evaluated in the LIBERO simulation suite.",
+        "a_zh": "实现使用 OpenAI GPT-6 Astra 进行多模态推理，并使用 Codex 把智能体与机器人工具连接起来。检测、分割、RGB-D 几何、Contact-GraspNet、MPLib 与控制器负责物理落地与执行，并在 LIBERO 仿真套件中评测。"
+      },
+      {
+        "q": "Is the paper published?",
+        "q_zh": "论文发表了吗？",
+        "a": "This is a technical report. No venue acceptance is claimed. The current manuscript is available as a PDF from this site, and the method implementation is maintained in the IRMVLab/TGL repository.",
+        "a_zh": "这是一份技术报告，不主张已被任何会议或期刊接收。当前稿件可以通过本站下载 PDF，方法实现维护在 IRMVLab/TGL 仓库中。"
+      }
+    ],
+    "paper_keywords": [
+      "Training-free robot learning",
+      "agentic robotics",
+      "GPT-6 Astra",
+      "Codex",
+      "few-shot teaching",
+      "vision-language-action models",
+      "lifelong learning",
+      "skill composition",
+      "embodied intelligence"
+    ],
+    "paper_keywords_zh": [
+      "免训练机器人学习",
+      "智能体机器人学",
+      "GPT-6 Astra",
+      "Codex",
+      "少样本示教",
+      "视觉-语言-动作模型",
+      "终身学习",
+      "技能组合",
+      "具身智能"
+    ],
+    "context": "Teach and Grow sits inside embodied-intelligence and agentic-robotics research, and targets general robot manipulation. Work in this area is usually organised around vision-language-action (VLA) models, which map perception and language directly to control, and world-action models (WAM), which add learned physical dynamics. Both absorb a new capability by collecting more robot data and optimising policy parameters. Robot foundation models supply the priors TGL relies on; TGL changes where new task knowledge is stored, not how strong those priors are. Its neighbours therefore include few-shot and sparse-teaching methods, skill-composition and skill-library approaches, lifelong and continual learning, and agent-based robot control. The technical report's own keywords are listed above.",
+    "context_zh": "Teach and Grow 属于具身智能与智能体机器人学（agentic robotics）的研究脉络，面向通用机器人操作。这一领域通常围绕两类方法组织：视觉-语言-动作（VLA）模型把感知与语言直接映射为控制，世界动作模型（WAM）进一步引入学习到的物理动态。两者都通过采集更多机器人数据、优化策略参数来吸收新能力。机器人基础模型为 TGL 提供先验；TGL 改变的是新任务知识存放的位置，而不是先验的强弱。因此它的邻近方向包括少样本与稀疏示教方法、技能组合与技能库方法、终身学习与持续学习，以及基于智能体的机器人控制。技术报告自身的关键词见上。"
+  }
 }

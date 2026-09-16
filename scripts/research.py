@@ -1,6 +1,8 @@
 """Bilingual research narrative, grounded in the current manuscript and appendices."""
-def sections(t, figure, paper):
+def sections(t, figure, paper, data=None):
     def p(en, zh): return '<p>'+t(en,zh)+'</p>'
+    seo = (data or {}).get('seo', {})
+    terms = seo.get('terms', [])
     def intro(n,k,title,lead):
         return f'<div class="section-intro"><p class="eyebrow">{n} / {k}</p><h2>{title}</h2><p class="lead">{lead}</p></div>'
     overview = '<section id="overview" class="section container">'+intro('01',t('THE PROBLEM','问题从哪里来'),t('Where end-to-end VLA and WAM learning becomes costly.','端到端 VLA 与 WAM 的能力扩展，难在哪里？'),t('A robot encounters a new container, a changed camera, or a grasp that no longer works. The missing behavior may be local. The effort to acquire it can reach across the entire learning system.','一个新容器、变化的相机位置，或一次不再奏效的抓取，都可能暴露局部的能力缺口。补上这个缺口，却往往牵动整个学习系统。'))
@@ -62,4 +64,22 @@ def sections(t, figure, paper):
     growth+='<div class="reading-wide subtopic"><h3>'+t('VLA, WAM, and classical robotics remain part of the system.','VLA、WAM 与经典机器人方法都可以进入这一系统。')+'</h3>'+p('A learned policy can implement a block, execute a familiar composition, or become a future student. A geometric planner can bridge two skills; a visual servo can close a local loop; tactile sensing can strengthen a contact check. TGL supplies the semantic contract and feedback structure through which these components contribute to a task.','学习策略可以实现某个技能块、执行熟悉的技能组合，或成为未来的学生。几何规划器可以连接两个技能，视觉伺服可以完成局部闭环，触觉可以加强接触检查。TGL 提供语义契约与反馈结构，让这些组件共同服务于任务。')+p('The same perspective extends to teaching sources. Robot trajectories, simulation, human video, and written procedures offer different kinds of evidence. A manual may reveal the order of operations while leaving the grasp unresolved. The architecture preserves that distinction: semantic knowledge guides acquisition, and robot-specific grounding and validation determine what can actually run.','同样的思路也适用于示教来源。机器人轨迹、仿真、人类视频与书面操作流程提供不同类型的证据。手册可能揭示操作顺序，却没有解决抓取方式。架构保留这种区别：语义知识指导获取，机器人相关的场景落地与验证决定哪些行为真正能够运行。')+'</div>'
     growth+=figure(6,t('Models, tools, teaching sources, and feedback in the TGL ecosystem','TGL 生态中的模型、工具、示教来源与反馈'),t('A whole-system view. Dashed paths mark proposed distillation and fleet sharing.','系统整体视角。虚线路径表示拟议的蒸馏与多机器人共享。'))
     growth+='<details class="deep-dive"><summary>'+t('Why local skill updates may change acquisition cost','为什么局部技能更新可能改变能力获取成本')+' <span>+</span></summary><div class="reading-wide">'+p('A local skill addition can avoid reopening every part of the learning system, provided grounding, validation, compatibility, and retrieval remain manageable. Those conditions matter: unrestricted pairwise compatibility checks can make library growth expensive. The paper analyzes these different cost regimes rather than treating low-cost growth as automatic.','如果场景落地、验证、兼容性检查和检索成本保持可控，局部增加技能就可能避免重新更新整个学习系统。这些条件至关重要：不受限制的两两兼容性检查同样可能使技能库增长变得昂贵。论文分析不同的成本情形，而不把低成本增长视为自动成立。')+'</div>'+figure(5,t('Conditional acquisition-cost regimes','条件性的能力获取成本模型'),t('Analytic cost regimes under different assumptions about coverage and local compatibility.','在不同覆盖需求与局部兼容性假设下的分析性成本情形。'))+'</details></section>'
-    return dict(overview=overview,origins=origins,idea=idea,method=method,memory=memory,investigation=investigation,growth=growth)
+    abstract='<section id="abstract" class="section soft"><div class="container">'+intro(t('ABSTRACT','摘要'),t('PAPER SUMMARY','论文摘要'),t('The paper in its own words.','论文摘要原文。'),t('The abstract of the technical report, reproduced verbatim so the claims can be quoted and checked directly.','技术报告摘要原文，便于直接引用与核对。'))
+    abstract+='<blockquote class="abstract-text">'+t(seo.get('abstract',''),seo.get('abstract_zh',''))+'</blockquote>'
+    abstract+='<p class="paper-keywords"><span class="kw-label">'+t('Keywords','关键词')+'</span>'+t(' · '.join(seo.get('paper_keywords',[])),' · '.join(seo.get('paper_keywords_zh',[])))+'</p>'
+    abstract+='<div class="reading-wide"><h3>'+t('Where this work sits','这项工作处在什么位置')+'</h3>'+p(seo.get('context',''),seo.get('context_zh',''))+'</div>'
+    abstract+='<div class="abstract-meta"><p>'+t('Technical report · Shanghai Jiao Tong University · 2026','技术报告 · 上海交通大学 · 2026')+'</p><p class="small">'+t('Cite as: Chang Nie, Zhe Liu and Hesheng Wang, “Teach and Grow: An Agent-Centered Architecture for General Robot Learning,” technical report, Shanghai Jiao Tong University, 2026.','引用格式：Chang Nie, Zhe Liu and Hesheng Wang, “Teach and Grow: An Agent-Centered Architecture for General Robot Learning,” 技术报告，上海交通大学，2026。')+'</p></div></div></section>'
+
+    glossary='<section id="glossary" class="section container">'+intro(t('GLOSSARY','术语表'),t('KEY TERMS','关键术语'),t('The terminology this work introduces.','本工作提出的术语。'),t('Each term is defined on its own so that it can be quoted, checked, or reused without the surrounding page.','每条定义都保持自包含，便于单独引用、核对或复用。'))
+    glossary+='<dl class="glossary-grid">'
+    for _term in terms:
+        glossary+='<div class="glossary-item"><dt>'+t(_term['name'],_term.get('name_zh',_term['name']))+'</dt><dd>'+t(_term['definition'],_term.get('definition_zh',_term['definition']))+'</dd></div>'
+    glossary+='</dl></section>'
+
+    faq=    faq='<section id="faq" class="section soft"><div class="container">'+intro(t('FAQ','常见问题'),t('QUESTIONS','问答'),t('Direct answers about TGL.','关于 TGL 的直接回答。'),t('Short, self-contained answers written so that a reader or an AI assistant can quote them without the rest of the page.','以下回答刻意写成自包含的，读者或 AI 助手可以直接引用，而无需依赖页面其余部分。'))
+    faq+='<div class="faq-list">'
+    for _item in seo.get('faq',[]):
+        faq+='<details class="faq-item"><summary><h3>'+t(_item['q'],_item.get('q_zh',_item['q']))+'</h3></summary><div class="faq-answer">'+p(_item['a'],_item.get('a_zh',_item['a']))+'</div></details>'
+    faq+='</div></div></section>'
+
+    return dict(overview=overview,origins=origins,idea=idea,method=method,memory=memory,investigation=investigation,growth=growth,abstract=abstract,glossary=glossary,faq=faq)
