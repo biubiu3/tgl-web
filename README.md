@@ -100,7 +100,12 @@ project without scraping HTML. All of it is generated from `content/site.json`:
 The page carries a JSON-LD `@graph` (WebSite, WebPage, ScholarlyArticle, SoftwareSourceCode, Person,
 CollegeOrUniversity, Organization, DefinedTermSet, ImageObject, 10 VideoObject, ItemList, Dataset and
 FAQPage) and Google Scholar Highwire `citation_*` tags. `citation_publication_date` must stay in
-`YYYY/MM/DD` form or Scholar mis-parses it. `arxiv_id` and `doi` are `null` in `site.json`; when they are
+`YYYY/MM/DD` form or Scholar mis-parses it.
+
+Highwire `citation_*` tags appear on the two canonical pages — `/` and `/paper/` — and deliberately **not** on
+the concept or research-context pages. Both carry the same `citation_title`, authors and `citation_pdf_url`, so
+Scholar resolves them to one work with one PDF; the other pages would only add near-duplicate records. If that
+ever needs to change, `_citation_tags()` in `scripts/seo.py` is the single place that emits them. `arxiv_id` and `doi` are `null` in `site.json`; when they are
 filled in, `scripts/seo.py` emits `citation_arxiv_id` / `citation_doi` and the matching `identifier` and
 `sameAs` automatically.
 

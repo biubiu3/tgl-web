@@ -1056,6 +1056,30 @@ def _subpage_jsonld(page, lang, url, data, page_url):
     return graph
 
 
+def _citation_tags(page, data, url, zh):
+    """Highwire citation metadata. Only the publication record carries it: Scholar
+    should see one landing page per paper, not eight."""
+    if page["slug"] != "paper":
+        return []
+    seo = data["seo"]
+    tags = [
+        f'<meta name="citation_title" content="{e(data["title"])}">',
+        *[f'<meta name="citation_author" content="{e(n)}">' for n in data["authors"]],
+        f'<meta name="citation_publication_date" content="{seo["paper_date"]}">',
+        f'<meta name="citation_online_date" content="{seo["paper_date"]}">',
+        '<meta name="citation_language" content="en">',
+        f'<meta name="citation_pdf_url" content="{url}assets/paper/teach-and-grow.pdf">',
+        f'<meta name="citation_technical_report_institution" content="{e(seo["institution"])}">',
+        f'<meta name="citation_keywords" content="{e(", ".join(seo["keywords"]))}">',
+        f'<meta name="citation_abstract" content="{e(seo["abstract"])}">',
+    ]
+    if seo.get("arxiv_id"):
+        tags.append(f'<meta name="citation_arxiv_id" content="{e(seo["arxiv_id"])}">')
+    if seo.get("doi"):
+        tags.append(f'<meta name="citation_doi" content="{e(seo["doi"])}">')
+    return tags
+
+
 def _subpage_head(page, lang, url, data, page_url):
     seo = data["seo"]
     zh = lang == "zh"
@@ -1092,6 +1116,7 @@ def _subpage_head(page, lang, url, data, page_url):
         f'<meta name="twitter:image" content="{url}assets/brand/tgl-cover-v4.png">',
         '<meta name="theme-color" content="#155e59">',
         '<meta name="color-scheme" content="light">',
+        *_citation_tags(page, data, url, zh),
         '<script type="application/ld+json">',
         json.dumps({"@context": "https://schema.org",
                     "@graph": _subpage_jsonld(page, lang, url, data, page_url)},
