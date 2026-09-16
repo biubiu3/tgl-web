@@ -55,18 +55,18 @@ filters.querySelectorAll('button').forEach(button => button.addEventListener('cl
     if (card.hidden) card.querySelectorAll('video').forEach(v => v.pause());
   });
 }));
-const resultTabs = document.querySelector('.result-tabs');
-resultTabs.hidden = false;
-const selectResult = id => {
-  resultTabs.querySelectorAll('button').forEach(b => {
-    const active = b.dataset.result === id;
+const stageButtons = document.querySelector('.walk-tabs');
+stageButtons.hidden = false;
+const selectStage = id => {
+  stageButtons.querySelectorAll('button').forEach(b => {
+    const active = b.dataset.stage === id;
     b.classList.toggle('active', active);
     b.setAttribute('aria-pressed', String(active));
   });
-  document.querySelectorAll('.result-panel').forEach(p => { p.hidden = p.id !== `result-${id}`; });
+  document.querySelectorAll('.walk-panel').forEach(p => { p.hidden = p.id !== `stage-${id}`; });
 };
-resultTabs.querySelectorAll('button').forEach(b => b.addEventListener('click', () => selectResult(b.dataset.result)));
-selectResult('libero');
+stageButtons.querySelectorAll('button').forEach(b => b.addEventListener('click', () => selectStage(b.dataset.stage)));
+selectStage('teach');
 const copy = document.getElementById('copy-citation');
 copy.hidden = false;
 copy.addEventListener('click', async () => {
