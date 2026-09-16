@@ -2,8 +2,10 @@
 
 Bilingual project page for **Teach and Grow: An Agent-Centered Architecture for General Robot Learning**, by Chang Nie, Zhe Liu, and Hesheng Wang (Shanghai Jiao Tong University).
 
-Review URL: **https://biubiu3.github.io/tgl-web/**  
-Chinese: **https://biubiu3.github.io/tgl-web/zh/**
+Production URL: **https://tgl.changnie.top/**<br>
+Chinese: **https://tgl.changnie.top/zh/**
+
+GitHub review URL: https://biubiu3.github.io/tgl-web/ (redirects after the custom domain is bound).
 
 This repository contains the website, paper PDF, figure exports, and ten author-supplied videos. The robot implementation is maintained separately at https://github.com/IRMVLab/TGL. A problem-led research narrative, method explanations, and paired demonstrations are inspired by https://hear.irmv.top/; the implementation, typography, color palette, and interactions are original. The research edition uses a restrained dark-blue technical masthead with light reading sections. It traces the problem, early agent experiments, sparse teaching, Skill Blocks, physical feedback, retained experience, and the longer-term research direction. Numerical scoreboards are intentionally left in the paper.
 
@@ -24,33 +26,22 @@ Open http://localhost:8000/ (Chinese: `/zh/`). Local preview omits GitHub's repo
 1. Open https://github.com/biubiu3/tgl-web/settings/pages.
 2. Under **Build and deployment**, set **Source** to **GitHub Actions**.
 3. Open **Actions → Build and deploy TGL website** and rerun the latest workflow, or use **Run workflow** on `main`.
-4. Wait for both `build` and `deploy` to succeed. Visit the review URL above.
+4. Wait for both `build` and `deploy` to succeed. Visit the configured site URL above.
 
 Every subsequent push to `main` rebuilds, checks links and benchmark arithmetic, and deploys the static artifact. GitHub Pages ties the first path component to the repository name. An exact `biubiu3.github.io/tgl/` URL requires a repository named `tgl` or a route in the owner's `biubiu3.github.io` site.
 
-## Future custom domain: tgl.changnie.top
+## Production domain: tgl.changnie.top
 
-Do this after accepting the review site. DNS has not been changed by this repository.
+`deployment.json` is configured for the production domain. Account-side setup is still required:
 
-1. In this repository's **Settings → Pages → Custom domain**, enter `tgl.changnie.top` and save.
-2. In the Cloudflare zone for `changnie.top`, create a DNS record: **CNAME**, name **tgl**, target **biubiu3.github.io**, **DNS only** (gray cloud), TTL **Auto**. The target is a hostname, with no scheme or path. Replace an existing record at `tgl` only after confirming it is no longer needed.
-3. Update `deployment.json` to:
-   ```json
-   {
-     "url": "https://tgl.changnie.top/",
-     "custom_domain": "tgl.changnie.top"
-   }
-   ```
-4. Commit and push. The build places the site at the domain root, updates canonical/hreflang/social/PDF/BibTeX URLs, sitemap and robots.txt, and emits `CNAME`. Chinese becomes `/zh/`.
-5. Wait for GitHub's DNS check and certificate provisioning, then enable **Enforce HTTPS**. Check the English/Chinese pages, PDF, figures, and video playback over HTTPS. GitHub may need time to issue the certificate.
-6. If GitHub requests ownership verification, use its exact TXT hostname and value in Cloudflare. No account password or Cloudflare global API key is needed.
+1. Open https://github.com/biubiu3/tgl-web/settings/pages. Keep Source as **GitHub Actions**. Set **Custom domain** to `tgl.changnie.top` and save.
+2. In Cloudflare, select `changnie.top` → **DNS → Records**. Add **CNAME**, name **tgl**, target **biubiu3.github.io**, proxy **DNS only** (gray cloud), TTL **Auto**. Do not include `https://` or a repository path in the target. Leave the apex and other subdomains unchanged.
+3. Wait for GitHub's DNS check and TLS certificate, then enable **Enforce HTTPS**. This option can take up to 24 hours to become available.
+4. Verify `/`, `/zh/`, the paper PDF, images, and video playback on the production domain. Update external project links after HTTPS is live.
 
-The future configuration can be tested without altering the current review deployment:
+The build updates canonical, hreflang, social, PDF, BibTeX, sitemap, and robots URLs. It also emits `CNAME` for portability, but **GitHub Actions deployments ignore that file for domain binding**: the Pages setting in step 1 is required.
 
-```bash
-python3 scripts/build.py --url https://tgl.changnie.top/ --custom-domain tgl.changnie.top --out dist-custom
-python3 -m http.server 8001 --directory dist-custom
-```
+References: [GitHub custom domains](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site), [Cloudflare proxy status](https://developers.cloudflare.com/dns/proxy-status/).
 
 ## Editing
 
