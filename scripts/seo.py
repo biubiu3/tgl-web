@@ -443,13 +443,26 @@ def html_to_md(fragment):
 ROBOTS = """# robots.txt for {origin}/
 # {title}
 #
-# This is an open research project page. The authors WANT search engines, AI
-# answer engines, AI agents and model developers to index, retrieve, quote and
-# cite this work. Nothing is blocked.
+# This is an open research project page. The authors want search engines, AI
+# answer engines and AI agents to index, retrieve, quote and cite this work.
 #
 # The providers now split their crawlers by role, so this file configures the
 # three roles separately: blocking a *search* bot removes the site from that
 # product's answers, while blocking a *training* bot does not.
+#
+# NOTE ON ENFORCEMENT. This file states intent; it does not enforce it. As of
+# 2026-09-16 the Cloudflare zone for this host returns HTTP 403 for several
+# training crawlers (GPTBot, ClaudeBot, CCBot, Bytespider, Amazonbot) via a
+# zone-level WAF rule managed in Cloudflare AI Crawl Control, while every
+# search-index crawler listed in section 1 reaches the site normally. So the
+# effective policy today is "search and retrieval allowed, training blocked" —
+# the opposite of what the Allow lines in section 3 below say.
+#
+# To make the two agree, change ONE side:
+#   - to permit training: Cloudflare dashboard -> AI Crawl Control -> Crawlers
+#     -> set those crawlers to Allow; or
+#   - to reserve training rights: change the section 3 Allow lines to Disallow.
+# Leaving both as they are means robots.txt misreports what actually happens.
 #
 # Machine-readable entry points:
 #   {url}llms.txt        - LLM-friendly index (Markdown)

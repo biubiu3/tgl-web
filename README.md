@@ -89,6 +89,36 @@ discover figures from disk rather than assuming a count.
 **This is a technical report. The site does not claim venue acceptance anywhere, and that should not change
 without the authors' instruction.**
 
+## AI crawler access: two layers, currently disagreeing
+
+`robots.txt` states intent; Cloudflare enforces. **As of 2026-09-16 the two do not match**, and this is the
+single most consequential setting for AI discoverability:
+
+| Layer | Training crawlers (GPTBot, ClaudeBot, CCBot, Bytespider, Amazonbot) | Search crawlers (OAI-SearchBot, Claude-SearchBot, PerplexityBot, Kimi-SearchBot, bingbot, Googlebot, Baiduspider) |
+| --- | --- | --- |
+| `robots.txt` section 3 | `Allow: /` | `Allow: /` |
+| Cloudflare edge | **HTTP 403, "Your request was blocked."** | HTTP 200 with real content |
+
+Blocking a *training* crawler does not affect whether the site appears in that product's answers — ChatGPT
+search reads `OAI-SearchBot`, which is not blocked. So this does not harm AI-search visibility. It does
+decide whether the work enters model training corpora.
+
+To resolve it, change one side only:
+
+- **To permit training**, open the Cloudflare dashboard → **AI Crawl Control** → **Crawlers** tab and set each of
+  those agents to **Allow**. (Blocking is implemented as a zone-level WAF rule, so the change takes effect
+  immediately.)
+- **To reserve training rights**, edit `ROBOTS` in `scripts/seo.py` and change the section 3 `Allow:` lines to
+  `Disallow:`.
+
+Verify with a real user-agent probe after any change:
+
+```bash
+for ua in "GPTBot/1.4" "OAI-SearchBot/1.4" "ClaudeBot/1.0" "Claude-SearchBot/1.0" "CCBot/2.0"; do
+  printf '%s  %s\n' "$(curl -s -o /dev/null -w '%{http_code}' -A "$ua" https://tgl.changnie.top/)" "$ua"
+done
+```
+
 ## Generated visual identity
 
 `assets/brand/tgl-logo-v3.png` and `assets/brand/tgl-cover-v4.png` were created with native ImageGen for this project. The logo expresses robotic manipulation and capability growth. The cover is conceptual artwork, not a physical-robot experiment. Original generated PNGs are preserved. The cover is used in the page and social metadata.
