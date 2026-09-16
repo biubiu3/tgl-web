@@ -1,0 +1,38 @@
+{
+  "title": "Teach and Grow: An Agent-Centered Architecture for General Robot Learning",
+  "authors": ["Chang Nie", "Zhe Liu", "Hesheng Wang"],
+  "year": "2026",
+  "libero": {
+    "columns": ["Spatial", "Object", "Goal", "Long", "Mean"],
+    "rows": [
+      ["OpenVLA", 84.7, 88.4, 79.2, 53.7, 76.5],
+      ["OpenVLA-OFT", 97.6, 98.4, 97.9, 94.5, 97.1],
+      ["SRPO", 98.8, 100.0, 99.4, 98.6, 99.2],
+      ["VLANeXt", 99.0, 99.2, 96.6, 94.8, 97.4],
+      ["InternVLA-A1.5", 98.6, 99.8, 98.6, 98.4, 98.9],
+      ["LaST-R1", 99.8, 100.0, 100.0, 99.8, 99.9],
+      ["TGL (ours)", 99.7, 100.0, 100.0, 99.9, 99.9]
+    ]
+  },
+  "plus": {
+    "columns": ["Camera", "Robot", "Language", "Light", "Background", "Noise", "Layout", "Mean"],
+    "rows": [
+      ["OpenVLA", 0.8, 3.5, 23.0, 8.1, 34.8, 15.2, 28.5, 16.3],
+      ["π₀", 13.8, 6.0, 58.8, 85.0, 81.4, 79.0, 68.9, 56.1],
+      ["OpenVLA-OFT", 56.4, 31.9, 79.5, 88.7, 93.3, 75.8, 74.2, 71.4],
+      ["OpenVLA-OFT+", 92.8, 30.3, 85.8, 94.9, 93.9, 89.3, 77.6, 80.7],
+      ["VLANeXt", 90.4, 65.7, 81.8, 95.9, 82.5, 94.1, 80.8, 84.5],
+      ["InternVLA-A1.5", 83.1, 55.1, 86.9, 96.4, 98.2, 95.6, 85.2, 85.8],
+      ["π₀.₅ + MCSI", 86.0, 83.0, 83.0, 97.0, 98.0, 92.0, 87.0, 89.4],
+      ["π₀.₅ + RAS + MCSI", 81.0, 88.0, 90.0, 97.0, 96.0, 90.0, 86.0, 89.7],
+      ["TGL (ours)", 87.3, 90.7, 96.8, 97.3, 97.4, 89.9, 87.2, 92.4]
+    ]
+  },
+  "videos": [
+    {"id":"libero_object_task00","suite":"Object","tag":["Adaptation","抓取适应"],"title":["Same goal. A different grasp.","同一个目标，不同的抓取方式"],"task":["Place the soup can in the basket","将汤罐放入篮子"],"description":["The teacher provides the task structure: acquire the can, carry it, and release it in the basket. TGL approaches and grasps the can differently while preserving the intended outcome.","教师演示提供抓取、搬运和放入篮子的任务结构。TGL 采用不同的接近与抓取方式，完成相同的目标。"],"watch":["Compare the approach direction and gripper orientation before the lift.","观察抬起罐子前，两侧的接近方向和夹爪朝向。"]},
+    {"id":"libero_spatial_task00","suite":"Spatial","tag":["Scene grounding","场景适应"],"title":["A new contact point. The same subgoal.","换一个接触位置，完成同一子目标"],"task":["Place the bowl on the plate","将碗放到盘子上"],"description":["TGL grasps a different part of the bowl rim from the teacher. The reusable subgoal stays the same, while the physical grasp is grounded in the current scene.","TGL 抓取碗沿的位置与教师不同。可复用的子目标保持不变，实际抓取根据当前场景确定。"],"watch":["Follow where the fingers contact the rim in each rollout.","对照两段视频中夹爪与碗沿的接触位置。"]},
+    {"id":"libero_spatial_task09","suite":"Spatial","tag":["Feedback & recovery","反馈纠错"],"title":["Miss. Observe. Try again.","抓取未成功，观察后再次尝试"],"task":["Move the bowl from the cabinet to the plate","将柜子上的碗移到盘子上"],"description":["The first grasp does not secure the bowl. In the supplied system rollout, TGL makes another attempt and completes the placement. This example illustrates feedback-driven recovery during execution.","第一次抓取未能夹稳碗。在这段系统视频中，TGL 再次尝试并完成放置，展示执行过程中的反馈纠错。"],"watch":["Watch the first lift attempt, then the renewed approach and successful transfer.","留意第一次抬起尝试，以及随后重新接近、抓取和搬运的过程。"]},
+    {"id":"libero_object_task02","suite":"Object","tag":["Skill execution","技能执行"],"title":["From a taught sequence to execution.","从演示中的步骤到自主执行"],"task":["Place the dressing bottle in the basket","将沙拉酱瓶放入篮子"],"description":["The teacher and TGL both complete the bottle transfer. The pair shows the acquire, transport, and release stages on another object.","教师与 TGL 都完成瓶子的搬运。这组对照展示抓取、运输与释放的步骤如何应用于另一种物体。"],"watch":["Track the bottle from the initial grasp to release above the basket.","观察从初始抓取到篮子上方释放的完整过程。"]},
+    {"id":"libero_goal_task07","suite":"Goal","tag":["Articulated control","关节式物体操控"],"title":["Turn a goal into a physical change.","将任务目标变成可观察的物理变化"],"task":["Turn on the stove","旋转旋钮，打开炉灶"],"description":["This task requires an interaction with the stove knob rather than moving an object to a new location. Both clips show the robot approaching and turning the control.","这项任务需要操作炉灶旋钮，而非搬运物体。两段视频展示机器人接近并旋转旋钮的过程。"],"watch":["Focus on the gripper–knob contact and the resulting rotation.","观察夹爪与旋钮的接触，以及旋钮随后的转动。"]}
+  ]
+}

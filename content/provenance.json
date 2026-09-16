@@ -1,0 +1,33 @@
+{
+  "paper_sha256": "0b7f68b44dc4666dd1f4acf4caca8eb6271c3d663bbc211de6e3d1165e832170",
+  "manuscript_sha256": "3f42a0d1c1cb3ab5669806e0b492373c5e2ad9a2cff5380e6d64b621d549ae49",
+  "figures": [
+    {
+      "asset": "fig2.webp",
+      "source": "teach_and_grow_learning/figures_author_pdf/fig2.pdf",
+      "sha256": "de3b2bf2c44e1a9b77daae41048cceac3159372ffe26df09915cbe0cd1717024"
+    },
+    {
+      "asset": "fig3.webp",
+      "source": "teach_and_grow_learning/figures_author_pdf/fig3.pdf",
+      "sha256": "0b016c6c532aece9ba7eebd3c67b50a298449918ab36dc812f72d6016b1f80c2"
+    },
+    {
+      "asset": "fig4.webp",
+      "source": "teach_and_grow_learning/figures_author_pdf/fig4.pdf",
+      "sha256": "cbddaa24345af3081aacb62d5c9e30e693daca5854e0b6a18c19104cd0ee2726"
+    },
+    {
+      "asset": "fig5.webp",
+      "source": "teach_and_grow_learning/figures_author_pdf/fig5.pdf",
+      "sha256": "749060b669648d336feebd49e12c95c273996bf986174e666e4dd5bd33e1535f"
+    },
+    {
+      "asset": "fig6.webp",
+      "source": "teach_and_grow_learning/figures_author_pdf/fig6.pdf",
+      "sha256": "ee528701975ee7f1e098531f6f37a380db821088a391d92ae0e2f79cf2ee6c71"
+    }
+  ],
+  "videos": "Author supplied video/*.mp4; copied byte for byte.",
+  "task_correction": "libero_goal_task07 is turn_on_the_stove, per task map and visual inspection; name.txt describes a bottle cap."
+}
