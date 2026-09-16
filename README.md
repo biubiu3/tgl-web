@@ -5,7 +5,7 @@ Bilingual project page for **Teach and Grow: An Agent-Centered Architecture for 
 Review URL: **https://biubiu3.github.io/tgl-web/**  
 Chinese: **https://biubiu3.github.io/tgl-web/zh/**
 
-This repository contains the website, paper PDF, figure exports, and ten author-supplied videos. It does not contain the robot implementation. A problem-led research narrative, method explanations, and paired demonstrations are inspired by https://hear.irmv.top/; the implementation, typography, color palette, and interactions are original. The research edition uses a restrained dark-blue technical masthead with light reading sections. It traces the problem, early agent experiments, sparse teaching, Skill Blocks, physical feedback, retained experience, and the longer-term research direction. Numerical scoreboards are intentionally left in the paper.
+This repository contains the website, paper PDF, figure exports, and ten author-supplied videos. The robot implementation is maintained separately at https://github.com/IRMVLab/TGL. A problem-led research narrative, method explanations, and paired demonstrations are inspired by https://hear.irmv.top/; the implementation, typography, color palette, and interactions are original. The research edition uses a restrained dark-blue technical masthead with light reading sections. It traces the problem, early agent experiments, sparse teaching, Skill Blocks, physical feedback, retained experience, and the longer-term research direction. Numerical scoreboards are intentionally left in the paper.
 
 ## Local preview
 
@@ -68,3 +68,7 @@ python3 -m http.server 8001 --directory dist-custom
 The supplied description calls Goal task 07 a bottle-cap task. The local LIBERO task map identifies it as `turn_on_the_stove`, consistent with inspection of both videos; the website uses that name. Paired video playback shares a start time but does not time-align actions or imply a speed comparison. The page presents five qualitative simulation examples, qualitative study descriptions, bounded observations, and clearly identified scaling hypotheses. It does not assert publication acceptance, a released robot codebase, empirical readiness, or an independently replicated benchmark.
 
 Images open in an accessible native dialog (Escape to close). Videos retain native controls, and content remains readable when JavaScript is disabled. All stages of the worked example remain visible without JavaScript. Reduced-motion preferences are respected.
+
+## Generated visual identity
+
+`assets/brand/tgl-logo.png` and `assets/brand/tgl-cover.png` were created with native ImageGen for this project. The logo expresses robotic manipulation and capability growth. The cover is conceptual artwork, not a physical-robot experiment. Original generated PNGs are preserved. The cover is used in the page and social metadata.
