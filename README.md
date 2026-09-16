@@ -71,4 +71,4 @@ Images open in an accessible native dialog (Escape to close). Videos retain nati
 
 ## Generated visual identity
 
-`assets/brand/tgl-logo.png` and `assets/brand/tgl-cover.png` were created with native ImageGen for this project. The logo expresses robotic manipulation and capability growth. The cover is conceptual artwork, not a physical-robot experiment. Original generated PNGs are preserved. The cover is used in the page and social metadata.
+`assets/brand/tgl-logo-v2.png` and `assets/brand/tgl-cover-v2.png` were created with native ImageGen for this project. The logo expresses robotic manipulation and capability growth. The cover is conceptual artwork, not a physical-robot experiment. Original generated PNGs are preserved. The cover is used in the page and social metadata.
