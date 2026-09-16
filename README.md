@@ -2,8 +2,8 @@
 
 Bilingual project page for **Teach and Grow: An Agent-Centered Architecture for General Robot Learning**, by Chang Nie, Zhe Liu, and Hesheng Wang (Shanghai Jiao Tong University).
 
-Review URL: **https://biubiu3.github.io/tgl-web/tgl/**  
-Chinese: **https://biubiu3.github.io/tgl-web/tgl/zh/**
+Review URL: **https://biubiu3.github.io/tgl-web/**  
+Chinese: **https://biubiu3.github.io/tgl-web/zh/**
 
 This repository contains the website, paper PDF, figure exports, and ten author-supplied videos. It does not contain the robot implementation. White backgrounds, a centered paper masthead, resource links, and a long-form research narrative are inspired by https://hear.irmv.top/; the implementation, typography, color palette, and interactions are original.
 
@@ -17,7 +17,7 @@ python3 scripts/check_site.py
 python3 -m http.server 8000 --directory dist
 ```
 
-Open http://localhost:8000/tgl/ (Chinese: `/tgl/zh/`). Local preview omits GitHub's repository prefix. No runtime third-party fonts, scripts, analytics, or embeds are loaded.
+Open http://localhost:8000/ (Chinese: `/zh/`). Local preview omits GitHub's repository prefix. No runtime third-party fonts, scripts, analytics, or embeds are loaded.
 
 ## GitHub Pages setup
 
@@ -26,7 +26,7 @@ Open http://localhost:8000/tgl/ (Chinese: `/tgl/zh/`). Local preview omits GitHu
 3. Open **Actions → Build and deploy TGL website** and rerun the latest workflow, or use **Run workflow** on `main`.
 4. Wait for both `build` and `deploy` to succeed. Visit the review URL above.
 
-Every subsequent push to `main` rebuilds, checks links and benchmark arithmetic, and deploys the static artifact. `/tgl-web/` redirects to `/tgl-web/tgl/`. GitHub Pages ties the first path component to the repository name. An exact `biubiu3.github.io/tgl/` URL requires a repository named `tgl` or a route in the owner's `biubiu3.github.io` site.
+Every subsequent push to `main` rebuilds, checks links and benchmark arithmetic, and deploys the static artifact. GitHub Pages ties the first path component to the repository name. An exact `biubiu3.github.io/tgl/` URL requires a repository named `tgl` or a route in the owner's `biubiu3.github.io` site.
 
 ## Future custom domain: tgl.changnie.top
 

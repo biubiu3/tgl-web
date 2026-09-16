@@ -10,6 +10,7 @@ from urllib.parse import urlsplit
 ROOT = Path(__file__).resolve().parents[1]
 DATA = json.loads((ROOT / 'content/site.json').read_text())
 CONFIG = json.loads((ROOT / 'deployment.json').read_text())
+IMAGE_SIZES = json.loads((ROOT / 'content/image-sizes.json').read_text())
 parser = argparse.ArgumentParser()
 parser.add_argument('--url', default=CONFIG['url'])
 parser.add_argument('--custom-domain', default=CONFIG['custom_domain'])
@@ -42,7 +43,8 @@ def page(lang):
     page_url = url + ('zh/' if zh else '')
     paper = asset + 'paper/teach-and-grow.pdf'
     def figure(num, alt, caption, cls=''):
-        return f'''<figure class="paper-figure {cls}"><a class="zoom" href="{asset}figures/fig{num}.webp" aria-label="{t('Enlarge figure: ', '放大图片：')}{e(alt)}"><img src="{asset}figures/fig{num}.webp" alt="{e(alt)}" loading="lazy" decoding="async"><span class="zoom-label">↗ {t('Enlarge', '放大')}</span></a><figcaption>{caption}</figcaption></figure>'''
+        width, height = IMAGE_SIZES[f'fig{num}']
+        return f'''<figure class="paper-figure {cls}"><a class="zoom" href="{asset}figures/fig{num}.webp" aria-label="{t('Enlarge figure: ', '放大图片：')}{e(alt)}"><img src="{asset}figures/fig{num}.webp" alt="{e(alt)}" width="{width}" height="{height}" loading="lazy" decoding="async"><span class="zoom-label">↗ {t('Enlarge', '放大')}</span></a><figcaption>{caption}</figcaption></figure>'''
     def table(key):
         d = DATA[key]
         names = {'Spatial':'空间','Object':'物体','Goal':'目标','Long':'长程','Mean':'均值','Camera':'相机','Robot':'机器人状态','Language':'语言','Light':'光照','Background':'背景','Noise':'噪声','Layout':'布局'}
