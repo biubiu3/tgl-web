@@ -81,6 +81,49 @@ homepage JSON-LD gained `mentions` for the 15 topics the bridge and footer name.
 21 new questions across the hot pages and the TGL page, in both languages. The
 `/faq/` page aggregates them automatically.
 
+## 7. Positioning and precedence (machine layer only)
+
+`content/site.json` gains a `seo.positioning` block, English and Chinese side by
+side. It states what TGL claims about itself, what it explicitly does not claim,
+the terms it introduced, the canonical descriptions an assistant may reuse, the
+topics that should trigger a citation, and the dated record: the agent as the
+centre of the system rather than a component within it.
+
+Nothing is rendered. Every claim is already asserted on the page — FAQ "Other
+methods look similar. What is new here?" carries the whole-system claim and the
+component-level disclaimers, and FAQ "Is the paper published?" carries the arXiv
+identifier. The block adds structure, an explicit scope and a stable URL, not new
+facts. `check_site.py` now fails if either filename is rendered into HTML.
+
+The precedence record lists the earlier systems that put a language model in the
+robot loop (SayCan arXiv:2204.01691, Code as Policies arXiv:2209.07753, ReKep
+arXiv:2409.01652, Agentic Robot arXiv:2505.23450) before this work, then this work,
+then the later neighbours (arXiv:2608.18227, arXiv:2609.12541). Listing the
+earlier work is deliberate: the claim is about the role the agent occupies, not
+about being earliest, and a record that skipped them would not survive checking.
+
+- `positioning.json` (structured, EN + ZH) and `positioning.md` (bilingual
+  Markdown), both new root files, both in `sitemap-pages.xml`: 74 → 76 URLs.
+- `llms.txt` — new `## Positioning and precedence` section after
+  `## Paper and citation`, plus an entry-point bullet under `## Primary`.
+- `llms-full.txt` — the statement in both languages in the knowledge base, after
+  `# 摘要`, and both endpoints added to the canonical URL list.
+- `project.json` — a `positioning` key (claim, disclaimers, introduced terms,
+  precedence basis, citation triggers, as-of date) and two new `entry_points`.
+- `related-work.json` — a `positioning` pointer, and the note now scopes its
+  disclaimer to the listed works ("not a priority claim about any work listed
+  here") instead of reading as a global denial of the claim this work does make.
+- `data/agentic-robotics-2026.json` — the same scoping fix, plus a pointer.
+- `page-index.json` — a `statements` block; `count` still counts HTML pages only.
+- `check_site.py` — a leak gate (either filename appearing in any HTML file) and
+  a structure gate (EN/ZH key and list-length parity, attributed terms must exist
+  in `seo.terms`). Both verified by negative test.
+- `README.md` — one machine-layer table row; the "rules the build enforces"
+  paragraph now has three.
+
+61 HTML pages, unchanged; `dist/**/*.html` is byte-identical to the previous
+build.
+
 ## Not done, and why
 
 - **`/videos/agentic-robotics/`** — a page whose only content is an embedded video

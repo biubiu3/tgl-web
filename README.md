@@ -143,6 +143,7 @@ project without scraping HTML. All of it is generated from `content/site.json`:
 | `data/search-targets.json` | Query to landing page, for assistants that start from a question |
 | `index.md` / `zh/index.md` | Markdown mirrors of the two main pages, with YAML frontmatter (sub-pages get their own) |
 | `project.json` | Canonical facts, benchmark numbers and identifiers for agents |
+| `positioning.json` / `positioning.md` | Positioning and precedence: what TGL claims about itself, what it explicitly does not claim, the terms it introduced, and the dated record behind those statements |
 | `feed.xml`, `favicon.ico` | Change feed and root icon |
 
 The page carries a JSON-LD `@graph` (WebSite, WebPage, ScholarlyArticle, SoftwareSourceCode, Person,
@@ -157,9 +158,12 @@ ever needs to change, `_citation_tags()` in `scripts/seo.py` is the single place
 filled in, `scripts/seo.py` emits `citation_arxiv_id` / `citation_doi` and the matching `identifier` and
 `sameAs` automatically.
 
-Two rules the build enforces: structured data must describe content that is actually visible on the page
-(the `FAQPage` and `DefinedTerm` nodes exist because the FAQ and glossary are rendered), and the sitemaps
-discover figures from disk rather than assuming a count.
+Three rules the build enforces: structured data must describe content that is actually visible on the page
+(the `FAQPage` and `DefinedTerm` nodes exist because the FAQ and glossary are rendered); the sitemaps
+discover figures from disk rather than assuming a count; and the positioning statement is machine-layer
+only. Every claim in `positioning.json`/`positioning.md` is already asserted in the visible FAQ and the
+research narrative — the statement adds structure, an explicit scope and a stable URL, not new facts — so
+`check_site.py` fails if either filename is ever rendered into HTML.
 
 **This is a technical report. The site does not claim venue acceptance anywhere, and that should not change
 without the authors' instruction.**

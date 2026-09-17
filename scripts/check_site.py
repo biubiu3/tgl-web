@@ -40,6 +40,25 @@ for key in ('libero','plus'):
     for row in data[key]['rows']:
         mean=sum(row[1:-1])/len(row[1:-1])
         if abs(mean-row[-1])>0.051: errors.append(f'{key}: inconsistent mean for {row[0]}')
+# The positioning statement is machine-layer only: it must not enter rendered HTML.
+for path in DIST.rglob('*.html'):
+    text = path.read_text(encoding='utf-8')
+    for token in ('positioning.json', 'positioning.md'):
+        if token in text:
+            errors.append(f'{path}: machine-layer statement leaked into HTML ({token})')
+pos = data['seo'].get('positioning')
+if pos:
+    en, zh = pos.get('en', {}), pos.get('zh', {})
+    if set(en) != set(zh):
+        errors.append('seo.positioning: en/zh keys differ: ' + ', '.join(sorted(set(en) ^ set(zh))))
+    for key, val in en.items():
+        if isinstance(val, list) and len(val) != len(zh.get(key, [])):
+            errors.append(f'seo.positioning.{key}: {len(val)} English items, {len(zh.get(key, []))} Chinese')
+    terms = {t['name'] for t in data['seo']['terms']}
+    for name in en.get('term_attribution', {}).get('introduced_here', []):
+        if name not in terms:
+            errors.append(f'seo.positioning: attributed term not defined in seo.terms: {name}')
 if errors:
     raise SystemExit('\n'.join(errors))
-print(f'PASS: {len(pages)} HTML pages, all local links and anchors, 10 videos per language, benchmark means.')
+print(f'PASS: {len(pages)} HTML pages, all local links and anchors, 10 videos per language, '
+      'benchmark means, positioning statement structure.')
