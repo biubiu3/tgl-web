@@ -454,8 +454,8 @@ CONCEPTS = [
                     "TGL follows the Agent-as-Policy design and adds the persistence layer. The agent orders subgoals, "
                     "chooses tools and revises the route; validated behaviour accumulates in a Skill Library, and the "
                     "conditions, outcomes, diagnoses and repairs of each attempt accumulate in Experience Memory. The "
-                    "report's proposed slow-teacher/fast-student split would later let a learned policy take over mature "
-                    "behaviours, keeping agentic deliberation for novelty.",
+                    "report's slow-teacher/fast-student split lets a learned policy take over mature behaviours, "
+                    "keeping agentic deliberation for novelty.",
                 ]),
             ],
             "faq": [
@@ -896,9 +896,9 @@ CONCEPTS = [
                 ("What this is not", [
                     "It is not “no learning” — behaviour is acquired and both stores grow. It is not “no "
                     "pretraining” — a strong pretrained stack is exactly what makes the route viable. And it does "
-                    "not mean weights may never change: the report's proposed slow-teacher/fast-student path "
-                    "would later train a policy from verified trajectories, which is a deliberate extension rather "
-                    "than part of the acquisition step.",
+                    "not mean weights may never change: under the report's slow-teacher/fast-student path the "
+                    "verified trajectories the system produces are the supervision a policy is trained from, which "
+                    "is a separate step from the acquisition of the incoming task.",
                 ]),
                 ("How it relates to in-context adaptation", [
                     "Both avoid the parameter update. In-context adaptation scopes the change to a session; TGL "
@@ -1084,9 +1084,9 @@ CONCEPTS = [
                 ("The usual compromise", [
                     "In practice the two are combined rather than chosen between. Deliberation is reserved for "
                     "novelty, diagnosis and recovery, while mature behaviour runs on a cheap learned policy. TGL's "
-                    "report proposes exactly that split — a slow teacher for the frontier of knowledge, a fast "
-                    "student for what is already established — and treats distillation from verified trajectories "
-                    "as a future extension rather than part of the current system.",
+                    "report builds on exactly that split — a slow teacher for the frontier of knowledge, a fast "
+                    "student for what is already established — and the verified trajectories the system produces "
+                    "are what the fast student is trained from.",
                 ]),
                 ("What has to be true for it to help", [
                     "The reasoning component has to receive enough evidence to reason with. If the robot's "

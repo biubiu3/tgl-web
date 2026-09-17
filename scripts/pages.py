@@ -163,11 +163,11 @@ RESEARCH_CONTEXT = {
                 "path and contact point differ from the teacher's.",
             ]),
             ("What TGL keeps from these directions", [
-                "A learned policy can still implement a Skill Block, execute a familiar composition, or become a "
-                "future student under the proposed slow-teacher/fast-student split. A geometric planner can "
-                "bridge two skills; a visual servo can close a local loop. TGL supplies the semantic contract and "
-                "the feedback structure through which those components contribute to a task, rather than "
-                "replacing them.",
+                "A learned policy can still implement a Skill Block, execute a familiar composition, or serve as "
+                "the fast student that takes over mature behaviour under the slow-teacher/fast-student split. A "
+                "geometric planner can bridge two skills; a visual servo can close a local loop. TGL supplies the "
+                "semantic contract and the feedback structure through which those components contribute to a task, "
+                "rather than replacing them.",
             ]),
         ],
         "faq": [
@@ -413,9 +413,9 @@ CONCEPTS = [
                 ("What it is not", [
                     "It is not “no learning”: behaviour is acquired, and the library and memory grow. It is not "
                     "“no pretraining” — a strong prior is exactly what makes the route viable. And it is not a "
-                    "claim that parameters should never be touched: the paper's proposed slow-teacher/fast-student "
-                    "path would later train a policy from verified trajectories, which is a deliberate extension "
-                    "rather than part of the training-free acquisition step.",
+                    "claim that parameters should never be touched: under the slow-teacher/fast-student split the "
+                    "verified trajectories this architecture produces are the supervision a policy is trained "
+                    "from, which is a separate step from the training-free acquisition of the incoming task.",
                 ]),
             ],
             "keywords": ("training-free robot learning, robot learning without fine-tuning, no-gradient robot "
