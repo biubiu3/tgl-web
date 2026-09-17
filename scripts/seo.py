@@ -307,10 +307,10 @@ def page_jsonld(lang, url, data):
         "name": T("Teach and Grow benchmark results (LIBERO and LIBERO-Plus)",
                   "Teach and Grow 基准结果（LIBERO 与 LIBERO-Plus）"),
         "description": T(
-            "Mean task success reported in the technical report: "
+            "Mean task success reported in the paper: "
             f"{_ours(data, 'libero')}% across four LIBERO suites and "
             f"{_ours(data, 'plus')}% across seven LIBERO-Plus perturbation categories.",
-            "技术报告中报告的平均任务成功率：四个 LIBERO 套件与七个 LIBERO-Plus 扰动类别。",
+            "论文中报告的平均任务成功率：四个 LIBERO 套件与七个 LIBERO-Plus 扰动类别。",
         ),
         "isPartOf": {"@id": paper_id},
         "creator": _author_objects(data),
@@ -373,7 +373,7 @@ def _citation_tags_values(seo, data, url, pdf_url=None, abstract_html_url=None):
     if seo.get("doi"):
         tags.append(f'<meta name="citation_doi" content="{e(seo["doi"])}">')
     tags += [
-        f'<meta name="citation_technical_report_institution" content="{e(seo["institution"])}">',
+        f'<meta name="citation_author_institution" content="{e(seo["institution"])}">',
         f'<meta name="citation_keywords" content="{e(", ".join(seo["keywords"]))}">',
         f'<meta name="citation_abstract" content="{e(seo["abstract"])}">',
     ]
@@ -707,7 +707,7 @@ def write_crawler_files(out, url, data, rendered, sub_urls=None, all_pages=None)
     for path in figures:
         n = re.sub(r"\D", "", path.stem)
         imgs.append((f"assets/figures/{path.name}", f"Teach and Grow figure {n}",
-                     f"Figure {n} from the Teach and Grow technical report."))
+                     f"Figure {n} from the Teach and Grow paper."))
     for v in data["videos"]:
         for role in ("teacher", "system"):
             imgs.append((f"assets/posters/{v['id']}_{role}.webp",
@@ -888,7 +888,7 @@ def _write_project_json(out, url, data):
             "agentic_robotics_2026": url + "data/agentic-robotics-2026.json",
             "search_targets": url + "data/search-targets.json",
         },
-        "notice": ("This is a technical report. No venue acceptance is claimed. Benchmark rows other than TGL are "
+        "notice": ("This paper is available as an arXiv preprint. Benchmark rows other than TGL are "
                    "published literature values reproduced for comparison."),
     }
     (out / "project.json").write_text(
@@ -902,7 +902,7 @@ def _write_llms(out, url, data, rendered, sub_urls=(), all_pages=None):
     seo = data["seo"]
     summary = (
         f"> Teach and Grow (TGL) is an agent-centered, training-free architecture for general robot learning, "
-        f"presented in the technical report \"{data['title']}\" by {', '.join(data['authors'])} "
+        f"presented in the paper \"{data['title']}\" by {', '.join(data['authors'])} "
         f"({seo['institution']}). A pretrained multimodal agent turns a few demonstrations into reusable, "
         f"verifiable Skill Blocks without any gradient update, fine-tuning, or reinforcement learning; verified "
         f"behaviors enter a persistent Skill Library and conditions and repairs enter Experience Memory. The "
@@ -933,7 +933,7 @@ def _write_llms(out, url, data, rendered, sub_urls=(), all_pages=None):
         "",
         "## Paper and citation",
         "",
-        f"- [Technical report (PDF)]({url}assets/paper/teach-and-grow.pdf): \"{data['title']}\", {data['year']}, {seo['paper_type']}, {seo['institution']}.",
+        f"- [arXiv preprint (PDF)]({url}assets/paper/teach-and-grow.pdf): \"{data['title']}\", {data['year']}, {seo['paper_type']}, {seo['institution']}.",
         f"- [BibTeX]({url}index.md): key `{seo['bibtex_key']}`.",
         "",
         "## Code and videos",
@@ -1080,12 +1080,16 @@ def _write_mirrors(out, url, data, rendered):
 
 
 def _bibtex(url, data):
-    return (f"@techreport{{{data['seo']['bibtex_key']},\n"
+    seo = data['seo']
+    return (f"@misc{{{seo['bibtex_key']},\n"
             f"  title = {{{data['title']}}},\n"
             f"  author = {{Nie, Chang and Liu, Zhe and Wang, Hesheng}},\n"
-            f"  institution = {{{data['seo']['institution']}}},\n"
             f"  year = {{{data['year']}}},\n"
-            f"  url = {{{url}}}\n"
+            f"  eprint = {{{seo['arxiv_id']}}},\n"
+            f"  archivePrefix = {{arXiv}},\n"
+            f"  primaryClass = {{cs.RO}},\n"
+            f"  doi = {{{seo['doi']}}},\n"
+            f"  url = {{{seo['arxiv_url']}}}\n"
             f"}}")
 
 
@@ -1098,7 +1102,7 @@ def _write_feed(out, url, data):
     entries = [
         (url, "Teach and Grow — project page", _description(data, "en")),
         (url + "zh/", "Teach and Grow — 项目主页", _description(data, "zh")),
-        (url + "assets/paper/teach-and-grow.pdf", "Teach and Grow — technical report (PDF)", data["title"]),
+        (url + "assets/paper/teach-and-grow.pdf", "Teach and Grow — paper (PDF)", data["title"]),
     ]
     body = "\n".join(
         "  <entry>\n"
@@ -1304,7 +1308,7 @@ def _subpage_head(page, lang, url, data, page_url):
         '</script>',
         f'<link rel="icon" type="image/png" href="{asset}brand/tgl-logo-v3.png">',
         f'<link rel="icon" href="{up}favicon.ico" sizes="any">',
-        f'<link rel="stylesheet" href="{asset}style.css?v=brand6">',
+        f'<link rel="stylesheet" href="{asset}style.css?v=readability1">',
     ]
     return "\n".join(lines)
 
@@ -1406,7 +1410,7 @@ def render_subpage(page, lang, url, data, site):
 <a href="{up}llms.txt">llms.txt</a> · <a href="{up}llms-full.txt">llms-full.txt</a> ·
 <a href="{up}project.json">project.json</a> · <a href="{up}cite.bib">cite.bib</a> ·
 <a href="{up}sitemap.xml">sitemap.xml</a></p>
-<p class="small">{T("Cite as: ", "引用：")}Chang Nie, Zhe Liu and Hesheng Wang, “Teach and Grow: An Agent-Centered Architecture for General Robot Learning,” technical report, Shanghai Jiao Tong University, 2026.</p></div>
+<p class="small">{T("Cite as: ", "引用：")}Chang Nie, Zhe Liu and Hesheng Wang, “Teach and Grow: An Agent-Centered Architecture for General Robot Learning,” arXiv:2608.17209, 2026.</p></div>
 </section></main>
 <footer class="container"><a class="brand" href="{home}">TGL<span class="brand-dot">.</span></a><p>Teach and Grow · Shanghai Jiao Tong University<br><span>{T('Project images and demonstration videos are hosted with this website.','项目图片与演示视频均由本站提供。')}</span></p><a href="#">{T('Back to top','返回顶部')} ↑</a></footer>
 </body></html>''')
@@ -1436,30 +1440,14 @@ def _subpage_md(page, lang, url, data, page_url):
         for q, a in body["faq"]:
             out += [f"**{_fill(q, data, up, home, url)}**", "", _fill(a, data, up, home, url), ""]
     out += ["---", "",
-            f"{data['title']} — Chang Nie, Zhe Liu, Hesheng Wang, technical report, "
+            f"{data['title']} — Chang Nie, Zhe Liu, Hesheng Wang, arXiv preprint, "
             f"Shanghai Jiao Tong University, 2026. {url}"]
     return "\n".join(out)
 
 
 def _write_cite_bib(out, url, data):
-    """The BibTeX file that the paper page links to."""
-    seo = data["seo"]
-    entry = (
-        f"@techreport{{{seo['bibtex_key']},\n"
-        f"  title        = {{{data['title']}}},\n"
-        f"  author       = {{Nie, Chang and Liu, Zhe and Wang, Hesheng}},\n"
-        f"  institution  = {{{seo['institution']}}},\n"
-        f"  year         = {{{data['year']}}},\n"
-        f"  type         = {{Technical report}},\n"
-        f"  url          = {{{url}}}\n")
-    if seo.get("arxiv_id"):
-        entry += (f"  eprint       = {{{seo['arxiv_id']}}},\n"
-                  f"  archivePrefix = {{arXiv}},\n"
-                  f"  primaryClass = {{cs.RO}},\n")
-    if seo.get("doi"):
-        entry += f"  doi          = {{{seo['doi']}}},\n"
-    entry += "}\n"
-    (out / "cite.bib").write_text(entry, encoding="utf-8")
+    """Export the same arXiv citation displayed on the project page."""
+    (out / "cite.bib").write_text(_bibtex(url, data) + "\n", encoding="utf-8")
 
 
 def _write_citation_cff(out, url, data):
@@ -1699,8 +1687,7 @@ def _write_data_endpoints(out, url, data, sub_urls):
             "tgl_mean": _ours(data, key),
         }
     results["notes"] = (
-        "Rows other than TGL are published literature values reproduced for comparison in the technical "
-        "report. Full protocols and per-task tables are in the paper.")
+        "Rows other than TGL are published literature values reproduced for comparison in the paper. Full protocols and per-task tables are in the paper.")
     (out / "results.json").write_text(json.dumps(results, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
     # results.csv — one flat table, both benchmarks
@@ -1974,7 +1961,7 @@ Code: {seo["code_url"]}''')
     problem = data["libero"]
     sec("# Research Problem", f'''General robot learning aims for one system that handles many tasks and scenes. End-to-end
 vision-language-action and world-action models pursue it by absorbing each new capability into policy parameters, which
-requires new robot data, optimisation, and regression checking against everything already supported. The report names
+requires new robot data, optimisation, and regression checking against everything already supported. The paper names
 this recurring cost the retraining tax. Physical interaction data is expensive in a way text and code are not: it has to
 be created by operating a machine.''')
     sec("## The Retraining Tax",
@@ -2011,11 +1998,11 @@ Simulation only; the page presents five qualitative paired demonstrations.''')
 TGL mean success: {_ours(data, "plus")}% on LIBERO-Plus (columns: {", ".join(data["plus"]["columns"])}).
 Machine-readable: {url}results.json and {url}results.csv. Full tables are in the paper.''')
     sec("## Controlled Studies",
-        "The report describes studies on skill induction, persistence across episodes, agent-directed adaptation under "
+        "The paper describes studies on skill induction, persistence across episodes, agent-directed adaptation under "
         "physical feedback, and library growth affecting related-task execution with the same weights and executors.")
 
     sec("# Scaling Law Hypothesis",
-        "The report proposes — as a hypothesis to be tested over sequential acquisition experiments, not as a fitted "
+        "The paper proposes — as a hypothesis to be tested over sequential acquisition experiments, not as a fitted "
         "law — that effective reusable experience X relates to falling future-task error and falling teaching demand, "
         "both approaching irreducible floors as power laws in X.")
 

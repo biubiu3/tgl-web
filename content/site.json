@@ -312,7 +312,7 @@
     "paper_date": "2026/08/17",
     "paper_date_iso": "2026-08-17",
     "updated_iso": "2026-09-16",
-    "paper_type": "technical report",
+    "paper_type": "arXiv preprint",
     "institution": "Shanghai Jiao Tong University",
     "institution_zh": "上海交通大学",
     "lab": "IRMV Lab",
@@ -415,8 +415,8 @@
       "技能组合",
       "具身智能"
     ],
-    "context": "Teach and Grow sits inside embodied-intelligence and agentic-robotics research, and targets general robot manipulation. Work in this area is usually organized around vision-language-action (VLA) models, which map perception and language directly to control, and world-action models (WAM), which add learned physical dynamics. Both absorb a new capability by collecting more robot data and optimizing policy parameters. Robot foundation models supply the priors TGL depends on; TGL changes where new task knowledge is stored, and leaves the strength of those priors to the foundation models. Its neighbors therefore include few-shot and sparse-teaching methods, skill-composition and skill-library approaches, lifelong and continual learning, and agent-based robot control. The technical report's own keywords are listed above.",
-    "context_zh": "Teach and Grow 属于具身智能与智能体机器人学（agentic robotics）的研究脉络，面向通用机器人操作。这一领域通常围绕两类方法组织：视觉-语言-动作（VLA）模型把感知与语言直接映射为控制，世界动作模型（WAM）进一步引入学习到的物理动态。两者都通过采集更多机器人数据、优化策略参数来吸收新能力。机器人基础模型为 TGL 提供先验；TGL 改变的是新任务知识存放的位置，先验的强弱则仍由基础模型决定。因此它的邻近方向包括少样本与稀疏示教方法、技能组合与技能库方法、终身学习与持续学习，以及基于智能体的机器人控制。技术报告自身的关键词见上。",
+    "context": "Teach and Grow sits inside embodied-intelligence and agentic-robotics research, and targets general robot manipulation. Work in this area is usually organized around vision-language-action (VLA) models, which map perception and language directly to control, and world-action models (WAM), which add learned physical dynamics. Both absorb a new capability by collecting more robot data and optimizing policy parameters. Robot foundation models supply the priors TGL depends on; TGL changes where new task knowledge is stored, and leaves the strength of those priors to the foundation models. Its neighbors therefore include few-shot and sparse-teaching methods, skill-composition and skill-library approaches, lifelong and continual learning, and agent-based robot control. The paper's own keywords are listed above.",
+    "context_zh": "Teach and Grow 属于具身智能与智能体机器人学（agentic robotics）的研究脉络，面向通用机器人操作。这一领域通常围绕两类方法组织：视觉-语言-动作（VLA）模型把感知与语言直接映射为控制，世界动作模型（WAM）进一步引入学习到的物理动态。两者都通过采集更多机器人数据、优化策略参数来吸收新能力。机器人基础模型为 TGL 提供先验；TGL 改变的是新任务知识存放的位置，先验的强弱则仍由基础模型决定。因此它的邻近方向包括少样本与稀疏示教方法、技能组合与技能库方法、终身学习与持续学习，以及基于智能体的机器人控制。论文自身的关键词见上。",
     "terms": [
       {
         "name": "Teach-and-Grow Learning (TGL)",
@@ -489,8 +489,8 @@
       {
         "q": "What results does TGL report?",
         "q_zh": "TGL 报告了哪些结果？",
-        "a": "The technical report reports 99.9% mean success across four LIBERO suites and 92.4% mean success across seven LIBERO-Plus perturbation categories. Controlled studies report that taught blocks persist and improve related-task execution with the same model weights and executors. The comparison tables, protocols, and caveats are in the paper.",
-        "a_zh": "技术报告报告了四个 LIBERO 套件上 99.9% 的平均成功率，以及七个 LIBERO-Plus 扰动类别上 92.4% 的平均成功率。受控研究显示，在模型权重与执行器相同的条件下，已习得的技能块可以保留并改善相关任务的执行。完整的对比表、实验协议与适用边界见论文。"
+        "a": "The paper reports 99.9% mean success across four LIBERO suites and 92.4% mean success across seven LIBERO-Plus perturbation categories. Controlled studies report that taught blocks persist and improve related-task execution with the same model weights and executors. The comparison tables, protocols, and caveats are in the paper.",
+        "a_zh": "论文报告了四个 LIBERO 套件上 99.9% 的平均成功率，以及七个 LIBERO-Plus 扰动类别上 92.4% 的平均成功率。受控研究显示，在模型权重与执行器相同的条件下，已习得的技能块可以保留并改善相关任务的执行。完整的对比表、实验协议与适用边界见论文。"
       },
       {
         "q": "What robot and agent does the implementation use?",
@@ -501,8 +501,8 @@
       {
         "q": "Is the paper published?",
         "q_zh": "论文发表了吗？",
-        "a": "Yes — a preprint is publicly available. The paper is on arXiv as 2608.17209 (DOI 10.48550/arXiv.2608.17209), first posted 17 August 2026. It is a technical report: no venue acceptance is claimed. The current manuscript PDF and the method implementation (IRMVLab/TGL) are linked from this site.",
-        "a_zh": "有公开预印本。论文已在 arXiv 发布，编号 2608.17209（DOI 10.48550/arXiv.2608.17209），首次发布于 2026 年 8 月 17 日。它是一份技术报告，不主张已被任何会议或期刊接收。当前稿件 PDF 与方法实现（IRMVLab/TGL）均可在本站链接到。"
+        "a": "Yes — a preprint is publicly available. The paper is on arXiv as 2608.17209 (DOI 10.48550/arXiv.2608.17209), first posted 17 August 2026. It is an arXiv preprint intended for future submission to a journal or conference. The current manuscript PDF and the method implementation (IRMVLab/TGL) are linked from this site.",
+        "a_zh": "有公开预印本。论文已在 arXiv 发布，编号 2608.17209（DOI 10.48550/arXiv.2608.17209），首次发布于 2026 年 8 月 17 日。这是一篇 arXiv 预印本，后续计划投稿期刊或会议。当前稿件 PDF 与方法实现（IRMVLab/TGL）均可在本站链接到。"
       }
     ]
   }

@@ -26,7 +26,7 @@ PAPER = {
                  "Learning\" by Chang Nie, Zhe Liu and Hesheng Wang: abstract, authors, keywords, BibTeX and "
                  "links to the PDF, code and demonstrations."),
         "h1": "Teach and Grow: An Agent-Centered Architecture for General Robot Learning",
-        "lede": ("This is the publication record for the Teach and Grow technical report. TGL is a training-free "
+        "lede": ("This is the publication record for the Teach and Grow paper. TGL is a training-free "
                  "architecture for general robot learning: a pretrained multimodal agent turns a few "
                  "demonstrations into reusable, verifiable Skill Blocks while the model weights stay fixed."),
         "sections": [
@@ -36,8 +36,7 @@ PAPER = {
                 "Services, Shanghai 200240, China. The corresponding author is Hesheng Wang.",
             ]),
             ("Publication status", [
-                "This is a <b>technical report</b>. No venue acceptance is claimed. A public preprint is "
-                "available: the paper is on arXiv as <code>arXiv:2608.17209</code>, first posted 17 August 2026, "
+                "This paper is an <b>arXiv preprint</b>, intended for future submission to a journal or conference. The paper is on arXiv as <code>arXiv:2608.17209</code>, first posted 17 August 2026, "
                 "with DOI <code>10.48550/arXiv.2608.17209</code>. The current manuscript PDF is also served from "
                 "this site, and the method implementation is maintained in the IRMVLab/TGL repository. This "
                 "record will be updated if the manuscript is submitted to or accepted by a venue.",
@@ -64,7 +63,7 @@ PAPER = {
                 "architecture, a worked example, the controlled studies and the demonstrations.",
             ]),
         ],
-        "keywords": ("Teach and Grow paper, TGL technical report, training-free robot learning, agent-centered "
+        "keywords": ("Teach and Grow paper, TGL paper, training-free robot learning, agent-centered "
                      "robot learning, Skill Blocks, abstract, BibTeX, Chang Nie, Zhe Liu, Hesheng Wang, Shanghai "
                      "Jiao Tong University"),
     },
@@ -73,7 +72,7 @@ PAPER = {
         "desc": ("《Teach and Grow: An Agent-Centered Architecture for General Robot Learning》的著录页面，"
                  "作者为 Chang Nie、Zhe Liu、Hesheng Wang。含摘要、作者、关键词、BibTeX，以及 PDF、代码与演示链接。"),
         "h1": "Teach and Grow：面向通用机器人学习的以智能体为中心的架构",
-        "lede": ("本页是 Teach and Grow 技术报告的正式著录页。TGL 是一种免训练的通用机器人学习架构："
+        "lede": ("本页是 Teach and Grow 论文的正式著录页。TGL 是一种免训练的通用机器人学习架构："
                  "预训练的多模态智能体把少量演示转化为可复用、可验证的 Skill Block，而模型权重始终保持不变。"),
         "sections": [
             ("作者与单位", [
@@ -81,7 +80,7 @@ PAPER = {
                 "（上海 200240）。通讯作者为王贺升。",
             ]),
             ("发表状态", [
-                "这是一份<b>技术报告</b>，不主张已被任何会议或期刊接收。公开预印本已发布："
+                "这篇论文目前以 <b>arXiv 预印本</b>形式公开，后续计划投稿期刊或会议："
                 "论文在 arXiv 的编号为 <code>arXiv:2608.17209</code>，首次发布于 2026 年 8 月 17 日，"
                 "DOI 为 <code>10.48550/arXiv.2608.17209</code>。当前稿件 PDF 同时由本站提供，"
                 "方法实现维护在 IRMVLab/TGL 仓库中。若稿件后续投稿或获得接收，本页面会同步更新。",
@@ -106,7 +105,7 @@ PAPER = {
                 "Skill Block 架构、工作示例、受控研究与演示视频。",
             ]),
         ],
-        "keywords": ("Teach and Grow 论文, TGL 技术报告, 免训练机器人学习, 以智能体为中心的机器人学习, "
+        "keywords": ("Teach and Grow 论文, TGL 论文, 免训练机器人学习, 以智能体为中心的机器人学习, "
                      "Skill Block, 摘要, BibTeX, 上海交通大学, 机器人操作, 具身智能"),
     },
 }
@@ -304,7 +303,7 @@ CONCEPTS = [
             ],
             "faq": [
                 ("What does TGL stand for?",
-                 "Teach-and-Grow Learning. The technical report is “Teach and Grow: An Agent-Centered "
+                 "Teach-and-Grow Learning. The paper is “Teach and Grow: An Agent-Centered "
                  "Architecture for General Robot Learning”."),
                 ("How is TGL different from fine-tuning a robot policy?",
                  "Fine-tuning changes model parameters to absorb a new behaviour, which can affect previously "
@@ -359,7 +358,7 @@ CONCEPTS = [
             ],
             "faq": [
                 ("TGL 是什么的缩写？",
-                 "Teach-and-Grow Learning（教与长学习）。技术报告标题为 “Teach and Grow: An Agent-Centered "
+                 "Teach-and-Grow Learning（教与长学习）。论文标题为 “Teach and Grow: An Agent-Centered "
                  "Architecture for General Robot Learning”。"),
                 ("TGL 与微调机器人策略有什么不同？",
                  "微调通过改变模型参数来吸收新行为，可能影响此前已支持的行为，并且需要回归检查。"
@@ -732,7 +731,7 @@ CONCEPTS = [
             "lede": ("The retraining tax is the recurring cost of repairing robot behaviour through a policy "
                      "update. It includes new data collection, optimisation, and regression checking against "
                      "everything the policy already supported. The term is introduced in the Teach and Grow "
-                     "technical report, which uses it to frame an alternative: store the new capability "
+                     "paper, which uses it to frame an alternative: store the new capability "
                      "explicitly and leave the weights alone."),
             "sections": [
                 ("Why the cost recurs", [
@@ -772,7 +771,7 @@ CONCEPTS = [
                      "以及对策略此前已支持能力的回归验证。Teach-and-Grow Learning 命名了它，并提出了替代方案。"),
             "h1": "再训练成本（Retraining Tax）",
             "lede": ("再训练成本指通过一次策略更新来修复机器人行为所付出的反复代价，包括新增数据采集、优化，"
-                     "以及对策略此前已支持的全部能力做回归验证。该术语由 Teach and Grow 技术报告提出，"
+                     "以及对策略此前已支持的全部能力做回归验证。该术语由 Teach and Grow 论文提出，"
                      "用来引出一种替代方案：把新能力显式存起来，让权重保持不动。"),
             "sections": [
                 ("为什么这个代价会反复出现", [
