@@ -124,6 +124,27 @@ about being earliest, and a record that skipped them would not survive checking.
 61 HTML pages, unchanged; `dist/**/*.html` is byte-identical to the previous
 build.
 
+## 8. Crawler enforcement reconciled
+
+The authors cleared the Cloudflare side on 2026-09-17, so the edge now agrees with
+`robots.txt`. Three places in this repo had recorded the mismatch and were wrong
+after the change; all three are corrected:
+
+- `ROBOTS` in `scripts/seo.py` — the NOTE ON ENFORCEMENT block said the edge
+  returned 403 for training crawlers and that the effective policy was the
+  opposite of the Allow lines. It now records the verified 2026-09-17 state and
+  keeps the one-side-only reconciliation rule for if it drifts again.
+- `README.md` — "two layers, currently disagreeing" became "now in agreement",
+  with the probe result and a note that the block had also been catching
+  `Googlebot`, `bingbot` and `Baiduspider`.
+- This file — the "Not done, and why" bullet is struck through with the outcome.
+
+The probe covers every crawler named in `robots.txt` (13 search, 5
+user-triggered, 11 training). All return 200 in repeated rounds, and `robots.txt`
+stays reachable to all of them so a crawler can always read the policy. Note what
+the block was: a static user-agent list, not behavioural bot scoring — invented
+agents and commercial SEO crawlers passed while named AI agents did not.
+
 ## Not done, and why
 
 - **`/videos/agentic-robotics/`** — a page whose only content is an embedded video
@@ -133,5 +154,7 @@ build.
   Skild S1, GPT-Policy, RobotCurve, PFEA) — could not be resolved to a verifiable
   primary source, so they are not cited anywhere. `data/agentic-robotics-2026.json`
   records the omission rather than listing them speculatively.
-- **Training-crawler access** — still the authors' call. Cloudflare returns 403 for
-  GPTBot/ClaudeBot/CCBot while `robots.txt` grants Allow. Documented, not flipped.
+- ~~**Training-crawler access** — still the authors' call.~~ Resolved by the authors on
+  2026-09-17: the Cloudflare zone now permits every crawler `robots.txt` names, and the
+  probe confirms HTTP 200 for all of them. The block had also been catching `Googlebot`,
+  `bingbot` and `Baiduspider`, which is recorded in the README.

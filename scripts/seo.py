@@ -499,19 +499,19 @@ ROBOTS = """# robots.txt for {origin}/
 # three roles separately: blocking a *search* bot removes the site from that
 # product's answers, while blocking a *training* bot does not.
 #
-# NOTE ON ENFORCEMENT. This file states intent; it does not enforce it. As of
-# 2026-09-16 the Cloudflare zone for this host returns HTTP 403 for several
-# training crawlers (GPTBot, ClaudeBot, CCBot, Bytespider, Amazonbot) via a
-# zone-level WAF rule managed in Cloudflare AI Crawl Control, while every
-# search-index crawler listed in section 1 reaches the site normally. So the
-# effective policy today is "search and retrieval allowed, training blocked" —
-# the opposite of what the Allow lines in section 3 below say.
+# NOTE ON ENFORCEMENT. This file states intent; it does not enforce it. The
+# Cloudflare zone in front of this host used to return HTTP 403 for several
+# crawlers regardless of what this file said, so the two disagreed. That was
+# resolved on 2026-09-17. Verified on 2026-09-17 with a user-agent probe over
+# every crawler named below: all 20 return HTTP 200, and robots.txt itself is
+# reachable by all of them. The edge now matches the Allow lines in this file.
 #
-# To make the two agree, change ONE side:
-#   - to permit training: Cloudflare dashboard -> AI Crawl Control -> Crawlers
-#     -> set those crawlers to Allow; or
-#   - to reserve training rights: change the section 3 Allow lines to Disallow.
-# Leaving both as they are means robots.txt misreports what actually happens.
+# If that ever changes, the two must be reconciled on one side only:
+#   - to permit a crawler: Cloudflare dashboard -> AI Crawl Control -> Crawlers
+#     -> set it to Allow; or
+#   - to reserve a right: change the matching Allow line below to Disallow.
+# Leaving the two out of step means this file misreports what actually happens,
+# which is worse than either policy on its own.
 #
 # Machine-readable entry points:
 #   {url}llms.txt        - LLM-friendly index (Markdown)

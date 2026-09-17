@@ -168,32 +168,34 @@ research narrative — the statement adds structure, an explicit scope and a sta
 **This is a technical report. The site does not claim venue acceptance anywhere, and that should not change
 without the authors' instruction.**
 
-## AI crawler access: two layers, currently disagreeing
+## AI crawler access: two layers, now in agreement
 
-`robots.txt` states intent; Cloudflare enforces. **As of 2026-09-16 the two do not match**, and this is the
-single most consequential setting for AI discoverability:
+`robots.txt` states intent; Cloudflare enforces. These disagreed: from 2026-09-16 the Cloudflare zone returned
+**HTTP 403, "Your request was blocked."** to crawlers that `robots.txt` listed as `Allow: /`. The mismatch was
+resolved on **2026-09-17**, and the edge now matches the file.
 
-| Layer | Training crawlers (GPTBot, ClaudeBot, CCBot, Bytespider, Amazonbot) | Search crawlers (OAI-SearchBot, Claude-SearchBot, PerplexityBot, Kimi-SearchBot, bingbot, Googlebot, Baiduspider) |
-| --- | --- | --- |
-| `robots.txt` section 3 | `Allow: /` | `Allow: /` |
-| Cloudflare edge | **HTTP 403, "Your request was blocked."** | HTTP 200 with real content |
+Verified on 2026-09-17 with a user-agent probe over every crawler named in `robots.txt` — including the search
+crawlers, the user-triggered fetchers and all eleven training crawlers in section 3. All returned HTTP 200, in
+repeated rounds. `robots.txt` itself is reachable by all of them, so a crawler can always read the policy.
 
-Blocking a *training* crawler does not affect whether the site appears in that product's answers — ChatGPT
-search reads `OAI-SearchBot`, which is not blocked. So this does not harm AI-search visibility. It does
-decide whether the work enters model training corpora.
+The block, while it lasted, was a static user-agent list at the edge, not behavioural bot scoring: made-up
+agents (`RandomBot/1.0`) and commercial SEO crawlers (`SemrushBot`, `AhrefsBot`) passed while named AI agents
+did not. It also caught `Googlebot`, `bingbot` and `Baiduspider`, which Cloudflare's AI Crawl Control is not
+supposed to touch — worth knowing if it ever reappears, because that would take the site out of conventional
+search as well as AI answers.
 
-To resolve it, change one side only:
+If the two ever fall out of step again, reconcile them on one side only:
 
-- **To permit training**, open the Cloudflare dashboard → **AI Crawl Control** → **Crawlers** tab and set each of
-  those agents to **Allow**. (Blocking is implemented as a zone-level WAF rule, so the change takes effect
-  immediately.)
-- **To reserve training rights**, edit `ROBOTS` in `scripts/seo.py` and change the section 3 `Allow:` lines to
-  `Disallow:`.
+- **To permit a crawler**, open the Cloudflare dashboard → **AI Crawl Control** → **Crawlers** tab and set it to
+  **Allow**. (Enforcement is a zone-level WAF rule, so the change takes effect immediately.)
+- **To reserve a right**, edit `ROBOTS` in `scripts/seo.py` and change the matching `Allow:` line to `Disallow:`.
 
-Verify with a real user-agent probe after any change:
+Leaving the two out of step means `robots.txt` misreports what actually happens, which is worse than either
+policy on its own. Re-run the probe after any change:
 
 ```bash
-for ua in "GPTBot/1.4" "OAI-SearchBot/1.4" "ClaudeBot/1.0" "Claude-SearchBot/1.0" "CCBot/2.0"; do
+for ua in "GPTBot/1.4" "OAI-SearchBot/1.4" "ClaudeBot/1.0" "Claude-SearchBot/1.0" "CCBot/2.0" \
+          "Googlebot/2.1" "bingbot/2.0" "Baiduspider/2.0" "Amazonbot/0.1" "Applebot/0.1"; do
   printf '%s  %s\n' "$(curl -s -o /dev/null -w '%{http_code}' -A "$ua" https://tgl.changnie.top/)" "$ua"
 done
 ```
