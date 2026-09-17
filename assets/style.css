@@ -116,3 +116,48 @@ footer{flex-wrap:wrap}footer p,footer p span,footer>a:last-child,.footer-index,.
  .state-row{padding-top:36px}.paper-keywords{font-size:16px}.subpage-lede{font-size:18px}
  .footer-index a{padding-block:6px}.deep-dive h3,.faq-item h3{font-size:19px}
 }
+
+/* Text can grow when a browser extension adds a second language. */
+:root{--header-offset:92px}
+html{scroll-padding-top:var(--header-offset)}
+:is(.reading-grid,.overview-grid,.block-detail,.memory-columns,.study-narrative,.hero-system,.demo-grid,.demo-heading,.walk-tabs,.state-row,.invariant-strip)>*{min-width:0}
+main :is(p,h1,h2,h3,h4,dt,dd,figcaption,small),.nav-wrap a,.button,button,.tag{overflow-wrap:anywhere}
+.nav-wrap{flex-wrap:wrap}
+.nav-wrap nav{flex:1;min-width:0;flex-wrap:nowrap;justify-content:flex-start;align-items:flex-start;overflow-x:auto;column-gap:22px;row-gap:0}
+.nav-wrap nav a{flex:0 0 auto;white-space:normal;line-height:1.5;max-width:12rem}
+.language{flex-shrink:0}
+.button{display:inline-block;text-align:center;max-width:100%;white-space:normal;vertical-align:middle}
+.hero-caption{display:block}.hero-caption .signal-dot{display:inline-block;vertical-align:middle;margin-right:9px}
+.hero-system{grid-template-columns:minmax(0,1fr) 32px minmax(0,1.2fr) 32px minmax(0,1fr)}
+.system-node{min-width:0}
+.hero-bottom>span{flex:1;min-width:0}
+.state-row{grid-template-columns:35px minmax(0,1fr);padding:20px 17px;align-items:start}
+.state-label{position:static;grid-column:2;grid-row:2;justify-self:start;line-height:1.6}
+.demo-heading{flex-wrap:wrap;min-height:0}.demo-heading>div{flex:1 1 220px}
+.tag{flex-shrink:1;max-width:100%;white-space:normal}
+.video-pair{grid-template-columns:repeat(2,minmax(0,1fr));align-items:start}
+.video-label{display:block;height:auto;min-height:64px;overflow-wrap:anywhere}
+.video-label .status-dot{display:inline-block;margin:0 6px 2px 0}
+.pair-controls>*{max-width:100%;min-width:0}.pair-controls button{white-space:normal;text-align:center}
+.pair-controls label{display:block;white-space:normal}
+.walk-tabs{grid-template-columns:repeat(4,minmax(0,1fr))}.walk-tabs button{white-space:normal;overflow-wrap:anywhere}
+.resource-top,.paper-callout{flex-wrap:wrap}.resource-top>div{flex:1 1 480px}
+.paper-callout a{white-space:normal}.research-note{flex-wrap:wrap}.research-note>span{white-space:normal}
+.research-aside{top:var(--header-offset)}
+/* Keep injected sibling translations on their own row inside flex/grid UI. */
+:is(.nav-wrap,.nav-wrap nav,.authors,.hero-links,.hero-system,.hero-bottom,.demo-heading,.pair-controls,.filters,.walk-tabs,.resource-top,.paper-callout)>.immersive-translate-target-wrapper{flex-basis:100%;grid-column:1/-1;min-width:0;max-width:100%}
+.immersive-translate-target-wrapper{overflow-wrap:anywhere;white-space:normal}
+:is(.button,.nav-wrap nav a,.pair-controls button,.walk-tabs button,.video-label,.state-label) .immersive-translate-target-wrapper{display:block;margin-top:.35em;line-height:1.6;letter-spacing:normal}
+@media(max-width:900px){
+ :root{--header-offset:132px}
+ .nav-wrap nav{flex:1 0 100%;flex-wrap:nowrap;justify-content:flex-start;align-items:flex-start;gap:22px}
+ .nav-wrap nav a{flex:0 0 auto;max-width:12rem;white-space:normal}
+}
+@media(max-width:760px){
+ .hero-system{grid-template-columns:minmax(0,1fr)}
+ .walk-tabs{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .resource-top>div{flex-basis:100%}
+ .hero-bottom>span{flex:auto}
+}
+.demo-card:first-child>.immersive-translate-target-wrapper{grid-column:1;min-width:0}
+.system-node>.immersive-translate-target-wrapper{font-size:15px;line-height:1.7;letter-spacing:normal;color:inherit}

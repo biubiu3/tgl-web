@@ -1309,7 +1309,8 @@ def _subpage_head(page, lang, url, data, page_url):
         '</script>',
         f'<link rel="icon" type="image/png" href="{asset}brand/tgl-logo-v3.png">',
         f'<link rel="icon" href="{up}favicon.ico" sizes="any">',
-        f'<link rel="stylesheet" href="{asset}style.css?v=readability1">',
+        f'<link rel="stylesheet" href="{asset}style.css?v=bilingual1">',
+        f'<script src="{asset}layout.js?v=bilingual1" defer></script>',
     ]
     return "\n".join(lines)
 

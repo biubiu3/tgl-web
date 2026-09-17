@@ -70,7 +70,7 @@ def page(lang):
 <html lang="{t('en','zh-CN')}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 {head_seo(lang, url, DATA)}
 <meta name="theme-color" content="#155e59"><meta name="color-scheme" content="light">
-<link rel="icon" type="image/png" href="{asset}brand/tgl-logo-v3.png"><link rel="icon" href="{'../' if zh else ''}favicon.ico" sizes="any"><link rel="stylesheet" href="{asset}style.css?v=readability1"><script src="{asset}app.js?v=brand6" defer></script>
+<link rel="icon" type="image/png" href="{asset}brand/tgl-logo-v3.png"><link rel="icon" href="{'../' if zh else ''}favicon.ico" sizes="any"><link rel="stylesheet" href="{asset}style.css?v=bilingual1"><script src="{asset}layout.js?v=bilingual1" defer></script><script src="{asset}app.js?v=brand6" defer></script>
 </head><body data-lang="{lang}"><a class="skip-link" href="#main">{t('Skip to content','跳至正文')}</a>
 <header class="site-header"><div class="nav-wrap"><a class="brand" href="#" aria-label="Teach and Grow home"><img src="{asset}brand/tgl-logo-v3.png" width="30" height="30" alt=""><span>TGL<span class="brand-dot">.</span></span></a><nav aria-label="{t('Main navigation','主导航')}">{nav_html}</nav><a class="language" href="{'../' if zh else 'zh/'}" lang="{t('zh-CN','en')}">{t('中文','English')} <span aria-hidden="true">↗</span></a></div></header>
 <main id="main">
