@@ -1,3 +1,4 @@
+from display import display_html, visible_faq
 """SEO / GEO generation for the Teach and Grow project site.
 
 Three responsibilities:
@@ -1406,19 +1407,15 @@ def render_subpage(page, lang, url, data, site):
                 parts.append(f'<li><a href="{_link(dirs, _page_dirs(index[r], lang), url)}">{label}</a></li>')
         parts.append("</ul>")
 
-    parts.append(f'''<div class="subpage-footer"><p>{T('Machine-readable entry points','机器可读入口')}:
-<a href="{up}llms.txt">llms.txt</a> · <a href="{up}llms-full.txt">llms-full.txt</a> ·
-<a href="{up}project.json">project.json</a> · <a href="{up}cite.bib">cite.bib</a> ·
-<a href="{up}sitemap.xml">sitemap.xml</a></p>
-<p class="small">{T("Cite as: ", "引用：")}Chang Nie, Zhe Liu and Hesheng Wang, “Teach and Grow: An Agent-Centered Architecture for General Robot Learning,” arXiv:2608.17209, 2026.</p></div>
+    parts.append(f'''<div class="subpage-footer"><a href="{up}{"zh/" if zh else ""}paper/">{T("Paper", "论文")}</a> · <a href="{up}cite.bib">BibTeX</a></div>
 </section></main>
-<footer class="container"><a class="brand" href="{home}">TGL<span class="brand-dot">.</span></a><p>Teach and Grow · Shanghai Jiao Tong University<br><span>{T('Project images and demonstration videos are hosted with this website.','项目图片与演示视频均由本站提供。')}</span></p><a href="#">{T('Back to top','返回顶部')} ↑</a></footer>
+<footer class="container"><a class="brand" href="{home}">TGL<span class="brand-dot">.</span></a><p>Teach and Grow · Shanghai Jiao Tong University</p><a href="#">{T('Back to top','返回顶部')} ↑</a></footer>
 </body></html>''')
 
-    html_text = "\n".join(parts)
+    html_text = display_html("\n".join(parts))
     d = Path(site).joinpath(*dirs)
     d.mkdir(parents=True, exist_ok=True)
-    (d / "index.html").write_text(html_text, encoding="utf-8")
+    (d / "index.html").write_text(display_html(html_text), encoding="utf-8")
     (d / "index.md").write_text(_subpage_md(page, lang, url, data, page_url), encoding="utf-8")
     return page_url
 
@@ -1563,8 +1560,7 @@ def render_index_pages(url, data, site, all_pages):
               "Teach-and-Grow Learning 的全部概念页：范式本身、免训练机器人学习、Skill Block、Skill Library、"
               "Experience Memory、再训练成本，以及围绕它们的研究词汇。"),
             T("Concept index", "概念索引"),
-            T("Each page defines one term so it can be quoted or checked on its own, and links to the pages it "
-              "relates to.", "每页定义一个术语，便于单独引用或核对，并链接到相关页面。"),
+            T("Explore the architecture and its connections to robot learning.", "了解 TGL 的架构及相关机器人学习方法。"),
             f'<ul class="concept-index">{"".join(items)}</ul>')
         if zh:
             urls.append(url + "zh/concepts/")
@@ -1573,16 +1569,12 @@ def render_index_pages(url, data, site, all_pages):
 
         # ---- /glossary/ ----
         terms = seo["terms"]
-        faq = seo.get("faq", [])
+        faq = visible_faq(seo.get("faq", []))
         gl = []
         for t in terms:
             name = t["name_zh"] if zh else t["name"]
             definition = t["definition_zh"] if zh else t["definition"]
             gl.append(f'<div class="glossary-item"><dt>{name}</dt><dd>{definition}</dd></div>')
-        for item in faq:
-            q = item["q_zh"] if zh else item["q"]
-            a = item["a_zh"] if zh else item["a"]
-            gl.append(f'<div class="glossary-item"><dt>{q}</dt><dd>{a}</dd></div>')
         _write_index_page(
             site, url, data, lang, "glossary",
             T("Glossary — Teach and Grow (TGL) terminology", "术语表 — Teach and Grow（TGL）术语"),
@@ -1591,8 +1583,7 @@ def render_index_pages(url, data, site, all_pages):
               "Teach-and-Grow Learning 提出术语的定义——免训练机器人学习、Skill Block、Skill Library、"
               "Experience Memory、再训练成本——每条都可独立引用。"),
             "Glossary" if not zh else "术语表",
-            T("Definitions are self-contained so they can be quoted, checked or reused without the surrounding "
-              "page.", "每条定义都保持自包含，便于单独引用、核对或复用。"),
+            "",
             f'<dl class="glossary-grid">{"".join(gl)}</dl>')
         urls.append(url + ("zh/" if zh else "") + "glossary/")
 
@@ -1614,8 +1605,7 @@ def render_index_pages(url, data, site, all_pages):
               "关于 Teach-and-Grow Learning 的直接回答：它是什么、免训练指什么、与训练 VLA 模型有何不同、"
               "结果如何、以及如何引用。"),
             "FAQ" if not zh else "常见问题",
-            T("Written to be self-contained so a reader or an AI assistant can quote an answer without the rest "
-              "of the site.", "刻意写成自包含的，读者或 AI 助手可以直接引用某条回答，而无需依赖网站其余部分。"),
+            "",
             f'<div class="faq-list">{blocks}</div>')
         urls.append(url + ("zh/" if zh else "") + "faq/")
 
@@ -1645,18 +1635,15 @@ def _write_index_page(site, url, data, lang, slug, title, desc, h1, lede, body_h
 <main id="main"><section class="section container subpage">
 <nav class="breadcrumb-nav" aria-label="Breadcrumb"><a href="{home}">&larr; {'Teach and Grow' if not zh else 'Teach and Grow 项目主页'}</a></nav>
 <h1 class="subpage-title">{h1}</h1>
-<p class="lead subpage-lede">{lede}</p>
+{f'<p class="lead subpage-lede">{lede}</p>' if lede else ''}
 {body_html}
-<div class="subpage-footer"><p>{'机器可读入口' if zh else 'Machine-readable entry points'}:
-<a href="{up}llms.txt">llms.txt</a> · <a href="{up}llms-full.txt">llms-full.txt</a> ·
-<a href="{up}project.json">project.json</a> · <a href="{up}cite.bib">cite.bib</a> ·
-<a href="{up}sitemap.xml">sitemap.xml</a></p></div>
+<div class="subpage-footer"><a href="{up}{"zh/" if zh else ""}paper/">{"论文" if zh else "Paper"}</a> · <a href="{up}cite.bib">BibTeX</a></div>
 </section></main>
 <footer class="container"><a class="brand" href="{home}">TGL<span class="brand-dot">.</span></a><p>Teach and Grow · Shanghai Jiao Tong University</p><a href="#">{'返回顶部' if zh else 'Back to top'} ↑</a></footer>
 </body></html>'''
     d = Path(site).joinpath(*dirs)
     d.mkdir(parents=True, exist_ok=True)
-    (d / "index.html").write_text(html_text, encoding="utf-8")
+    (d / "index.html").write_text(display_html(html_text), encoding="utf-8")
     (d / "index.md").write_text(f"# {h1}\n\n> {lede}\n\nSource: {page_url}\n\n{html_to_md(body_html)}\n",
                                 encoding="utf-8")
 

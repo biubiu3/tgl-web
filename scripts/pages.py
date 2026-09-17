@@ -26,7 +26,7 @@ PAPER = {
                  "Learning\" by Chang Nie, Zhe Liu and Hesheng Wang: abstract, authors, keywords, BibTeX and "
                  "links to the PDF, code and demonstrations."),
         "h1": "Teach and Grow: An Agent-Centered Architecture for General Robot Learning",
-        "lede": ("This is the publication record for the Teach and Grow paper. TGL is a training-free "
+        "lede": ("TGL is a training-free "
                  "architecture for general robot learning: a pretrained multimodal agent turns a few "
                  "demonstrations into reusable, verifiable Skill Blocks while the model weights stay fixed."),
         "sections": [
@@ -37,9 +37,7 @@ PAPER = {
             ]),
             ("Publication status", [
                 "This paper is an <b>arXiv preprint</b>, intended for future submission to a journal or conference. The paper is on arXiv as <code>arXiv:2608.17209</code>, first posted 17 August 2026, "
-                "with DOI <code>10.48550/arXiv.2608.17209</code>. The current manuscript PDF is also served from "
-                "this site, and the method implementation is maintained in the IRMVLab/TGL repository. This "
-                "record will be updated if the manuscript is submitted to or accepted by a venue.",
+                "with DOI <code>10.48550/arXiv.2608.17209</code>.",
             ]),
             ("Abstract", ["{abstract}"]),
             ("Keywords", ["{keywords}"]),
@@ -58,7 +56,7 @@ PAPER = {
                 "DOI: 10.48550/arXiv.2608.17209.",
             ]),
             ("Companion artifacts", [
-                "The report is released together with a reference implementation and ten paired demonstration "
+                "The paper is released together with a reference implementation and ten paired demonstration "
                 "videos. The <a href=\"{home}\">project page</a> covers the problem framing, the Skill Block "
                 "architecture, a worked example, the controlled studies and the demonstrations.",
             ]),
@@ -72,7 +70,7 @@ PAPER = {
         "desc": ("《Teach and Grow: An Agent-Centered Architecture for General Robot Learning》的著录页面，"
                  "作者为 Chang Nie、Zhe Liu、Hesheng Wang。含摘要、作者、关键词、BibTeX，以及 PDF、代码与演示链接。"),
         "h1": "Teach and Grow：面向通用机器人学习的以智能体为中心的架构",
-        "lede": ("本页是 Teach and Grow 论文的正式著录页。TGL 是一种免训练的通用机器人学习架构："
+        "lede": ("TGL 是一种免训练的通用机器人学习架构："
                  "预训练的多模态智能体把少量演示转化为可复用、可验证的 Skill Block，而模型权重始终保持不变。"),
         "sections": [
             ("作者与单位", [
@@ -82,8 +80,7 @@ PAPER = {
             ("发表状态", [
                 "这篇论文目前以 <b>arXiv 预印本</b>形式公开，后续计划投稿期刊或会议："
                 "论文在 arXiv 的编号为 <code>arXiv:2608.17209</code>，首次发布于 2026 年 8 月 17 日，"
-                "DOI 为 <code>10.48550/arXiv.2608.17209</code>。当前稿件 PDF 同时由本站提供，"
-                "方法实现维护在 IRMVLab/TGL 仓库中。若稿件后续投稿或获得接收，本页面会同步更新。",
+                "DOI 为 <code>10.48550/arXiv.2608.17209</code>。",
             ]),
             ("摘要", ["{abstract_zh}"]),
             ("关键词", ["{keywords_zh}"]),
@@ -101,7 +98,7 @@ PAPER = {
                 "DOI: 10.48550/arXiv.2608.17209。",
             ]),
             ("配套产出", [
-                "本报告同时发布参考实现与十段成对演示视频。<a href=\"{home}\">项目主页</a>涵盖问题定义、"
+                "本研究同时提供参考实现与十段成对演示视频。<a href=\"{home}\">项目主页</a>涵盖问题定义、"
                 "Skill Block 架构、工作示例、受控研究与演示视频。",
             ]),
         ],
