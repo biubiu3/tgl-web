@@ -54,7 +54,11 @@ References: [GitHub custom domains](https://docs.github.com/en/pages/configuring
 - `assets/videos/`: original MP4s, preserved byte for byte.
 - `assets/posters/`: actual video frames; 256 × 256 source videos are not artificially upscaled.
 - `assets/figures/`: optimized WebP exports of the author's figures. Figure 1 is a conceptual illustration, not a physical-robot result.
-- `assets/paper/teach-and-grow.pdf`: freshly built current 17-page manuscript.
+- The paper PDF is **not hosted here** (removed 2026-09-18). Every PDF link on the site, the
+  `citation_pdf_url` tag, `project.json`, `llms.txt` and the JSON-LD `contentUrl` resolve to
+  `seo.arxiv_pdf_url` on arXiv. There is no `assets/paper/` directory and no sitemap entry for a PDF,
+  because a sitemap `<link>` must point at this host. Do not reintroduce a local copy: the author asked
+  the site to link out to arXiv instead of serving the manuscript.
 - `content/provenance.json`: paper/figure source hashes, the current revision note, and the video-label correction. On 2026-09-18 the site was synced to arXiv v2: the abstract clause and the figures 2–6 sources were replaced, and the WebPs were re-exported from the v2 PDFs at the same 2100 px asset widths in `content/image-sizes.json`.
 
 The supplied description calls Goal task 07 a bottle-cap task. The local LIBERO task map identifies it as `turn_on_the_stove`, consistent with inspection of both videos; the website uses that name. Paired video playback shares a start time but does not time-align actions or imply a speed comparison. The page presents five qualitative simulation examples, the controlled-study counts reported in the paper's appendix (stage accuracy, effect confirmations, the 3/3 and 0/6-to-4/6 studies), bounded observations, and clearly identified scaling hypotheses. The full benchmark tables stay in the paper. It does not assert publication acceptance, complete paper reproduction from the public code snapshot, empirical readiness, or an independently replicated benchmark.

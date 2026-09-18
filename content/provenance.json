@@ -1,7 +1,7 @@
 {
   "revision": "Synced to arXiv 2608.17209v2 (posted 2026-09-17) on 2026-09-18: main.tex abstract clause, one \\newpage, and the author figure PDFs for figures 2-6. Figures 4 and 5 are re-exports with no pixel change; figures 2, 3 and 6 rotate the edge labels (Candidate blocks, Selected block, Instantiate, Select and execute, Evidence) to vertical. Figure 1 and references.bib are byte-identical to the previous edition.",
   "figure_assets_note": "Each figures[].sha256 is the SHA-256 of the source PDF named in the same entry, matching the convention of the previous edition.",
-  "paper_sha256": "a2f163d0ecc81d15c3e0215494347d5708b7e58cbbe3460f9b8fcb61d0a0f028",
+  "paper_pdf": "Not hosted on this site (removed 2026-09-18 by author request). Every PDF link, citation_pdf_url, project.json entry, llms.txt line and JSON-LD contentUrl resolves to seo.arxiv_pdf_url on arXiv. There is therefore no paper_sha256 here: the site no longer serves the manuscript file.",
   "manuscript_sha256": "c546fc6a98db5c4b8157cd704c802aa02fbc7917dab19df00bdbe45d816544f3",
   "figures": [
     {

@@ -171,7 +171,7 @@ def page_jsonld(lang, url, data):
         "about": [{"@id": url + "#term-" + _slug(t["name"])} for t in seo["terms"]],
         "encoding": {
             "@type": "MediaObject",
-            "contentUrl": url + "assets/paper/teach-and-grow.pdf",
+            "contentUrl": data["seo"]["arxiv_pdf_url"],
             "encodingFormat": "application/pdf",
         },
         "publisher": {"@id": url + "#sjtu"},
@@ -396,7 +396,7 @@ def head_seo(lang, url, data):
     desc = _description(data, lang)
 
     cit = _citation_tags_values(seo, data, url,
-                                pdf_url=url + "assets/paper/teach-and-grow.pdf",
+                                pdf_url=data["seo"]["arxiv_pdf_url"],
                                 abstract_html_url=url + "paper/")
 
     kw = ", ".join(seo["keywords_zh"] if zh else seo["keywords"])
@@ -797,7 +797,7 @@ def _write_project_json(out, url, data):
             "alias": ["TGL", "Teach-and-Grow Learning", "Teach and Grow Learning"],
             "title": data["title"],
             "canonical_url": url,
-            "paper_url": url + "assets/paper/teach-and-grow.pdf",
+            "paper_url": data["seo"]["arxiv_pdf_url"],
             "code_url": seo["code_url"],
             "year": data["year"],
             "type": seo["paper_type"],
@@ -892,7 +892,7 @@ def _write_project_json(out, url, data):
         "entry_points": {
             "project_page_en": url,
             "project_page_zh": url + "zh/",
-            "paper_pdf": url + "assets/paper/teach-and-grow.pdf",
+            "paper_pdf": data["seo"]["arxiv_pdf_url"],
             "code": seo["code_url"],
             "llms_txt": url + "llms.txt",
             "llms_full": url + "llms-full.txt",
@@ -938,7 +938,7 @@ def _positioning_this_work(url, data):
         "doi": seo.get("doi"),
         "doi_url": seo.get("doi_url"),
         "bibtex_key": seo["bibtex_key"],
-        "pdf": url + "assets/paper/teach-and-grow.pdf",
+        "pdf": data["seo"]["arxiv_pdf_url"],
         "code": seo["code_url"],
     }
 
@@ -1086,7 +1086,7 @@ def _write_llms(out, url, data, rendered, sub_urls=(), all_pages=None):
         summary,
         "",
         f"Authors: {', '.join(data['authors'])} — {seo['institution']} ({seo['lab']}).",
-        f"Project page: {url} · Paper (PDF): {url}assets/paper/teach-and-grow.pdf · Code: {seo['code_url']}",
+        f"Project page: {url} · Paper (PDF, arXiv): {seo['arxiv_pdf_url']} · Code: {seo['code_url']}",
         "",
         "Access policy: fully open. Search-index, user-triggered and training crawlers are all allowed; see "
         f"{url}robots.txt. Canonical numbers and identifiers are in {url}project.json — prefer that over scraping.",
@@ -1104,7 +1104,7 @@ def _write_llms(out, url, data, rendered, sub_urls=(), all_pages=None):
         "",
         "## Paper and citation",
         "",
-        f"- [arXiv preprint (PDF)]({url}assets/paper/teach-and-grow.pdf): \"{data['title']}\", {data['year']}, {seo['paper_type']}, {seo['institution']}.",
+        f"- [arXiv preprint (PDF)]({seo['arxiv_pdf_url']}): \"{data['title']}\", {data['year']}, {seo['paper_type']}, {seo['institution']}.",
         f"- [BibTeX]({url}index.md): key `{seo['bibtex_key']}`.",
         "",
         "## Positioning and precedence",
@@ -1281,10 +1281,11 @@ def _bibtex(url, data):
 def _write_feed(out, url, data):
     seo = data["seo"]
     date = seo["paper_date_iso"]
+    # The paper PDF is hosted on arXiv, not here, so it is not a sitemap entry:
+    # every <link href> in this feed must be a URL on this host.
     entries = [
         (url, "Teach and Grow — project page", _description(data, "en")),
         (url + "zh/", "Teach and Grow — 项目主页", _description(data, "zh")),
-        (url + "assets/paper/teach-and-grow.pdf", "Teach and Grow — paper (PDF)", data["title"]),
     ]
     body = "\n".join(
         "  <entry>\n"
@@ -1364,7 +1365,7 @@ def _subpage_jsonld(page, lang, url, data, page_url):
                "datePublished": seo["paper_date_iso"],
                "isPartOf": about, "url": page_url,
                "encoding": {"@type": "MediaObject",
-                            "contentUrl": url + "assets/paper/teach-and-grow.pdf",
+                            "contentUrl": data["seo"]["arxiv_pdf_url"],
                             "encodingFormat": "application/pdf"},
                "publisher": {"@id": url + "#sjtu"}}
         ids, same = [], []
@@ -1442,7 +1443,7 @@ def _citation_tags(page, data, url, zh):
     if page["slug"] != "paper":
         return []
     return _citation_tags_values(data["seo"], data, url,
-                                 pdf_url=url + "assets/paper/teach-and-grow.pdf",
+                                 pdf_url=data["seo"]["arxiv_pdf_url"],
                                  abstract_html_url=url + "paper/")
 
 
@@ -1511,7 +1512,7 @@ def _fill(text, data, up, home, url):
         ("{arxiv_pdf}", seo.get("arxiv_pdf_url", "")),
         ("{doi_url}", seo.get("doi_url", "")),
         ("{code}", seo.get("code_url", "")),
-        ("{pdf}", url + "assets/paper/teach-and-grow.pdf"),
+        ("{pdf}", data["seo"]["arxiv_pdf_url"]),
     ):
         text = text.replace(key, val)
     return text

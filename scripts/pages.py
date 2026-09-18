@@ -44,8 +44,7 @@ PAPER = {
             ("Identifiers", [
                 "arXiv: <a href=\"{arxiv_url}\">2608.17209</a> · DOI: "
                 "<a href=\"{doi_url}\">10.48550/arXiv.2608.17209</a> · "
-                "PDF: <a href=\"{pdf}\">manuscript (this site)</a> and "
-                "<a href=\"{arxiv_pdf}\">arXiv:2608.17209</a> · "
+                "PDF: <a href=\"{arxiv_pdf}\">arXiv:2608.17209</a> · "
                 "Code: <a href=\"{code}\">IRMVLab/TGL</a>",
             ]),
             ("How to cite", [
@@ -87,7 +86,7 @@ PAPER = {
             ("标识符", [
                 "arXiv：<a href=\"{arxiv_url}\">2608.17209</a> · DOI："
                 "<a href=\"{doi_url}\">10.48550/arXiv.2608.17209</a> · "
-                "PDF：<a href=\"{pdf}\">本站稿件</a> 与 <a href=\"{arxiv_pdf}\">arXiv:2608.17209</a> · "
+                "PDF：<a href=\"{arxiv_pdf}\">arXiv:2608.17209</a> · "
                 "代码：<a href=\"{code}\">IRMVLab/TGL</a>",
             ]),
             ("如何引用", [
