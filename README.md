@@ -55,7 +55,7 @@ References: [GitHub custom domains](https://docs.github.com/en/pages/configuring
 - `assets/posters/`: actual video frames; 256 × 256 source videos are not artificially upscaled.
 - `assets/figures/`: optimized WebP exports of the author's figures. Figure 1 is a conceptual illustration, not a physical-robot result.
 - `assets/paper/teach-and-grow.pdf`: freshly built current 17-page manuscript.
-- `content/provenance.json`: paper/figure source hashes and the video-label correction.
+- `content/provenance.json`: paper/figure source hashes, the current revision note, and the video-label correction. On 2026-09-18 the site was synced to arXiv v2: the abstract clause and the figures 2–6 sources were replaced, and the WebPs were re-exported from the v2 PDFs at the same 2100 px asset widths in `content/image-sizes.json`.
 
 The supplied description calls Goal task 07 a bottle-cap task. The local LIBERO task map identifies it as `turn_on_the_stove`, consistent with inspection of both videos; the website uses that name. Paired video playback shares a start time but does not time-align actions or imply a speed comparison. The page presents five qualitative simulation examples, the controlled-study counts reported in the paper's appendix (stage accuracy, effect confirmations, the 3/3 and 0/6-to-4/6 studies), bounded observations, and clearly identified scaling hypotheses. The full benchmark tables stay in the paper. It does not assert publication acceptance, complete paper reproduction from the public code snapshot, empirical readiness, or an independently replicated benchmark.
 
@@ -63,19 +63,25 @@ Images open in an accessible native dialog (Escape to close). Videos retain nati
 
 ## Publication identity
 
-The paper is on arXiv as **2608.17209** (DOI `10.48550/arXiv.2608.17209`), first posted **17 August 2026**. These
-live in `content/site.json` under `seo` and are written into the citation tags, JSON-LD `identifier`/`sameAs`,
-`cite.bib`, `CITATION.cff`, `codemeta.json`, `project.json` and `/paper/` automatically. `arxiv_id` and `doi`
-were verified against the arXiv record on 2026-09-16; re-verify before changing them.
+The paper is on arXiv as **2608.17209** (DOI `10.48550/arXiv.2608.17209`), first posted **17 August 2026**.
+These live in `content/site.json` under `seo` and are written into the citation tags, JSON-LD
+`identifier`/`sameAs`, `cite.bib`, `CITATION.cff`, `codemeta.json`, `project.json` and `/paper/` automatically.
+`arxiv_id` and `doi` were re-verified against the arXiv record on 2026-09-18; re-verify before changing them.
+
+`arxiv_url` and `arxiv_pdf_url` are **pinned to the `v2` revision** (`.../2608.17209v2`), by author decision on
+2026-09-18. `arxiv_id` stays versionless so `citation_arxiv_id` and the JSON-LD `identifier` keep naming the
+record rather than one revision. When a later revision is posted, the two URLs must be repinned by hand or the
+site will keep pointing at v2.
 
 Two dates are tracked separately and must not be conflated:
 
 - `paper_date` (`2026/08/17`) — the publication date. Feeds `citation_publication_date` and JSON-LD
   `datePublished`. **Must stay `YYYY/MM/DD`** or Google Scholar mis-parses it.
-- `updated_iso` (`2026-09-16`) — last content change. Feeds sitemap `lastmod` and JSON-LD `dateModified`.
+- `updated_iso` (`2026-09-18`) — last content change. Feeds sitemap `lastmod` and JSON-LD `dateModified`.
 
-The site's own abstract comes from the current manuscript PDF, which is newer than the arXiv posting; the two
-abstracts are worded differently. The site keeps its own and links out to arXiv rather than overwriting either.
+The site's own abstract is a deliberately shorter wording that omits the paper's teaching-as-accelerator
+sentence; the two are not expected to match word for word. The site keeps its own and links out to arXiv rather
+than overwriting either.
 
 ## Generated sub-pages
 

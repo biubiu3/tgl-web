@@ -1,31 +1,33 @@
 {
-  "paper_sha256": "0b7f68b44dc4666dd1f4acf4caca8eb6271c3d663bbc211de6e3d1165e832170",
-  "manuscript_sha256": "3f42a0d1c1cb3ab5669806e0b492373c5e2ad9a2cff5380e6d64b621d549ae49",
+  "revision": "Synced to arXiv 2608.17209v2 (posted 2026-09-17) on 2026-09-18: main.tex abstract clause, one \\newpage, and the author figure PDFs for figures 2-6. Figures 4 and 5 are re-exports with no pixel change; figures 2, 3 and 6 rotate the edge labels (Candidate blocks, Selected block, Instantiate, Select and execute, Evidence) to vertical. Figure 1 and references.bib are byte-identical to the previous edition.",
+  "figure_assets_note": "Each figures[].sha256 is the SHA-256 of the source PDF named in the same entry, matching the convention of the previous edition.",
+  "paper_sha256": "a2f163d0ecc81d15c3e0215494347d5708b7e58cbbe3460f9b8fcb61d0a0f028",
+  "manuscript_sha256": "c546fc6a98db5c4b8157cd704c802aa02fbc7917dab19df00bdbe45d816544f3",
   "figures": [
     {
       "asset": "fig2.webp",
       "source": "teach_and_grow_learning/figures_author_pdf/fig2.pdf",
-      "sha256": "de3b2bf2c44e1a9b77daae41048cceac3159372ffe26df09915cbe0cd1717024"
+      "sha256": "2c4efa6dfc9203dee94bdc5ac90b1b593e36b0f0e13142f5ca164046f2e58143"
     },
     {
       "asset": "fig3.webp",
       "source": "teach_and_grow_learning/figures_author_pdf/fig3.pdf",
-      "sha256": "0b016c6c532aece9ba7eebd3c67b50a298449918ab36dc812f72d6016b1f80c2"
+      "sha256": "2f9e26ca12368c7664fe780deaa42cfe75cd3def9dd83d3926a96ed960ea8cf2"
     },
     {
       "asset": "fig4.webp",
       "source": "teach_and_grow_learning/figures_author_pdf/fig4.pdf",
-      "sha256": "cbddaa24345af3081aacb62d5c9e30e693daca5854e0b6a18c19104cd0ee2726"
+      "sha256": "2e99d7f07e33e20a0d44cb2e70fb50b1392eb16613c1bb9d233f125b504ff8b6"
     },
     {
       "asset": "fig5.webp",
       "source": "teach_and_grow_learning/figures_author_pdf/fig5.pdf",
-      "sha256": "749060b669648d336feebd49e12c95c273996bf986174e666e4dd5bd33e1535f"
+      "sha256": "d17aabfc9095855d47cdeda041ab5ec0c90a38fa11c52b06fa0d91175f99c7d7"
     },
     {
       "asset": "fig6.webp",
       "source": "teach_and_grow_learning/figures_author_pdf/fig6.pdf",
-      "sha256": "ee528701975ee7f1e098531f6f37a380db821088a391d92ae0e2f79cf2ee6c71"
+      "sha256": "7a478493af0bec0d547274234c9f639803a7de55279d31aac79ba7fdb9a3b785"
     }
   ],
   "videos": "Author supplied video/*.mp4; copied byte for byte.",
